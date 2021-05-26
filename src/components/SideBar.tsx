@@ -7,10 +7,10 @@ export default function SideBar() {
         <Link to="/">Login</Link>
       </li>
       <li>
-        <Link to="/acceuil">Acceuil</Link>
+        <Link to="/register">Register</Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/accueil">Acceuil</Link>
       </li>
     </ul>
   );
