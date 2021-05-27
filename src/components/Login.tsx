@@ -1,17 +1,25 @@
-import { useHistory, useLocation } from "react-router-dom";
-import { useAuth } from "../router/RouterGuard";
+import { useState } from "react";
+import { Redirect, RouteComponentProps } from "react-router-dom";
+import { fakeAuth } from "../router/RouterGuard";
 
-export default function Login() {
-  let history = useHistory();
-  let location = useLocation();
-  let auth = useAuth() as any;
+type Props = RouteComponentProps & {
+  location: {
+    state: { from: any };
+  };
+};
 
-  let { from }: any = location.state || { from: { pathname: "/" } };
+const Login: React.FC<Props> = ({ location }) => {
+  const [state, setState] = useState({ redirectToReferrer: false });
   let login = () => {
-    auth.signin(() => {
-      history.replace(from);
+    fakeAuth.authenticate(() => {
+      setState({ redirectToReferrer: true });
     });
   };
+
+  let { from } = location.state || { from: { pathname: "/" } };
+  let { redirectToReferrer } = state;
+
+  if (redirectToReferrer) return <Redirect to={from} />;
 
   return (
     <div>
@@ -19,4 +27,6 @@ export default function Login() {
       <button onClick={login}>Log in</button>
     </div>
   );
-}
+};
+
+export default Login;

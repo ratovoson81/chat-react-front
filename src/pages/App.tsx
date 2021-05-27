@@ -3,30 +3,22 @@ import Acceuil from "../components/Accueil";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import SideBar from "../components/SideBar";
-import { AuthButton, PrivateRoute, ProvideAuth } from "../router/RouterGuard";
+import { AuthButton, PrivateRoute } from "../router/RouterGuard";
 
 export default function App() {
   return (
-    <ProvideAuth>
-      <Router>
-        <div>
-          <AuthButton />
+    <Router>
+      <div>
+        <AuthButton />
 
-          <SideBar />
+        <SideBar />
 
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <PrivateRoute path="/accueil">
-              <Acceuil />
-            </PrivateRoute>
-          </Switch>
-        </div>
-      </Router>
-    </ProvideAuth>
+        <Switch>
+          <Route exact path="/" component={Login}></Route>
+          <Route path="/register" component={Register}></Route>
+          <PrivateRoute path="/accueil" component={Acceuil}></PrivateRoute>
+        </Switch>
+      </div>
+    </Router>
   );
 }
