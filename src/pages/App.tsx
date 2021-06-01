@@ -3,7 +3,9 @@ import Acceuil from "../components/Accueil";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import SideBar from "../components/SideBar";
-import { AuthButton, PrivateRoute, ProvideAuth } from "../router/RouterGuard";
+import { AuthButton } from "../components/AuthButton";
+import { PrivateRoute } from "../router/PrivateRoute";
+import ProvideAuth from "../router/ProvideAuth";
 
 export default function App() {
   return (

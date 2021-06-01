@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
-import { useAuth } from "../router/RouterGuard";
 import { Location } from "history";
 import { authType } from "../CostumType";
+import { useAuth } from "../context/Auth";
 
 interface LocationState {
   from: Location;
