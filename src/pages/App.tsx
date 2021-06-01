@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Acceuil from "../components/Accueil";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import SideBar from "../components/SideBar";
+import NavBar from "../router/NavBar";
 import { AuthButton } from "../components/AuthButton";
 import { PrivateRoute } from "../router/PrivateRoute";
 import ProvideAuth from "../router/ProvideAuth";
@@ -14,7 +14,7 @@ export default function App() {
         <div>
           <AuthButton />
 
-          <SideBar />
+          <NavBar />
 
           <Switch>
             <Route exact path="/">
