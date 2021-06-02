@@ -8,7 +8,7 @@ export function AuthButton() {
 
   return auth.user ? (
     <p>
-      Welcome!{" "}
+      Welcome! <span>🔥</span>
       <button
         onClick={() => {
           auth.signout(() => history.push("/"));
