@@ -2,23 +2,29 @@ import { Redirect, Route } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import { authType } from "../CostumType";
 
-export function PrivateRoute({ children, ...rest }: any) {
+export const PrivateRoute: React.ComponentType<any> = ({
+  component: Component,
+  layout: Layout,
+  ...rest
+}) => {
   let auth = useAuth() as authType;
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={(props) =>
         auth.user ? (
-          children
+          <Layout>
+            <Component {...props} />
+          </Layout>
         ) : (
           <Redirect
             to={{
               pathname: "/",
-              state: { from: location },
+              state: { from: props.location },
             }}
           />
         )
       }
     />
   );
-}
+};

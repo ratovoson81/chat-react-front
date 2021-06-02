@@ -6,6 +6,25 @@ import NavBar from "../router/NavBar";
 import { AuthButton } from "../components/AuthButton";
 import { PrivateRoute } from "../router/PrivateRoute";
 import ProvideAuth from "../router/ProvideAuth";
+import LoginPage from "../layout/LoginPage";
+import PrivatePage from "../layout/PrivatePage";
+
+const AppRoute: React.ComponentType<any> = ({
+  component: Component,
+  layout: Layout,
+  ...rest
+}) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <Layout>
+          <Component {...props}></Component>
+        </Layout>
+      )}
+    ></Route>
+  );
+};
 
 export default function App() {
   return (
@@ -17,15 +36,17 @@ export default function App() {
           <NavBar />
 
           <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <PrivateRoute path="/accueil">
-              <Acceuil />
-            </PrivateRoute>
+            <AppRoute exact path="/" layout={LoginPage} component={Login} />
+            <AppRoute
+              path="/register"
+              layout={LoginPage}
+              component={Register}
+            />
+            <PrivateRoute
+              path="/accueil"
+              layout={PrivatePage}
+              component={Acceuil}
+            />
           </Switch>
         </div>
       </Router>
