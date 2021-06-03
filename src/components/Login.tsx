@@ -20,9 +20,23 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <p>You must log in to view the page at {from.pathname}</p>
-      <button onClick={login}>Log in</button>
+    <div className="flex justify-center">
+      <form className="flex flex-col w-72">
+        <input
+          className="text-center"
+          placeholder="Nom"
+          type="text"
+          name="name"
+        />
+        <input
+          className="text-center"
+          placeholder="Password"
+          type="text"
+          name="name"
+        />
+        <input type="submit" value="Envoyer" />
+        <button onClick={login}>Log in</button>
+      </form>
     </div>
   );
 }
