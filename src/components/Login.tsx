@@ -2,6 +2,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Location } from "history";
 import { authType } from "../CostumType";
 import { useAuth } from "../context/Auth";
+import { SyntheticEvent } from "react";
 
 interface LocationState {
   from: Location;
@@ -13,7 +14,8 @@ export default function Login() {
   let auth = useAuth() as authType;
 
   let { from } = location.state || { from: { pathname: "/" } };
-  let login = () => {
+  let login = (e: SyntheticEvent) => {
+    e.preventDefault();
     auth.signin(() => {
       history.replace(from);
     });
@@ -34,8 +36,7 @@ export default function Login() {
           type="text"
           name="name"
         />
-        <input type="submit" value="Envoyer" />
-        <button onClick={login}>Log in</button>
+        <input type="submit" value="Envoyer" onClick={login} />
       </form>
     </div>
   );
