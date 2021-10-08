@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { REGISTER } from "../api/mutation";
+
 export const useRegister = () => {
   const [register] = useMutation(REGISTER);
   const [form, setForm] = useState({

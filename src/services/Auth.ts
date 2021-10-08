@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { UserLoginInput } from "./../api/types";
+import { ISLOGGED } from "./../api/mutation";
+import { useMutation } from "@apollo/client";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -13,7 +16,34 @@ const fakeAuth = {
 };
 
 export function useProvideAuth() {
+  const [isLogged] = useMutation(ISLOGGED);
   const [user, setUser] = useState<String | null>(null);
+  const [form, setForm] = useState<UserLoginInput>({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    async function fetch() {
+      await isLogged()
+        .then((result) => setUser(result.data.isLogged.name))
+        .catch((err) => {
+          console.error("error => ", err);
+        });
+      //console.log("islogged", response.data.isLogged);
+      //dispatch(getUser(response));
+    }
+    fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
 
   const signin = (cb: () => void) => {
     return fakeAuth.signin(() => {
@@ -30,8 +60,10 @@ export function useProvideAuth() {
   };
 
   return {
+    form,
     user,
     signin,
     signout,
+    handleChange,
   };
 }

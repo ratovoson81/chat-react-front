@@ -8,3 +8,21 @@ export const REGISTER = gql`
     }
   }
 `;
+
+export const LOGIN = gql`
+  mutation LoginUser($data: UserLoginInput!) {
+    loginUser(data: $data) {
+      token
+    }
+  }
+`;
+
+export const ISLOGGED = gql`
+  mutation IsLogged {
+    isLogged {
+      id
+      email
+      name
+    }
+  }
+`;
