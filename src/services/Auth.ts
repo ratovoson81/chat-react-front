@@ -55,6 +55,7 @@ export function useProvideAuth() {
   const signout = (cb: () => void) => {
     return fakeAuth.signout(() => {
       setUser(null);
+      localStorage.removeItem("token");
       cb();
     });
   };
