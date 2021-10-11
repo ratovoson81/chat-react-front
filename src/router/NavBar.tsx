@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const item = classNames(
   "w-20",
@@ -14,17 +14,25 @@ const active = classNames(item, "bg-gray-100", "rounded-lg");
 export default function NavBar() {
   return (
     <ul className="flex justify-end">
-      <li className={active}>
-        <Link to="/">Login</Link>
+      <li className={item}>
+        <NavLink exact activeClassName={active} to="/">
+          Login
+        </NavLink>
       </li>
       <li className={item}>
-        <Link to="/register">Register</Link>
+        <NavLink activeClassName={active} to="/register">
+          Register
+        </NavLink>
       </li>
       <li className={item}>
-        <Link to="/accueil">Acceuil</Link>
+        <NavLink activeClassName={active} to="/accueil">
+          Acceuil
+        </NavLink>
       </li>
       <li className={item}>
-        <Link to="/home">Home</Link>
+        <NavLink activeClassName={active} to="/home">
+          Home
+        </NavLink>
       </li>
     </ul>
   );
