@@ -4,6 +4,7 @@ import App from "./pages/App";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./api";
 import "./css/tailwind.css";
+import "antd/dist/antd.css";
 
 ReactDOM.render(
   <React.StrictMode>

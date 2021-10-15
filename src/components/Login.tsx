@@ -6,6 +6,7 @@ import { SyntheticEvent } from "react";
 import { useProvideAuth } from "../services/Auth";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../api/mutation";
+import { Input } from "antd";
 
 interface LocationState {
   from: Location;
@@ -39,7 +40,7 @@ export default function Login() {
   return (
     <div className="flex justify-center">
       <form onSubmit={submit} className="flex flex-col w-72">
-        <input
+        <Input
           className="text-center"
           placeholder="Email"
           type="text"
@@ -47,7 +48,7 @@ export default function Login() {
           onChange={handleChange}
           value={form.email}
         />
-        <input
+        <Input.Password
           className="text-center"
           placeholder="Password"
           type="text"
