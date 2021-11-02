@@ -1,6 +1,5 @@
+import { Button, Image } from "antd";
 import React from "react";
-import { AuthButton } from "../components/AuthButton";
-import NavBar from "../router/NavBar";
 
 type props = {
   children: React.ReactNode;
@@ -9,10 +8,30 @@ type props = {
 const PrivatePage: React.FC<props> = ({ children }) => {
   return (
     <>
-      <AuthButton />
+      {/*<AuthButton />
       <NavBar />
-      <br />
-      <h1>header Private</h1>
+      <br />*/}
+      <div className="flex mt-4">
+        <div className="flex-1 flex items-center">
+          <h1 className="ml-8 text-3xl w-1/3 ">Chat</h1>
+          <p>Newest</p>
+        </div>
+        <div className="flex-1 flex items-center">
+          <div className="w-2/3 pl-16">
+            <Button type="primary" danger>
+              NEW MESSAGE
+            </Button>
+          </div>
+          <div className="flex items-center">
+            <Image
+              className="rounded-full"
+              width={40}
+              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            />
+            <div className="pl-4 text-xl">John Doe</div>
+          </div>
+        </div>
+      </div>
       {children}
       <h1>footer Private</h1>
     </>

@@ -5,11 +5,15 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "./api";
 import "./css/tailwind.css";
 import "antd/dist/antd.css";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
