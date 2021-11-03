@@ -2,6 +2,8 @@ import { UserLoginInput } from "./../api/types";
 import { ISLOGGED } from "./../api/mutation";
 import { useMutation } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useAppDispatch } from "../Hooks";
+import { setMe } from "../store/User";
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -16,6 +18,8 @@ const fakeAuth = {
 };
 
 export function useProvideAuth() {
+  const dispatch = useAppDispatch();
+
   const [isLogged] = useMutation(ISLOGGED);
   const [user, setUser] = useState<String | null>(null);
   const [form, setForm] = useState<UserLoginInput>({
@@ -26,7 +30,10 @@ export function useProvideAuth() {
   useEffect(() => {
     async function fetch() {
       await isLogged()
-        .then((result) => setUser(result.data.isLogged.name))
+        .then((result) => {
+          setUser(result.data.isLogged.name);
+          dispatch(setMe(result.data.isLogged));
+        })
         .catch((err) => {
           console.error("error => ", err);
         });

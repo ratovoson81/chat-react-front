@@ -1,15 +1,19 @@
 import { Button, Image } from "antd";
 import React from "react";
+import { AuthButton } from "../components/AuthButton";
+import { useAppSelector } from "../Hooks";
 
 type props = {
   children: React.ReactNode;
 };
 
 const PrivatePage: React.FC<props> = ({ children }) => {
+  const me = useAppSelector((state) => state.user.me);
+
   return (
     <>
-      {/*<AuthButton />
-      <NavBar />
+      <AuthButton />
+      {/*<NavBar />
       <br />*/}
       <div className="flex mt-4">
         <div className="flex-1 flex items-center">
@@ -28,7 +32,9 @@ const PrivatePage: React.FC<props> = ({ children }) => {
               width={40}
               src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
             />
-            <div className="pl-4 text-xl">John Doe</div>
+            <div className="pl-4 text-xl">
+              {me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}
+            </div>
           </div>
         </div>
       </div>

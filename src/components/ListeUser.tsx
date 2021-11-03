@@ -1,11 +1,18 @@
 import { SpinnerCircular } from "spinners-react";
 import { User } from "../api/types";
-import { useAppSelector } from "../Hooks";
+import { useAppDispatch, useAppSelector } from "../Hooks";
 import { useListUser } from "../services/ListUser";
+import { setSelectedUser } from "../store/User";
 
 export default function ListUser() {
   useListUser();
   const users = useAppSelector((state) => state.user.users);
+  const dispatch = useAppDispatch();
+
+  const selectUser = (user: User) => {
+    dispatch(setSelectedUser(user));
+  };
+
   return (
     <>
       {users.length === 0 && (
@@ -14,7 +21,9 @@ export default function ListUser() {
         </div>
       )}
       {users.map((item: User, i: number) => (
-        <div key={i}>{item.email}</div>
+        <div key={i} onClick={() => selectUser(item)}>
+          {item.email}
+        </div>
       ))}
     </>
   );

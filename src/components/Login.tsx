@@ -7,12 +7,15 @@ import { useProvideAuth } from "../services/Auth";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../api/mutation";
 import { notification } from "antd";
+import { useAppDispatch } from "../Hooks";
+import { setMe } from "../store/User";
 
 interface LocationState {
   from: Location;
 }
 
 export default function Login() {
+  const dispatch = useAppDispatch();
   const { form, handleChange } = useProvideAuth();
   const [login] = useMutation(LOGIN);
 
@@ -27,12 +30,13 @@ export default function Login() {
     await login({ variables: { data: form } })
       .then((result) => {
         auth.signin(async () => {
-          console.log("login ok " + result.data.loginUser.token);
+          dispatch(setMe(result.data.loginUser.theUser));
           localStorage.setItem("token", result.data.loginUser.token);
           history.replace(from);
         });
       })
       .catch((err) => {
+        console.error(err);
         const placement = "bottomRight";
         notification.error({
           message: `Notification`,

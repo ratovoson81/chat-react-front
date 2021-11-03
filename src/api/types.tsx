@@ -20,6 +20,8 @@ export type Scalars = {
 export type AuthPayLoad = {
   __typename?: 'AuthPayLoad';
   token: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export enum CacheControlScope {
@@ -28,6 +30,12 @@ export enum CacheControlScope {
 }
 
 
+export type LoginAuthReturn = {
+  __typename?: 'LoginAuthReturn';
+  theUser: User;
+  token: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createDraft?: Maybe<Post>;
@@ -35,8 +43,9 @@ export type Mutation = {
   incrementPostViewCount?: Maybe<Post>;
   signupUser: AuthPayLoad;
   togglePublishPost?: Maybe<Post>;
-  loginUser: AuthPayLoad;
+  loginUser: LoginAuthReturn;
   logout: Scalars['Boolean'];
+  isLogged?: Maybe<User>;
 };
 
 
@@ -127,7 +136,7 @@ export type User = {
   __typename?: 'User';
   email: Scalars['String'];
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   posts: Array<Post>;
 };
 

@@ -3,10 +3,14 @@ import { User } from "../api/types";
 
 export interface UserState {
   users: User[];
+  selectedUser: User;
+  me: User;
 }
 
 const initialState: UserState = {
-  users: [] as any,
+  users: [] as User[],
+  selectedUser: {} as User,
+  me: {} as User,
 };
 
 export const userSlice = createSlice({
@@ -16,16 +20,16 @@ export const userSlice = createSlice({
     setAllUsers: (state, action: PayloadAction<any>) => {
       state.users = action.payload;
     },
-    decrement: (state) => {
-      //state.users -= 1;
+    setSelectedUser: (state, action: PayloadAction<any>) => {
+      state.selectedUser = action.payload;
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      //state.users += action.payload;
+    setMe: (state, action: PayloadAction<any>) => {
+      state.me = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setAllUsers, decrement, incrementByAmount } = userSlice.actions;
+export const { setAllUsers, setSelectedUser, setMe } = userSlice.actions;
 
 export default userSlice.reducer;

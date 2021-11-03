@@ -1,3 +1,4 @@
+import Chat from "./Chat";
 import ListUser from "./ListeUser";
 
 export default function Acceuil() {
@@ -7,7 +8,7 @@ export default function Acceuil() {
       <div>
         <ListUser />
       </div>
-      <div className="col-span-2 border">Discussion</div>
+      <Chat />
     </div>
   );
 }

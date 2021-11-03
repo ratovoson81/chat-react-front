@@ -13,6 +13,11 @@ export const LOGIN = gql`
   mutation LoginUser($data: UserLoginInput!) {
     loginUser(data: $data) {
       token
+      theUser {
+        email
+        name
+        id
+      }
     }
   }
 `;
