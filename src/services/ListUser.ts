@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import UserQuery from "../api/query";
+import Query from "../api/query";
 import { setAllUsers } from "../store/User";
 import { useAppDispatch } from "./../Hooks";
 
 export const useListUser = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    UserQuery.getAllUsers()
+    Query.getAllUsers()
       .then((result) => {
         dispatch(setAllUsers(result.data.allUsers));
       })

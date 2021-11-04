@@ -11,13 +11,39 @@ const GET_All_USERS = gql`
   }
 `;
 
-const UserQuery = {
+export const GET_CHAT = gql`
+  query GetChat($data: ArgsMessageChat!) {
+    getChat(data: $data) {
+      id
+      content
+      date
+      from {
+        id
+        name
+        email
+      }
+      to {
+        id
+        name
+        email
+      }
+    }
+  }
+`;
+
+const Query = {
   getAllUsers() {
     return client.query({
       fetchPolicy: "network-only",
       query: GET_All_USERS,
     });
   },
+  getChat() {
+    return client.query({
+      fetchPolicy: "network-only",
+      query: GET_CHAT,
+    });
+  },
 };
 
-export default UserQuery;
+export default Query;

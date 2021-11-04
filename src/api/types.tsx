@@ -50,6 +50,16 @@ export type Message = {
   date: Scalars['DateTime'];
 };
 
+export type MessageChat = {
+  __typename?: 'MessageChat';
+  id: Scalars['Int'];
+  content: Scalars['String'];
+  from: User;
+  to: User;
+  date: Scalars['DateTime'];
+  mine: Scalars['Boolean'];
+};
+
 export type MessageInput = {
   content: Scalars['String'];
   idFrom: Scalars['Int'];
@@ -135,6 +145,7 @@ export type Query = {
   postById?: Maybe<Post>;
   message: Array<Message>;
   messageByUser: Array<Message>;
+  getChat: Array<MessageChat>;
 };
 
 
@@ -157,6 +168,11 @@ export type QueryPostByIdArgs = {
 
 
 export type QueryMessageByUserArgs = {
+  data: ArgsMessageChat;
+};
+
+
+export type QueryGetChatArgs = {
   data: ArgsMessageChat;
 };
 
