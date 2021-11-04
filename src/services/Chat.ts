@@ -1,4 +1,4 @@
-import { ArgsMessageChat, MessageInput } from "./../api/types";
+import { ArgsMessageChat, MessageChat, MessageInput } from "./../api/types";
 import { SEND_MESSAGE } from "./../api/mutation";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
@@ -8,12 +8,28 @@ import { setChat } from "../store/Message";
 export const useChat = () => {
   const selectedUser = useAppSelector((state) => state.user.selectedUser);
   const me = useAppSelector((state) => state.user.me);
+  const chat = useAppSelector((state) => state.message.chatOpened);
+
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const dispatch = useAppDispatch();
 
   const [queryChat /*, { called, loading, data }*/] = useLazyQuery(GET_CHAT, {
-    onCompleted: (data) => {
-      dispatch(setChat(data.getChat));
+    onCompleted: ({ getChat }) => {
+      getChat.forEach(function (element: MessageChat) {
+        if (element.from.id === me.id) {
+          element.mine = true;
+        } else {
+          element.mine = false;
+        }
+      });
+      dispatch(
+        setChat(
+          getChat.sort(
+            (a: MessageChat, b: MessageChat) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          )
+        )
+      );
     },
   });
 
@@ -37,5 +53,5 @@ export const useChat = () => {
       });
   };
 
-  return { send, getChat };
+  return { send, getChat, selectedUser, chat };
 };

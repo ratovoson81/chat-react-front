@@ -25,11 +25,13 @@ export default function ListUser() {
           <SpinnerCircular size="40" color="black" />
         </div>
       )}
-      {users.map((item: User, i: number) => (
-        <div key={i} onClick={() => selectUser(item)}>
-          {item.email}
-        </div>
-      ))}
+      {users
+        .filter((item: User) => item.id !== me.id)
+        .map((item: User, i: number) => (
+          <div key={i} onClick={() => selectUser(item)}>
+            {item.email}
+          </div>
+        ))}
     </>
   );
 }

@@ -1,13 +1,13 @@
+import { MessageChat } from "./../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { Message } from "../api/types";
 
 export interface MessageState {
-  chatOpened: Message[];
+  chatOpened: MessageChat[];
 }
 
 const initialState: MessageState = {
-  chatOpened: [] as Message[],
+  chatOpened: [] as MessageChat[],
 };
 
 export const messageSlice = createSlice({
