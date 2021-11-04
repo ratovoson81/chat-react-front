@@ -17,6 +17,11 @@ export type Scalars = {
 };
 
 
+export type ArgsMessageChat = {
+  idFrom: Scalars['Int'];
+  idTo: Scalars['Int'];
+};
+
 export type AuthPayLoad = {
   __typename?: 'AuthPayLoad';
   token: Scalars['String'];
@@ -36,6 +41,22 @@ export type LoginAuthReturn = {
   token: Scalars['String'];
 };
 
+export type Message = {
+  __typename?: 'Message';
+  id: Scalars['Int'];
+  content: Scalars['String'];
+  from: User;
+  to: User;
+  date: Scalars['DateTime'];
+};
+
+export type MessageInput = {
+  content: Scalars['String'];
+  idFrom: Scalars['Int'];
+  idTo: Scalars['Int'];
+  date: Scalars['DateTime'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createDraft?: Maybe<Post>;
@@ -46,6 +67,7 @@ export type Mutation = {
   loginUser: LoginAuthReturn;
   logout: Scalars['Boolean'];
   isLogged?: Maybe<User>;
+  sendMessage: Message;
 };
 
 
@@ -79,6 +101,11 @@ export type MutationLoginUserArgs = {
   data?: Maybe<UserLoginInput>;
 };
 
+
+export type MutationSendMessageArgs = {
+  data: MessageInput;
+};
+
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
@@ -106,6 +133,8 @@ export type Query = {
   draftsByUser?: Maybe<Array<Maybe<Post>>>;
   feed: Array<Post>;
   postById?: Maybe<Post>;
+  message: Array<Message>;
+  messageByUser: Array<Message>;
 };
 
 
@@ -126,6 +155,11 @@ export type QueryPostByIdArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
+
+export type QueryMessageByUserArgs = {
+  data: ArgsMessageChat;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
@@ -142,7 +176,7 @@ export type User = {
 
 export type UserCreateInput = {
   email: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   password: Scalars['String'];
   posts?: Maybe<Array<PostCreateInput>>;
 };

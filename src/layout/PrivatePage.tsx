@@ -33,7 +33,7 @@ const PrivatePage: React.FC<props> = ({ children }) => {
               src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
             />
             <div className="pl-4 text-xl">
-              {me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}
+              {me.name && me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}
             </div>
           </div>
         </div>
