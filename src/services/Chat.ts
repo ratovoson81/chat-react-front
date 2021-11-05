@@ -4,6 +4,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { GET_CHAT } from "../api/query";
 import { setChat } from "../store/Message";
+import { ChangeEvent, useState } from "react";
 
 export const useChat = () => {
   const selectedUser = useAppSelector((state) => state.user.selectedUser);
@@ -12,6 +13,18 @@ export const useChat = () => {
 
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const dispatch = useAppDispatch();
+
+  const [form, setForm] = useState({
+    message: "",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
 
   const [queryChat /*, { called, loading, data }*/] = useLazyQuery(GET_CHAT, {
     onCompleted: ({ getChat }) => {
@@ -37,9 +50,9 @@ export const useChat = () => {
     queryChat({ variables: { data: params } });
   };
 
-  const send = (value: string) => {
+  const send = () => {
     const data: MessageInput = {
-      content: value,
+      content: form.message,
       idFrom: me.id,
       idTo: selectedUser.id,
       date: new Date(),
@@ -53,5 +66,5 @@ export const useChat = () => {
       });
   };
 
-  return { send, getChat, selectedUser, chat };
+  return { send, getChat, selectedUser, chat, handleChange, form };
 };

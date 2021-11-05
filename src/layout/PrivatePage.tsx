@@ -11,11 +11,10 @@ const PrivatePage: React.FC<props> = ({ children }) => {
   const me = useAppSelector((state) => state.user.me);
 
   return (
-    <>
-      <AuthButton />
+    <div className="h-screen">
       {/*<NavBar />
       <br />*/}
-      <div className="flex mt-4">
+      <div className="absolute flex pt-4 border w-full">
         <div className="flex-1 flex items-center">
           <h1 className="ml-8 text-3xl w-1/3 ">Chat</h1>
           <p>Newest</p>
@@ -36,11 +35,12 @@ const PrivatePage: React.FC<props> = ({ children }) => {
               {me.name && me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}
             </div>
           </div>
+          <AuthButton />
         </div>
       </div>
       {children}
-      <h1>footer Private</h1>
-    </>
+      {/*<h1>footer Private</h1>*/}
+    </div>
   );
 };
 
