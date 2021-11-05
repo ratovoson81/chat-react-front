@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRegister } from "../services/Register";
+import { useRegister } from "../../services/Register";
 
 export default function Register() {
   const { form, handleChange, submit } = useRegister();

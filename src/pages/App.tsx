@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import Acceuil from "../components/Accueil";
-import Login from "../components/Login";
-import Register from "../components/Register";
+import Acceuil from "../components/chat/Accueil";
+import Login from "../components/connexion/Login";
+import Register from "../components/connexion/Register";
 import { AppRoute, PrivateRoute } from "../router/PrivateRoute";
 import ProvideAuth from "../router/ProvideAuth";
 import LoginPage from "../layout/LoginPage";

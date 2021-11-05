@@ -1,7 +1,7 @@
 import { Input } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
-import { useChat } from "../services/Chat";
-import { MessageChat } from "../api/types";
+import { useChat } from "../../services/Chat";
+import { MessageChat } from "../../api/types";
 
 export default function Chat() {
   const { Search } = Input;

@@ -1,14 +1,14 @@
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Location } from "history";
-import { authType } from "../CostumType";
-import { useAuth } from "../context/Auth";
+import { authType } from "../../CostumType";
+import { useAuth } from "../../context/Auth";
 import { SyntheticEvent } from "react";
-import { useProvideAuth } from "../services/Auth";
+import { useProvideAuth } from "../../services/Auth";
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "../api/mutation";
+import { LOGIN } from "../../api/mutation";
 import { notification } from "antd";
-import { useAppDispatch } from "../Hooks";
-import { setMe } from "../store/User";
+import { useAppDispatch } from "../../Hooks";
+import { setMe } from "../../store/User";
 
 interface LocationState {
   from: Location;

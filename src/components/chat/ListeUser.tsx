@@ -1,9 +1,9 @@
 import { SpinnerCircular } from "spinners-react";
-import { User } from "../api/types";
-import { useAppDispatch, useAppSelector } from "../Hooks";
-import { useChat } from "../services/Chat";
-import { useListUser } from "../services/ListUser";
-import { setSelectedUser } from "../store/User";
+import { User } from "../../api/types";
+import { useAppDispatch, useAppSelector } from "../../Hooks";
+import { useChat } from "../../services/Chat";
+import { useListUser } from "../../services/ListUser";
+import { setSelectedUser } from "../../store/User";
 
 export default function ListUser() {
   useListUser();
