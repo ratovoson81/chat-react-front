@@ -2,6 +2,8 @@ import { Input } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
 import { useChat } from "../../services/Chat";
 import { MessageChat } from "../../api/types";
+import "../../css/chat.css";
+import { useEffect } from "react";
 
 export default function Chat() {
   const { Search } = Input;
@@ -16,9 +18,17 @@ export default function Chat() {
     />
   );
 
+  useEffect(() => {
+    const div: any = document.getElementById("messages");
+    div.scrollTop = div.scrollHeight - div.clientHeight;
+  });
+
   return (
     <>
-      <div className="border flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div
+        id="messages"
+        className="border flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+      >
         <div className="border ">{selectedUser.name}</div>
         {chat.map((message: MessageChat, i: number) => (
           <div key={i} className="chat-message">
