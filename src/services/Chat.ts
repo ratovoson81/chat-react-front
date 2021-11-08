@@ -35,14 +35,7 @@ export const useChat = () => {
           element.mine = false;
         }
       });
-      dispatch(
-        setChat(
-          getChat.sort(
-            (a: MessageChat, b: MessageChat) =>
-              new Date(a.date).getTime() - new Date(b.date).getTime()
-          )
-        )
-      );
+      dispatch(setChat(getChat));
     },
   });
 

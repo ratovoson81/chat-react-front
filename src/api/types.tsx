@@ -35,6 +35,17 @@ export enum CacheControlScope {
 }
 
 
+export type File = {
+  __typename?: 'File';
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
+  encoding: Scalars['String'];
+};
+
+export type IdUser = {
+  id?: Maybe<Scalars['Int']>;
+};
+
 export type LoginAuthReturn = {
   __typename?: 'LoginAuthReturn';
   theUser: User;
@@ -146,6 +157,7 @@ export type Query = {
   message: Array<Message>;
   messageByUser: Array<Message>;
   getChat: Array<Message>;
+  allUsersMessageByMe: Array<User>;
 };
 
 
@@ -176,6 +188,11 @@ export type QueryGetChatArgs = {
   data: ArgsMessageChat;
 };
 
+
+export type QueryAllUsersMessageByMeArgs = {
+  data: ArgsMessageChat;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
@@ -188,7 +205,8 @@ export type User = {
   id: Scalars['Int'];
   name: Scalars['String'];
   posts: Array<Post>;
-  imageUrl: Scalars['String'];
+  imageUrl?: Maybe<Scalars['String']>;
+  lastMessage?: Maybe<Array<Maybe<Message>>>;
 };
 
 export type UserCreateInput = {

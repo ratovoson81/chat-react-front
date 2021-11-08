@@ -1,17 +1,26 @@
+import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
-import Query from "../api/query";
+import { ALL_MESSAGE_BY_ME } from "../api/query";
 import { setAllUsers } from "../store/User";
-import { useAppDispatch } from "./../Hooks";
+import { useAppDispatch, useAppSelector } from "./../Hooks";
 
 export const useListUser = () => {
   const dispatch = useAppDispatch();
+  const me = useAppSelector((state) => state.user.me);
+
+  const [allUsersMessageByMe /*, { called, loading, data }*/] = useLazyQuery(
+    ALL_MESSAGE_BY_ME,
+    {
+      onCompleted: ({ allUsersMessageByMe }) => {
+        dispatch(setAllUsers(allUsersMessageByMe));
+      },
+    }
+  );
   useEffect(() => {
-    Query.getAllUsers()
-      .then((result) => {
-        dispatch(setAllUsers(result.data.allUsers));
-      })
-      .catch((err) => {
-        console.error("ERROR get All Users", err);
-      });
-  });
+    if (me) {
+      allUsersMessageByMe({ variables: { data: { id: me.id } } });
+    }
+    console.log(me);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [me]);
 };

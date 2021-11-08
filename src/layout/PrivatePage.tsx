@@ -1,5 +1,6 @@
-import { Button, Image } from "antd";
+import { Button } from "antd";
 import React from "react";
+import { IMAGE_URL } from "../api";
 import { AuthButton } from "../components/AuthButton";
 import { useAppSelector } from "../Hooks";
 
@@ -26,10 +27,11 @@ const PrivatePage: React.FC<props> = ({ children }) => {
             </Button>
           </div>
           <div className="flex items-center">
-            <Image
+            <img
               className="rounded-full"
               width={40}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+              src={IMAGE_URL + me.imageUrl}
             />
             <div className="pl-4 text-xl">
               {me.name && me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}

@@ -17,6 +17,7 @@ export const LOGIN = gql`
         email
         name
         id
+        imageUrl
       }
     }
   }
@@ -28,6 +29,7 @@ export const ISLOGGED = gql`
       id
       email
       name
+      imageUrl
     }
   }
 `;

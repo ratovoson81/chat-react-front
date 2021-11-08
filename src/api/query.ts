@@ -7,6 +7,7 @@ const GET_All_USERS = gql`
       id
       email
       name
+      imageUrl
     }
   }
 `;
@@ -26,6 +27,28 @@ export const GET_CHAT = gql`
         id
         name
         email
+      }
+    }
+  }
+`;
+
+export const ALL_MESSAGE_BY_ME = gql`
+  query AllUsersMessageByMe($data: IdUser!) {
+    allUsersMessageByMe(data: $data) {
+      id
+      email
+      name
+      imageUrl
+      lastMessage {
+        id
+        content
+        from {
+          id
+        }
+        to {
+          id
+        }
+        date
       }
     }
   }

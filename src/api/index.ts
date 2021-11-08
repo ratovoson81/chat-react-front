@@ -60,3 +60,5 @@ client
   })
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
+
+export const IMAGE_URL = "http://localhost:4000/images/";
