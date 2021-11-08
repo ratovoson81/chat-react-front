@@ -145,7 +145,7 @@ export type Query = {
   postById?: Maybe<Post>;
   message: Array<Message>;
   messageByUser: Array<Message>;
-  getChat: Array<MessageChat>;
+  getChat: Array<Message>;
 };
 
 
@@ -188,6 +188,7 @@ export type User = {
   id: Scalars['Int'];
   name: Scalars['String'];
   posts: Array<Post>;
+  imageUrl: Scalars['String'];
 };
 
 export type UserCreateInput = {
@@ -195,6 +196,7 @@ export type UserCreateInput = {
   name: Scalars['String'];
   password: Scalars['String'];
   posts?: Maybe<Array<PostCreateInput>>;
+  image: Scalars['Upload'];
 };
 
 export type UserLoginInput = {

@@ -1,22 +1,10 @@
-import { Input } from "antd";
-import { AudioOutlined } from "@ant-design/icons";
 import { useChat } from "../../services/Chat";
 import { MessageChat } from "../../api/types";
 import "../../css/chat.css";
 import { useEffect } from "react";
 
 export default function Chat() {
-  const { Search } = Input;
   const { send, selectedUser, chat, form, handleChange } = useChat();
-
-  const suffix = (
-    <AudioOutlined
-      style={{
-        fontSize: 16,
-        color: "#1890ff",
-      }}
-    />
-  );
 
   useEffect(() => {
     const div: any = document.getElementById("messages");
@@ -25,13 +13,14 @@ export default function Chat() {
 
   return (
     <>
+      <div className="border">{selectedUser.name}</div>
+
       <div
         id="messages"
-        className="border flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+        className="border h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
       >
-        <div className="border ">{selectedUser.name}</div>
         {chat.map((message: MessageChat, i: number) => (
-          <div key={i} className="chat-message">
+          <div key={i} className="chat-message mt-auto">
             <div className={`flex items-end ${message.mine && "justify-end"}`}>
               <div
                 className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${

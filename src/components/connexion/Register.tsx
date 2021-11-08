@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useRegister } from "../../services/Register";
 
 export default function Register() {
-  const { form, handleChange, submit } = useRegister();
+  const { form, handleChange, submit, handleChangeFile } = useRegister();
 
   return (
     <form
@@ -47,6 +47,18 @@ export default function Register() {
           name="password"
           onChange={handleChange}
           value={form.password}
+          required
+        />
+      </div>
+
+      <div className="mt-2">
+        <label className="block  text-sm text-white">Photo</label>
+        <input
+          className="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white"
+          placeholder="password"
+          type="file"
+          name="password"
+          onChange={handleChangeFile}
           required
         />
       </div>

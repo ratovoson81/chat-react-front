@@ -9,6 +9,7 @@ export const useRegister = () => {
     email: "",
     name: "",
     password: "",
+    image: null,
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +17,13 @@ export const useRegister = () => {
     setForm({
       ...form,
       [name]: value,
+    });
+  };
+
+  const handleChangeFile = (event: any) => {
+    setForm({
+      ...form,
+      image: event.target.files[0],
     });
   };
 
@@ -34,18 +42,10 @@ export const useRegister = () => {
         });
       })
       .catch((err) => {
-        console.error(JSON.stringify(err));
         const placement = "bottomRight";
-        let message = "Une erreur est survenue";
-        if (
-          err.graphQLErrors[0].message ===
-          "\nInvalid `prisma.user.create()` invocation:\n\n\n  Unique constraint failed on the constraint: `email_unique`"
-        ) {
-          message = "L'adresse email appartient déjà à un compte existant";
-        }
         notification.error({
           message: `Notification`,
-          description: message,
+          description: err.graphQLErrors[0].message,
           placement,
         });
       });
@@ -55,5 +55,6 @@ export const useRegister = () => {
     form,
     handleChange,
     submit,
+    handleChangeFile,
   };
 };
