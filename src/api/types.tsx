@@ -43,7 +43,7 @@ export type File = {
 };
 
 export type IdUser = {
-  id?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
 };
 
 export type LoginAuthReturn = {
@@ -190,7 +190,7 @@ export type QueryGetChatArgs = {
 
 
 export type QueryAllUsersMessageByMeArgs = {
-  data: ArgsMessageChat;
+  data: IdUser;
 };
 
 export enum SortOrder {
@@ -206,7 +206,7 @@ export type User = {
   name: Scalars['String'];
   posts: Array<Post>;
   imageUrl?: Maybe<Scalars['String']>;
-  lastMessage?: Maybe<Array<Maybe<Message>>>;
+  lastMessage: Array<Message>;
 };
 
 export type UserCreateInput = {

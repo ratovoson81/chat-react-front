@@ -15,7 +15,7 @@ const PrivatePage: React.FC<props> = ({ children }) => {
     <div className="h-screen">
       {/*<NavBar />
       <br />*/}
-      <div className="fixed flex pt-4 border w-full">
+      <div className="fixed flex pt-4 w-full">
         <div className="flex-1 flex items-center">
           <h1 className="ml-8 text-3xl w-1/3 ">Chat</h1>
           <p>Newest</p>

@@ -2,6 +2,7 @@ import { useChat } from "../../services/Chat";
 import { MessageChat } from "../../api/types";
 import "../../css/chat.css";
 import { useEffect } from "react";
+import { IMAGE_URL } from "../../api";
 
 export default function Chat() {
   const { send, selectedUser, chat, form, handleChange } = useChat();
@@ -13,11 +14,11 @@ export default function Chat() {
 
   return (
     <>
-      <div className="border">{selectedUser.name}</div>
+      <div className="">{selectedUser.name}</div>
 
       <div
         id="messages"
-        className="border h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+        className="h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
       >
         {chat.map((message: MessageChat, i: number) => (
           <div key={i} className="chat-message mt-auto">
@@ -40,7 +41,7 @@ export default function Chat() {
                 </div>
               </div>
               <img
-                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
+                src={IMAGE_URL + message.from.imageUrl}
                 alt="My profile"
                 className="w-6 h-6 rounded-full order-1"
               />

@@ -7,8 +7,7 @@ export function AuthButton() {
   let auth = useAuth() as authType;
 
   return auth.user ? (
-    <p>
-      Welcome! <span>🔥</span>
+    <div className="m-auto">
       <button
         onClick={() => {
           auth.signout(() => history.push("/"));
@@ -16,7 +15,7 @@ export function AuthButton() {
       >
         Sign out
       </button>
-    </p>
+    </div>
   ) : (
     <p>You are not logged in.</p>
   );

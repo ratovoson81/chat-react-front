@@ -22,11 +22,13 @@ export const GET_CHAT = gql`
         id
         name
         email
+        imageUrl
       }
       to {
         id
         name
         email
+        imageUrl
       }
     }
   }

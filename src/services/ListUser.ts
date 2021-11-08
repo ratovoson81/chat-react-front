@@ -1,3 +1,4 @@
+import { User } from "./../api/types";
 import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { ALL_MESSAGE_BY_ME } from "../api/query";
@@ -12,7 +13,15 @@ export const useListUser = () => {
     ALL_MESSAGE_BY_ME,
     {
       onCompleted: ({ allUsersMessageByMe }) => {
-        dispatch(setAllUsers(allUsersMessageByMe));
+        dispatch(
+          setAllUsers(
+            allUsersMessageByMe.sort(
+              (a: User, b: User) =>
+                new Date(b.lastMessage[0]?.date).getTime() -
+                new Date(a.lastMessage[0]?.date).getTime()
+            )
+          )
+        );
       },
     }
   );
@@ -20,7 +29,6 @@ export const useListUser = () => {
     if (me) {
       allUsersMessageByMe({ variables: { data: { id: me.id } } });
     }
-    console.log(me);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
 };

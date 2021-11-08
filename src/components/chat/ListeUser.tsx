@@ -1,3 +1,4 @@
+import moment from "moment";
 import { SpinnerCircular } from "spinners-react";
 import { IMAGE_URL } from "../../api";
 import { User } from "../../api/types";
@@ -45,10 +46,15 @@ export default function ListUser() {
             />
             <div className="flex flex-col col-span-3 pl-4 justify-center">
               <div className="font-medium">{item.name}</div>
-              <div className="text-gray-500">last message</div>
+              <div className="text-gray-500">{item.lastMessage[0].content}</div>
             </div>
             <div className="flex flex-col col-span-1 justify-center items-end pr-4">
-              <div className="">time</div>
+              <div className="text-xs">
+                {moment(
+                  new Date(item.lastMessage[0]?.date),
+                  "YYYYMMDD"
+                ).fromNow(true)}
+              </div>
             </div>
           </div>
         ))}
