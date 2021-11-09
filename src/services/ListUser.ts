@@ -1,7 +1,6 @@
-import { User } from "./../api/types";
 import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
-import { ALL_MESSAGE_BY_ME } from "../api/query";
+import { GET_All_GROUPE_BY_USER } from "../api/query";
 import { setAllUsers } from "../store/User";
 import { useAppDispatch, useAppSelector } from "./../Hooks";
 
@@ -10,18 +9,11 @@ export const useListUser = () => {
   const me = useAppSelector((state) => state.user.me);
 
   const [allUsersMessageByMe /*, { called, loading, data }*/] = useLazyQuery(
-    ALL_MESSAGE_BY_ME,
+    GET_All_GROUPE_BY_USER,
     {
-      onCompleted: ({ allUsersMessageByMe }) => {
-        dispatch(
-          setAllUsers(
-            allUsersMessageByMe.sort(
-              (a: User, b: User) =>
-                new Date(b.lastMessage[0]?.date).getTime() -
-                new Date(a.lastMessage[0]?.date).getTime()
-            )
-          )
-        );
+      onCompleted: ({ allGroupeByUser }) => {
+        console.log(allGroupeByUser);
+        dispatch(setAllUsers(allGroupeByUser));
       },
     }
   );

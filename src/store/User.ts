@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../api/types";
+import { Groupe, User } from "../api/types";
 
 export interface UserState {
-  users: User[];
+  groupes: Groupe[];
   selectedUser: User;
   me: User;
 }
 
 const initialState: UserState = {
-  users: [] as User[],
+  groupes: [] as Groupe[],
   selectedUser: {} as User,
   me: {} as User,
 };
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setAllUsers: (state, action: PayloadAction<any>) => {
-      state.users = action.payload;
+      state.groupes = action.payload;
     },
     setSelectedUser: (state, action: PayloadAction<any>) => {
       state.selectedUser = action.payload;

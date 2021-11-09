@@ -17,6 +17,15 @@ export type Scalars = {
 };
 
 
+export type ArgsGetGroupePerUser = {
+  id: Scalars['Int'];
+};
+
+export type ArgsGroupe = {
+  name?: Maybe<Scalars['String']>;
+  users: Array<Scalars['Int']>;
+};
+
 export type ArgsMessageChat = {
   idFrom: Scalars['Int'];
   idTo: Scalars['Int'];
@@ -42,6 +51,14 @@ export type File = {
   encoding: Scalars['String'];
 };
 
+export type Groupe = {
+  __typename?: 'Groupe';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  users: Array<ReturnGroupe>;
+  messages: Array<Message>;
+};
+
 export type IdUser = {
   id: Scalars['Int'];
 };
@@ -56,8 +73,7 @@ export type Message = {
   __typename?: 'Message';
   id: Scalars['Int'];
   content: Scalars['String'];
-  from: User;
-  to: User;
+  author: User;
   date: Scalars['DateTime'];
 };
 
@@ -89,6 +105,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   isLogged?: Maybe<User>;
   sendMessage: Message;
+  createGroupe: Groupe;
 };
 
 
@@ -127,6 +144,11 @@ export type MutationSendMessageArgs = {
   data: MessageInput;
 };
 
+
+export type MutationCreateGroupeArgs = {
+  data: ArgsGroupe;
+};
+
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
@@ -158,6 +180,8 @@ export type Query = {
   messageByUser: Array<Message>;
   getChat: Array<Message>;
   allUsersMessageByMe: Array<User>;
+  allGroupe: Array<Groupe>;
+  allGroupeByUser: Array<Groupe>;
 };
 
 
@@ -193,6 +217,18 @@ export type QueryAllUsersMessageByMeArgs = {
   data: IdUser;
 };
 
+
+export type QueryAllGroupeByUserArgs = {
+  data: ArgsGetGroupePerUser;
+};
+
+export type ReturnGroupe = {
+  __typename?: 'ReturnGroupe';
+  userId?: Maybe<Scalars['Int']>;
+  groupeId?: Maybe<Scalars['Int']>;
+  user?: Maybe<User>;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
@@ -201,12 +237,11 @@ export enum SortOrder {
 
 export type User = {
   __typename?: 'User';
-  email: Scalars['String'];
   id: Scalars['Int'];
+  email: Scalars['String'];
   name: Scalars['String'];
   posts: Array<Post>;
   imageUrl?: Maybe<Scalars['String']>;
-  lastMessage: Array<Message>;
 };
 
 export type UserCreateInput = {
