@@ -1,12 +1,14 @@
 import { useChat } from "../../services/Chat";
-import { useListUser } from "../../services/ListUser";
+import { useListUserAndGroupe } from "../../services/ListUser";
 import Chat from "./Chat";
-import ListUser from "./ListeUser";
+import ListConversation from "./ListConversation";
+import ListUser from "./ListUser";
 import Welcome from "./Welcome";
 
 export default function Acceuil() {
   const { selectedGroupe } = useChat();
-  const { form, handleChange } = useListUser();
+  const { form, handleChange } = useListUserAndGroupe();
+
   return (
     <div className="pt-20 flex flex-row h-full">
       <div className="w-1/4">
@@ -16,6 +18,7 @@ export default function Acceuil() {
             type="search"
             name="search"
             placeholder="Recherche"
+            autoComplete="off"
             onChange={handleChange}
             value={form.search}
           />
@@ -40,7 +43,11 @@ export default function Acceuil() {
           {form.search ? "Résultat de " + form.search : ""}
         </div>
         <div className="m-2">
-          <ListUser />
+          {form.search ? (
+            <ListUser search={form.search} />
+          ) : (
+            <ListConversation />
+          )}
         </div>
       </div>
       <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">

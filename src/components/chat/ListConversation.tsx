@@ -3,11 +3,9 @@ import { SpinnerCircular } from "spinners-react";
 import { IMAGE_URL } from "../../api";
 import { Groupe } from "../../api/types";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
-import { useListUser } from "../../services/ListUser";
 import { setSelectedGroupe } from "../../store/Groupe";
 
-export default function ListUser() {
-  useListUser();
+export default function ListConversation() {
   const groupes = useAppSelector((state) => state.groupe.groupes);
   const me = useAppSelector((state) => state.user.me);
   const selectedGroupe = useAppSelector((state) => state.groupe.selectedGroupe);

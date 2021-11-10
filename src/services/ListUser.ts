@@ -1,10 +1,11 @@
 import { useLazyQuery } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
-import { GET_All_GROUPE_BY_USER } from "../api/query";
-import { setAllUsers } from "../store/Groupe";
+import { ALL_USERS, GET_All_GROUPE_BY_USER } from "../api/query";
+import { setAllGroupe } from "../store/Groupe";
+import { setAllUsers } from "../store/User";
 import { useAppDispatch, useAppSelector } from "./../Hooks";
 
-export const useListUser = () => {
+export const useListUserAndGroupe = () => {
   const dispatch = useAppDispatch();
   const me = useAppSelector((state) => state.user.me);
 
@@ -24,12 +25,19 @@ export const useListUser = () => {
     GET_All_GROUPE_BY_USER,
     {
       onCompleted: ({ allGroupeByUser }) => {
-        console.log(allGroupeByUser);
-        dispatch(setAllUsers(allGroupeByUser));
+        dispatch(setAllGroupe(allGroupeByUser));
       },
     }
   );
+
+  const [allUsers /*, { called, loading, data }*/] = useLazyQuery(ALL_USERS, {
+    onCompleted: ({ allUsers }) => {
+      dispatch(setAllUsers(allUsers));
+    },
+  });
+
   useEffect(() => {
+    allUsers();
     if (me) {
       allUsersMessageByMe({ variables: { data: { id: me.id } } });
     }

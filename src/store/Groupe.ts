@@ -16,7 +16,7 @@ export const groupeSlice = createSlice({
   name: "groupe",
   initialState,
   reducers: {
-    setAllUsers: (state, action: PayloadAction<any>) => {
+    setAllGroupe: (state, action: PayloadAction<any>) => {
       state.groupes = action.payload;
     },
     setSelectedGroupe: (state, action: PayloadAction<any>) => {
@@ -25,6 +25,6 @@ export const groupeSlice = createSlice({
   },
 });
 
-export const { setAllUsers, setSelectedGroupe } = groupeSlice.actions;
+export const { setAllGroupe, setSelectedGroupe } = groupeSlice.actions;
 
 export default groupeSlice.reducer;
