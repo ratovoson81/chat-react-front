@@ -2,19 +2,14 @@ import moment from "moment";
 import { SpinnerCircular } from "spinners-react";
 import { IMAGE_URL } from "../../api";
 import { Groupe } from "../../api/types";
-import { useAppDispatch, useAppSelector } from "../../Hooks";
-import { setSelectedGroupe } from "../../store/Groupe";
+import { useAppSelector } from "../../Hooks";
+import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 
 export default function ListConversation() {
   const groupes = useAppSelector((state) => state.groupe.groupes);
   const me = useAppSelector((state) => state.user.me);
   const selectedGroupe = useAppSelector((state) => state.groupe.selectedGroupe);
-
-  const dispatch = useAppDispatch();
-
-  const selectConv = (groupe: Groupe) => {
-    dispatch(setSelectedGroupe(groupe));
-  };
+  const { selectConversation } = useListUserAndGroupe();
 
   return (
     <>
@@ -28,7 +23,7 @@ export default function ListConversation() {
         .map((item: Groupe, i: number) => (
           <div
             key={i}
-            onClick={() => selectConv(item)}
+            onClick={() => selectConversation(item)}
             className={`${
               item.id === selectedGroupe.id && "bg-gray-100"
             } grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer`}

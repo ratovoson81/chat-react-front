@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_All_GROUPE_BY_USER = gql`
-  query AllGroupeByUser($data: ArgsGetGroupePerUser!) {
-    allGroupeByUser(data: $data) {
+  query GetGroupeByMultipleUsers($data: ArgsGetGroupePerUser!) {
+    getGroupeByMultipleUsers(data: $data) {
       id
       name
       messages {
@@ -26,17 +26,6 @@ export const GET_All_GROUPE_BY_USER = gql`
           imageUrl
         }
       }
-    }
-  }
-`;
-
-export const ALL_MESSAGE_BY_ME = gql`
-  query AllUsersMessageByMe($data: IdUser!) {
-    allUsersMessageByMe(data: $data) {
-      id
-      email
-      name
-      imageUrl
     }
   }
 `;

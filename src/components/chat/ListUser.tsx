@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { IMAGE_URL } from "../../api";
 import { useAppSelector } from "../../Hooks";
+import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 
 type TypeListUser = {
   search: String;
@@ -8,6 +9,7 @@ type TypeListUser = {
 
 const ListUser: FC<TypeListUser> = ({ search }) => {
   const users = useAppSelector((state) => state.user.users);
+  const { selectUser } = useListUserAndGroupe();
 
   return (
     <>
@@ -18,7 +20,7 @@ const ListUser: FC<TypeListUser> = ({ search }) => {
         .map((user, i: number) => (
           <div
             key={i}
-            //onClick={() => selectConv(item)}
+            onClick={() => selectUser(user)}
             className="hover:bg-gray-100 grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer"
           >
             <img

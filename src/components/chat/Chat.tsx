@@ -22,40 +22,43 @@ export default function Chat() {
         id="messages"
         className="h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
       >
-        {selectedGroupe.messages.map((message: Message, i: number) => (
-          <div key={i} className="chat-message mt-auto">
-            <div
-              className={`flex items-end ${
-                message.author.id === me.id && "justify-end"
-              }`}
-            >
+        {selectedGroupe.messages
+          .slice(0)
+          .reverse()
+          .map((message: Message, i: number) => (
+            <div key={i} className="chat-message mt-auto">
               <div
-                className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${
-                  message.author.id === me.id
-                    ? "order-1 items-end"
-                    : "order-2 items-start"
+                className={`flex items-end ${
+                  message.author.id === me.id && "justify-end"
                 }`}
               >
-                <div>
-                  <span
-                    className={`px-4 py-2 rounded-lg inline-block ${
-                      message.author.id === me.id
-                        ? "rounded-br-none bg-blue-600 text-white "
-                        : "rounded-bl-none bg-gray-300 text-gray-600"
-                    }`}
-                  >
-                    {message.content}
-                  </span>
+                <div
+                  className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${
+                    message.author.id === me.id
+                      ? "order-1 items-end"
+                      : "order-2 items-start"
+                  }`}
+                >
+                  <div>
+                    <span
+                      className={`px-4 py-2 rounded-lg inline-block ${
+                        message.author.id === me.id
+                          ? "rounded-br-none bg-blue-600 text-white "
+                          : "rounded-bl-none bg-gray-300 text-gray-600"
+                      }`}
+                    >
+                      {message.content}
+                    </span>
+                  </div>
                 </div>
+                <img
+                  src={IMAGE_URL + message.author.imageUrl}
+                  alt="My profile"
+                  className="w-6 h-6 rounded-full order-1"
+                />
               </div>
-              <img
-                src={IMAGE_URL + message.author.imageUrl}
-                alt="My profile"
-                className="w-6 h-6 rounded-full order-1"
-              />
             </div>
-          </div>
-        ))}
+          ))}
 
         {/*<div className="">
           <Search

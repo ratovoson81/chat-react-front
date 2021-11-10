@@ -18,7 +18,7 @@ export type Scalars = {
 
 
 export type ArgsGetGroupePerUser = {
-  id: Scalars['Int'];
+  ids: Array<Scalars['Int']>;
 };
 
 export type ArgsGroupe = {
@@ -182,6 +182,7 @@ export type Query = {
   allUsersMessageByMe: Array<User>;
   allGroupe: Array<Groupe>;
   allGroupeByUser: Array<Groupe>;
+  getOneGroupeByIds: Groupe;
 };
 
 
@@ -220,6 +221,11 @@ export type QueryAllUsersMessageByMeArgs = {
 
 export type QueryAllGroupeByUserArgs = {
   data: ArgsGetGroupePerUser;
+};
+
+
+export type QueryGetOneGroupeByIdsArgs = {
+  data: Scalars['Int'];
 };
 
 export type ReturnGroupe = {
