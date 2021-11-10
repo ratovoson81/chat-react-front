@@ -90,7 +90,7 @@ export type MessageChat = {
 export type MessageInput = {
   content: Scalars['String'];
   idFrom: Scalars['Int'];
-  idTo: Scalars['Int'];
+  idGroupe: Scalars['Int'];
   date: Scalars['DateTime'];
 };
 

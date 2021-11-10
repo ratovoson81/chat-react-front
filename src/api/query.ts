@@ -13,6 +13,8 @@ export const GET_All_GROUPE_BY_USER = gql`
         author {
           id
           name
+          email
+          imageUrl
         }
       }
       users {

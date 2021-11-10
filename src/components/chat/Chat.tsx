@@ -1,11 +1,11 @@
 import { useChat } from "../../services/Chat";
-import { MessageChat } from "../../api/types";
+import { Message } from "../../api/types";
 import "../../css/chat.css";
 import { useEffect } from "react";
 import { IMAGE_URL } from "../../api";
 
 export default function Chat() {
-  const { send, selectedUser, chat, form, handleChange } = useChat();
+  const { sendMessage, selectedGroupe, form, handleChange, me } = useChat();
 
   useEffect(() => {
     const div: any = document.getElementById("messages");
@@ -14,24 +14,32 @@ export default function Chat() {
 
   return (
     <>
-      <div className="">{selectedUser.name}</div>
+      <div className="">
+        {selectedGroupe.users.find((u) => u.userId !== me.id)?.user?.name}
+      </div>
 
       <div
         id="messages"
         className="h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
       >
-        {chat.map((message: MessageChat, i: number) => (
+        {selectedGroupe.messages.map((message: Message, i: number) => (
           <div key={i} className="chat-message mt-auto">
-            <div className={`flex items-end ${message.mine && "justify-end"}`}>
+            <div
+              className={`flex items-end ${
+                message.author.id === me.id && "justify-end"
+              }`}
+            >
               <div
                 className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${
-                  message.mine ? "order-1 items-end" : "order-2 items-start"
+                  message.author.id === me.id
+                    ? "order-1 items-end"
+                    : "order-2 items-start"
                 }`}
               >
                 <div>
                   <span
                     className={`px-4 py-2 rounded-lg inline-block ${
-                      message.mine
+                      message.author.id === me.id
                         ? "rounded-br-none bg-blue-600 text-white "
                         : "rounded-bl-none bg-gray-300 text-gray-600"
                     }`}
@@ -41,7 +49,7 @@ export default function Chat() {
                 </div>
               </div>
               <img
-                src={IMAGE_URL + message.from.imageUrl}
+                src={IMAGE_URL + message.author.imageUrl}
                 alt="My profile"
                 className="w-6 h-6 rounded-full order-1"
               />
@@ -157,7 +165,7 @@ export default function Chat() {
             </button>
             <button
               type="button"
-              onClick={send}
+              onClick={sendMessage}
               className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
             >
               <svg

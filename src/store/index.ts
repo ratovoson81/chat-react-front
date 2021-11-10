@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./User";
-import messageReducer from "./Message";
+import groupeReducer from "./Groupe";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    message: messageReducer,
+    groupe: groupeReducer,
   },
 });
 

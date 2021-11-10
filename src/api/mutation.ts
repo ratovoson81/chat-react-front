@@ -39,15 +39,11 @@ export const SEND_MESSAGE = gql`
     sendMessage(data: $data) {
       id
       content
-      from {
-        email
+      author {
         id
-        name
-      }
-      to {
-        id
-        name
         email
+        name
+        imageUrl
       }
       date
     }
