@@ -51,6 +51,7 @@ export const useListUserAndGroupe = () => {
           dispatch(setExist(true));
         } else {
           dispatch(setExist(false));
+          dispatch(setSelectedGroupe({}));
         }
       },
     }

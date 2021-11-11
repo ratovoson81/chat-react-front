@@ -3,7 +3,7 @@ import { CREATE_GROUPE, SEND_MESSAGE } from "./../api/mutation";
 import { useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
-import { setExist } from "../store/Groupe";
+import { setExist, setSelectedGroupe } from "../store/Groupe";
 
 export const useChat = () => {
   const selectedGroupe = useAppSelector((state) => state.groupe.selectedGroupe);
@@ -29,6 +29,7 @@ export const useChat = () => {
     createGroupe({ variables: { data: { users: [me.id, selectedUser.id] } } })
       .then((result) => {
         dispatch(setExist(true));
+        dispatch(setSelectedGroupe(result.data.createGroupe));
       })
       .catch((err) => {
         console.error(err);
