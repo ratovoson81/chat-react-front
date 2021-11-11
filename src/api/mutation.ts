@@ -49,3 +49,33 @@ export const SEND_MESSAGE = gql`
     }
   }
 `;
+
+export const CREATE_GROUPE = gql`
+  mutation CreateGroupe($data: ArgsGroupe!) {
+    createGroupe(data: $data) {
+      id
+      name
+      messages {
+        id
+        content
+        date
+        author {
+          id
+          name
+          email
+          imageUrl
+        }
+      }
+      users {
+        userId
+        groupeId
+        user {
+          id
+          name
+          email
+          imageUrl
+        }
+      }
+    }
+  }
+`;

@@ -41,7 +41,7 @@ export default function ListConversation() {
               <div className="font-medium">
                 {item.users.find((i) => i.user?.id !== me.id)?.user?.name}
               </div>
-              <div className="text-gray-500">
+              <div className="text-gray-500 text-xs">
                 {item.messages[0] ? item.messages[0]?.content : "vide"}
               </div>
             </div>

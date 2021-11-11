@@ -1,4 +1,4 @@
-import { useChat } from "../../services/Chat";
+import { useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import Chat from "./Chat";
 import ListConversation from "./ListConversation";
@@ -6,7 +6,7 @@ import ListUser from "./ListUser";
 import Welcome from "./Welcome";
 
 export default function Acceuil() {
-  const { selectedGroupe } = useChat();
+  const selectedUser = useAppSelector((state) => state.user.selectedUser);
   const { form, handleChange } = useListUserAndGroupe();
 
   return (
@@ -51,7 +51,7 @@ export default function Acceuil() {
         </div>
       </div>
       <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">
-        {selectedGroupe.id ? <Chat /> : <Welcome />}
+        {selectedUser?.id ? <Chat /> : <Welcome />}
       </div>
     </div>
   );
