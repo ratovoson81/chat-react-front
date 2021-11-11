@@ -5,11 +5,13 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface MessageState {
   groupes: Groupe[];
   selectedGroupe: Groupe;
+  exist: Boolean;
 }
 
 const initialState: MessageState = {
   groupes: [] as Groupe[],
   selectedGroupe: {} as Groupe,
+  exist: true,
 };
 
 export const groupeSlice = createSlice({
@@ -22,9 +24,13 @@ export const groupeSlice = createSlice({
     setSelectedGroupe: (state, action: PayloadAction<any>) => {
       state.selectedGroupe = action.payload;
     },
+    setExist: (state, action: PayloadAction<any>) => {
+      state.exist = action.payload;
+    },
   },
 });
 
-export const { setAllGroupe, setSelectedGroupe } = groupeSlice.actions;
+export const { setExist, setAllGroupe, setSelectedGroupe } =
+  groupeSlice.actions;
 
 export default groupeSlice.reducer;

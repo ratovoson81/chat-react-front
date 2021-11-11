@@ -3,9 +3,12 @@ import { Message } from "../../api/types";
 import "../../css/chat.css";
 import { useEffect } from "react";
 import { IMAGE_URL } from "../../api";
+import { useAppSelector } from "../../Hooks";
 
 export default function Chat() {
   const { sendMessage, selectedGroupe, form, handleChange, me } = useChat();
+  const selectedUser = useAppSelector((state) => state.user.selectedUser);
+  const exist = useAppSelector((state) => state.groupe.exist);
 
   useEffect(() => {
     const div: any = document.getElementById("messages");
@@ -14,10 +17,34 @@ export default function Chat() {
 
   return (
     <>
-      <div className="">
-        {selectedGroupe.users.find((u) => u.userId !== me.id)?.user?.name}
+      <div className="flex h-16">
+        <img
+          className="rounded-full"
+          width={55}
+          alt=""
+          src={IMAGE_URL + selectedUser.imageUrl}
+        />
+        <div className="flex flex-col pl-4 justify-center">
+          <div className="font-medium">{selectedUser.name}</div>
+        </div>
       </div>
-
+      <div className="h-16 m-auto">
+        <img
+          className="rounded-full m-auto"
+          width={55}
+          alt=""
+          src={IMAGE_URL + selectedUser.imageUrl}
+        />
+        <div className="flex flex-col justify-center mt-4 text-xs">
+          <div className="m-auto">{selectedUser.email}</div>
+          <div className="m-auto">{selectedUser.name}</div>
+          {exist ? (
+            <div>Vous pouvez maintenant chater !</div>
+          ) : (
+            <div>bouton</div>
+          )}
+        </div>
+      </div>
       <div
         id="messages"
         className="h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
@@ -59,7 +86,6 @@ export default function Chat() {
               </div>
             </div>
           ))}
-
         {/*<div className="">
           <Search
             placeholder="Votre message"
