@@ -2,12 +2,8 @@ import { MessageInput } from "./../api/types";
 import { CREATE_GROUPE, SEND_MESSAGE } from "./../api/mutation";
 import { useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
-import { ChangeEvent, useEffect, useState } from "react";
-import {
-  arrivalMessageAllGroupe,
-  setExist,
-  setSelectedGroupe,
-} from "../store/Groupe";
+import { ChangeEvent, useState } from "react";
+import { setExist, setSelectedGroupe } from "../store/Groupe";
 import { socket } from "../api";
 
 export const useChat = () => {
@@ -21,13 +17,6 @@ export const useChat = () => {
   const [form, setForm] = useState({
     message: "",
   });
-
-  useEffect(() => {
-    socket.on("ok", (data) => {
-      dispatch(arrivalMessageAllGroupe(data));
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

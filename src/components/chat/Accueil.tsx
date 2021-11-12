@@ -1,13 +1,24 @@
-import { useAppSelector } from "../../Hooks";
+import { useEffect } from "react";
+import { socket } from "../../api";
+import { useAppDispatch, useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
+import { arrivalMessageAllGroupe } from "../../store/Groupe";
 import Chat from "./Chat";
 import ListConversation from "./ListConversation";
 import ListUser from "./ListUser";
 import Welcome from "./Welcome";
 
 export default function Acceuil() {
+  const dispatch = useAppDispatch();
   const selectedUser = useAppSelector((state) => state.user.selectedUser);
   const { form, handleChange } = useListUserAndGroupe();
+
+  useEffect(() => {
+    socket.on("ok", (data) => {
+      dispatch(arrivalMessageAllGroupe(data));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="pt-20 flex flex-row h-full">
