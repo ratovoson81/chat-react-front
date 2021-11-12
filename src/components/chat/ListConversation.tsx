@@ -1,9 +1,9 @@
-import moment from "moment";
 import { SpinnerCircular } from "spinners-react";
 import { IMAGE_URL } from "../../api";
 import { Groupe } from "../../api/types";
 import { useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
+import TimeAgo from "timeago-react";
 
 export default function ListConversation() {
   const groupes = useAppSelector((state) => state.groupe.groupes);
@@ -49,10 +49,7 @@ export default function ListConversation() {
             </div>
             <div className="flex flex-col col-span-1 justify-center items-end pr-4">
               <div className="text-xs">
-                {item.messages[0] &&
-                  moment(new Date(item.messages[0]?.date), "YYYYMMDD").fromNow(
-                    true
-                  )}
+                {<TimeAgo datetime={item.messages[0]?.date} locale="pt_BR" />}
               </div>
             </div>
           </div>

@@ -102,15 +102,6 @@ export default function Chat() {
                 </div>
               </div>
             ))}
-        {/*<div className="">
-          <Search
-            placeholder="Votre message"
-            enterButton="Envoyer"
-            size="large"
-            suffix={suffix}
-            onSearch={send}
-          />
-                  </div>*/}
       </div>
       {exist && (
         <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
@@ -218,14 +209,6 @@ export default function Chat() {
           </div>
         </div>
       )}
-      {/*<div key={i} className={`${message.mine && "flex justify-end"}`}>
-            <div>
-              <p className={`${message.mine && "flex justify-end"}`}>
-                {message.from.name}
-              </p>
-              <p>{message.content}</p>
-            </div>
-        </div>*/}
     </>
   );
 }
