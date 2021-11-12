@@ -6,6 +6,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import socketClient from "socket.io-client";
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -62,3 +63,4 @@ client
   .catch((error) => console.log(error));
 
 export const IMAGE_URL = "http://localhost:4000/images/";
+export const socket = socketClient("http://localhost:5000");

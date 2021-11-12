@@ -135,8 +135,9 @@ export default function Chat() {
             </span>
             <input
               type="text"
-              placeholder="Write Something"
+              placeholder="Taper votre message"
               name="message"
+              autoComplete="off"
               onChange={handleChange}
               value={form.message}
               required
