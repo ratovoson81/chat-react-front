@@ -3,11 +3,13 @@ import { CREATE_GROUPE, SEND_MESSAGE } from "./../api/mutation";
 import { useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
-import { setExist, setSelectedGroupe } from "../store/Groupe";
+import { selectGroupe, setExist } from "../store/Groupe";
 import { socket } from "../api";
 
 export const useChat = () => {
-  const selectedGroupe = useAppSelector((state) => state.groupe.selectedGroupe);
+  const iDselectedGroupe = useAppSelector(
+    (state) => state.groupe.idselectedGroupe
+  );
   const me = useAppSelector((state) => state.user.me);
   const selectedUser = useAppSelector((state) => state.user.selectedUser);
   const dispatch = useAppDispatch();
@@ -30,7 +32,7 @@ export const useChat = () => {
     createGroupe({ variables: { data: { users: [me.id, selectedUser.id] } } })
       .then((result) => {
         dispatch(setExist(true));
-        dispatch(setSelectedGroupe(result.data.createGroupe));
+        dispatch(selectGroupe(result.data.createGroupe.id));
       })
       .catch((err) => {
         console.error(err);
@@ -41,14 +43,14 @@ export const useChat = () => {
     const data: MessageInput = {
       content: form.message,
       idFrom: me.id,
-      idGroupe: selectedGroupe.id,
+      idGroupe: iDselectedGroupe,
       date: new Date(),
     };
     sendMessageMutation({ variables: { data: data } })
       .then((result) => {
         socket.emit("add", {
           message: result.data.sendMessage,
-          idgroupe: selectedGroupe.id,
+          idgroupe: iDselectedGroupe,
         });
       })
       .catch((err) => {
@@ -56,5 +58,5 @@ export const useChat = () => {
       });
   };
 
-  return { sendMessage, selectedGroupe, handleChange, form, me, createChat };
+  return { sendMessage, iDselectedGroupe, handleChange, form, me, createChat };
 };

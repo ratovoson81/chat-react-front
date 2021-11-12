@@ -4,13 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface MessageState {
   groupes: Groupe[];
-  selectedGroupe: Groupe;
+  idselectedGroupe: number;
   exist: Boolean;
 }
 
 const initialState: MessageState = {
   groupes: [] as Groupe[],
-  selectedGroupe: {} as Groupe,
+  idselectedGroupe: -1,
   exist: true,
 };
 
@@ -21,8 +21,8 @@ export const groupeSlice = createSlice({
     setAllGroupe: (state, action: PayloadAction<any>) => {
       state.groupes = action.payload;
     },
-    setSelectedGroupe: (state, action: PayloadAction<any>) => {
-      state.selectedGroupe = action.payload;
+    selectGroupe: (state, action: PayloadAction<any>) => {
+      state.idselectedGroupe = action.payload;
     },
     setExist: (state, action: PayloadAction<any>) => {
       state.exist = action.payload;
@@ -42,18 +42,13 @@ export const groupeSlice = createSlice({
         }
       });*/
     },
-    arrivalMessageSelectedGroupe: (state, action: PayloadAction<any>) => {
+    /*arrivalMessageSelectedGroupe: (state, action: PayloadAction<any>) => {
       state.selectedGroupe.messages.unshift(action.payload);
-    },
+    },*/
   },
 });
 
-export const {
-  setExist,
-  setAllGroupe,
-  setSelectedGroupe,
-  arrivalMessageSelectedGroupe,
-  arrivalMessageAllGroupe,
-} = groupeSlice.actions;
+export const { setExist, setAllGroupe, selectGroupe, arrivalMessageAllGroupe } =
+  groupeSlice.actions;
 
 export default groupeSlice.reducer;

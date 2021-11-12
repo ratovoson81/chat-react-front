@@ -8,10 +8,13 @@ import { Button } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
 
 export default function Chat() {
-  const { sendMessage, selectedGroupe, form, handleChange, me, createChat } =
+  const { sendMessage, iDselectedGroupe, form, handleChange, me, createChat } =
     useChat();
   const selectedUser = useAppSelector((state) => state.user.selectedUser);
   const exist = useAppSelector((state) => state.groupe.exist);
+  const groupe = useAppSelector((state) =>
+    state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
+  );
 
   useEffect(() => {
     const div: any = document.getElementById("messages");
@@ -61,8 +64,8 @@ export default function Chat() {
             )}
           </div>
         </div>
-        {selectedGroupe.id &&
-          selectedGroupe.messages
+        {iDselectedGroupe > -1 &&
+          groupe?.messages
             .slice(0)
             .reverse()
             .map((message: Message, i: number) => (

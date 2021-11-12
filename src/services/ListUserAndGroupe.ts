@@ -3,9 +3,13 @@ import { useLazyQuery } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ALL_USERS, GET_All_GROUPE_BY_USER } from "../api/query";
 import { Groupe } from "../api/types";
-import { setAllGroupe, setExist, setSelectedGroupe } from "../store/Groupe";
+import { selectGroupe, setAllGroupe, setExist } from "../store/Groupe";
 import { setAllUsers, setSelectedUser } from "../store/User";
 import { useAppDispatch, useAppSelector } from "../Hooks";
+
+type returnQuery = {
+  getGroupeByMultipleUsers: Groupe[];
+};
 
 export const useListUserAndGroupe = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +27,7 @@ export const useListUserAndGroupe = () => {
   };
 
   const selectConversation = (groupe: Groupe) => {
-    dispatch(setSelectedGroupe(groupe));
+    dispatch(selectGroupe(groupe.id));
     dispatch(
       setSelectedUser(groupe.users.find((u) => u.userId !== me.id)?.user)
     );
@@ -45,13 +49,13 @@ export const useListUserAndGroupe = () => {
   const [checkGroupeExist /*, { called, loading, data }*/] = useLazyQuery(
     GET_All_GROUPE_BY_USER,
     {
-      onCompleted: ({ getGroupeByMultipleUsers }) => {
+      onCompleted: ({ getGroupeByMultipleUsers }: returnQuery) => {
         if (getGroupeByMultipleUsers.length) {
-          dispatch(setSelectedGroupe(getGroupeByMultipleUsers[0]));
+          dispatch(selectGroupe(getGroupeByMultipleUsers[0].id));
           dispatch(setExist(true));
         } else {
           dispatch(setExist(false));
-          dispatch(setSelectedGroupe({}));
+          dispatch(selectGroupe(-1));
         }
       },
     }
