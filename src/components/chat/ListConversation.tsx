@@ -20,7 +20,14 @@ export default function ListConversation() {
           <SpinnerCircular size="40" color="black" />
         </div>
       )}
+
       {groupes
+        .slice()
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.messages[0]?.date).getTime() -
+            new Date(a.messages[0]?.date).getTime()
+        )
         .filter((item: Groupe) => item.id !== me.id)
         .map((item: Groupe, i: number) => (
           <div
@@ -44,6 +51,7 @@ export default function ListConversation() {
                 {item.users.find((i) => i.user?.id !== me.id)?.user?.name}
               </div>
               <div className="text-gray-500 text-xs">
+                {item.messages[0]?.author.id === me.id && "Vous: "}
                 {item.messages[0] ? item.messages[0]?.content : "vide"}
               </div>
             </div>
