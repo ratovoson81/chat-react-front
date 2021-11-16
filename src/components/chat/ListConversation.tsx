@@ -35,17 +35,22 @@ export default function ListConversation() {
             onClick={() => selectConversation(item)}
             className={`${
               item.id === idselectedGroupe && "bg-gray-100"
-            } grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer`}
+            } grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer items-center`}
           >
-            <img
-              className="rounded-full col-span-1 m-auto"
-              width={55}
-              alt=""
-              src={
-                IMAGE_URL +
-                item.users.find((i) => i.user?.id !== me.id)?.user?.imageUrl
-              }
-            />
+            <span className="relative inline-block">
+              <img
+                className="rounded-full col-span-1 m-auto"
+                width={55}
+                alt=""
+                src={
+                  IMAGE_URL +
+                  item.users.find((i) => i.user?.id !== me.id)?.user?.imageUrl
+                }
+              />
+              {item.users.find((i) => i.user?.id !== me.id)?.user?.IsOnline && (
+                <span className="absolute bottom-0 right-0 text-xs h-2.5 w-2.5 leading-none ring-2 ring-gray-50 transform bg-green-400 rounded-full"></span>
+              )}
+            </span>
             <div className="flex flex-col col-span-3 pl-4 justify-center">
               <div className="font-medium">
                 {item.users.find((i) => i.user?.id !== me.id)?.user?.name}

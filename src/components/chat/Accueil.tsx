@@ -18,17 +18,11 @@ export default function Acceuil() {
       console.log("arrivalUser", data);
     });
 
-    /*socket.on("check", (data) => {
-      console.log(data);
+    socket.on("someone disconnect", (data) => {
+      console.log("user offline", data);
       console.log(localStorage.getItem("token"));
-
-      console.log("check", socket.connected);
-      // if socket.connected = true et data === local... set online
-      // tester lancer mutation meme si socket.connected false
-      socket.on("connect", function () {
-        console.log("check 3", socket.connected);
-      });
-    });*/
+      //reconnecter tous les users au cas ou une l'user connected avec deux session , pas nécessaire ou chercher meilleur méthode
+    });
 
     socket.on("ok", (data) => {
       dispatch(arrivalMessageAllGroupe(data));
