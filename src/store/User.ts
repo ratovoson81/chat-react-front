@@ -4,13 +4,13 @@ import { User } from "../api/types";
 export interface UserState {
   me: User;
   users: User[];
-  selectedUser: User;
+  idSelectedUser: number;
 }
 
 const initialState: UserState = {
   me: {} as User,
   users: [] as User[],
-  selectedUser: {} as User,
+  idSelectedUser: -1,
 };
 
 export const userSlice = createSlice({
@@ -24,7 +24,7 @@ export const userSlice = createSlice({
       state.users = action.payload;
     },
     setSelectedUser: (state, action: PayloadAction<any>) => {
-      state.selectedUser = action.payload;
+      state.idSelectedUser = action.payload;
     },
   },
 });

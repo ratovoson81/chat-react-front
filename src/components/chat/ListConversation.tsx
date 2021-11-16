@@ -57,7 +57,7 @@ export default function ListConversation() {
             </div>
             <div className="flex flex-col col-span-1 justify-center items-end pr-4">
               <div className="text-xs">
-                {<TimeAgo datetime={item.messages[0]?.date} locale="pt_BR" />}
+                <TimeAgo datetime={item.messages[0]?.date} locale="pt_BR" />
               </div>
             </div>
           </div>

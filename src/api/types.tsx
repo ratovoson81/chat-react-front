@@ -16,7 +16,6 @@ export type Scalars = {
   Upload: any;
 };
 
-
 export type ArgsGetGroupePerUser = {
   ids: Array<Scalars['Int']>;
 };
@@ -37,11 +36,6 @@ export type AuthPayLoad = {
   email?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
 };
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
-}
 
 
 export type File = {
@@ -106,6 +100,7 @@ export type Mutation = {
   isLogged?: Maybe<User>;
   sendMessage: Message;
   createGroupe: Groupe;
+  setOnline: User;
 };
 
 
@@ -149,6 +144,11 @@ export type MutationCreateGroupeArgs = {
   data: ArgsGroupe;
 };
 
+
+export type MutationSetOnlineArgs = {
+  idUser: Scalars['Int'];
+};
+
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
@@ -181,8 +181,8 @@ export type Query = {
   getChat: Array<Message>;
   allUsersMessageByMe: Array<User>;
   allGroupe: Array<Groupe>;
-  allGroupeByUser: Array<Groupe>;
-  getOneGroupeByIds: Groupe;
+  getGroupeByMultipleUsers: Array<Groupe>;
+  getOneGroupeById: Groupe;
 };
 
 
@@ -219,12 +219,12 @@ export type QueryAllUsersMessageByMeArgs = {
 };
 
 
-export type QueryAllGroupeByUserArgs = {
+export type QueryGetGroupeByMultipleUsersArgs = {
   data: ArgsGetGroupePerUser;
 };
 
 
-export type QueryGetOneGroupeByIdsArgs = {
+export type QueryGetOneGroupeByIdArgs = {
   data: Scalars['Int'];
 };
 
@@ -248,6 +248,8 @@ export type User = {
   name: Scalars['String'];
   posts: Array<Post>;
   imageUrl?: Maybe<Scalars['String']>;
+  IsOnline?: Maybe<Scalars['Boolean']>;
+  connectedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserCreateInput = {

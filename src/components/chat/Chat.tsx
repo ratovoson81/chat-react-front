@@ -6,11 +6,21 @@ import { IMAGE_URL } from "../../api";
 import { useAppSelector } from "../../Hooks";
 import { Button } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
+import TimeAgo from "timeago-react";
 
 export default function Chat() {
-  const { sendMessage, iDselectedGroupe, form, handleChange, me, createChat } =
-    useChat();
-  const selectedUser = useAppSelector((state) => state.user.selectedUser);
+  const {
+    sendMessage,
+    iDselectedGroupe,
+    form,
+    handleChange,
+    me,
+    createChat,
+    idSelectedUser,
+  } = useChat();
+  const selectedUser = useAppSelector((state) =>
+    state.user.users.find((u) => u.id === idSelectedUser)
+  );
   const exist = useAppSelector((state) => state.groupe.exist);
   const groupe = useAppSelector((state) =>
     state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
@@ -24,14 +34,30 @@ export default function Chat() {
   return (
     <>
       <div className="flex h-16">
-        <img
-          className="rounded-full"
-          width={55}
-          alt=""
-          src={IMAGE_URL + selectedUser.imageUrl}
-        />
+        <span className="relative inline-block">
+          <img
+            className="rounded-full"
+            width={55}
+            alt=""
+            src={IMAGE_URL + selectedUser?.imageUrl}
+          />
+          {selectedUser?.IsOnline && (
+            <span className="absolute bottom-0.5 right-0.5 text-xs h-3 w-3 leading-none ring-2 ring-gray-50  transform bg-green-400 rounded-full"></span>
+          )}
+        </span>
         <div className="flex flex-col pl-4 justify-center">
-          <div className="font-medium">{selectedUser.name}</div>
+          <div className="font-medium">{selectedUser?.name}</div>
+          <div className="text-gray-500 text-xs">
+            En ligne{" "}
+            {selectedUser?.IsOnline ? (
+              ""
+            ) : (
+              <span>
+                il y a{" "}
+                <TimeAgo datetime={selectedUser?.connectedAt} locale="pt_BR" />
+              </span>
+            )}
+          </div>
         </div>
       </div>
       <div
@@ -43,11 +69,11 @@ export default function Chat() {
             className="rounded-full m-auto "
             width={55}
             alt=""
-            src={IMAGE_URL + selectedUser.imageUrl}
+            src={IMAGE_URL + selectedUser?.imageUrl}
           />
           <div className="flex flex-col justify-center mt-4 text-xs">
-            <div className="m-auto">{selectedUser.email}</div>
-            <div className="m-auto">{selectedUser.name}</div>
+            <div className="m-auto">{selectedUser?.email}</div>
+            <div className="m-auto">{selectedUser?.name}</div>
             {exist ? (
               <div className="m-auto">Vous pouvez maintenant chater !</div>
             ) : (

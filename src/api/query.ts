@@ -14,6 +14,8 @@ export const GET_All_GROUPE_BY_USER = gql`
           name
           email
           imageUrl
+          IsOnline
+          connectedAt
         }
       }
       users {
@@ -24,6 +26,8 @@ export const GET_All_GROUPE_BY_USER = gql`
           name
           email
           imageUrl
+          IsOnline
+          connectedAt
         }
       }
     }
@@ -37,6 +41,8 @@ export const ALL_USERS = gql`
       email
       name
       imageUrl
+      IsOnline
+      connectedAt
     }
   }
 `;

@@ -29,14 +29,14 @@ export const useListUserAndGroupe = () => {
   const selectConversation = (groupe: Groupe) => {
     dispatch(selectGroupe(groupe.id));
     dispatch(
-      setSelectedUser(groupe.users.find((u) => u.userId !== me.id)?.user)
+      setSelectedUser(groupe.users.find((u) => u.userId !== me.id)?.user?.id)
     );
     dispatch(setExist(true));
   };
 
   const selectUser = (user: User) => {
     checkGroupeExist({ variables: { data: { ids: [me.id, user.id] } } });
-    dispatch(setSelectedUser(user));
+    dispatch(setSelectedUser(user.id));
   };
 
   const [getGroupeByMultipleUsers /*, { called, loading, data }*/] =

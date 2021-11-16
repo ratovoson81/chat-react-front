@@ -9,6 +9,7 @@ import { LOGIN } from "../../api/mutation";
 import { notification } from "antd";
 import { useAppDispatch } from "../../Hooks";
 import { setMe } from "../../store/User";
+import { socket } from "../../api";
 
 interface LocationState {
   from: Location;
@@ -32,6 +33,7 @@ export default function Login() {
         auth.signin(async () => {
           dispatch(setMe(result.data.loginUser.theUser));
           localStorage.setItem("token", result.data.loginUser.token);
+          socket.emit("conn", result.data.loginUser.token);
           history.replace(from);
         });
       })

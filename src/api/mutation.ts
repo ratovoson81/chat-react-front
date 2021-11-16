@@ -18,6 +18,8 @@ export const LOGIN = gql`
         name
         id
         imageUrl
+        IsOnline
+        connectedAt
       }
     }
   }
@@ -30,6 +32,8 @@ export const ISLOGGED = gql`
       email
       name
       imageUrl
+      IsOnline
+      connectedAt
     }
   }
 `;
@@ -44,6 +48,8 @@ export const SEND_MESSAGE = gql`
         email
         name
         imageUrl
+        IsOnline
+        connectedAt
       }
       date
     }
@@ -64,6 +70,8 @@ export const CREATE_GROUPE = gql`
           name
           email
           imageUrl
+          IsOnline
+          connectedAt
         }
       }
       users {
@@ -74,6 +82,8 @@ export const CREATE_GROUPE = gql`
           name
           email
           imageUrl
+          IsOnline
+          connectedAt
         }
       }
     }

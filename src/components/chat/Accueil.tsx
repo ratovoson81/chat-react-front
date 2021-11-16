@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { socket } from "../../api";
+import { socket, wsClient } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import { arrivalMessageAllGroupe } from "../../store/Groupe";
@@ -10,15 +10,31 @@ import Welcome from "./Welcome";
 
 export default function Acceuil() {
   const dispatch = useAppDispatch();
-  const selectedUser = useAppSelector((state) => state.user.selectedUser);
+  const idSelectedUser = useAppSelector((state) => state.user.idSelectedUser);
   const { form, handleChange } = useListUserAndGroupe();
 
   useEffect(() => {
+    socket.on("arrivalUser", (data) => {
+      console.log("arrivalUser", data);
+    });
+
+    /*socket.on("check", (data) => {
+      console.log(data);
+      console.log(localStorage.getItem("token"));
+
+      console.log("check", socket.connected);
+      // if socket.connected = true et data === local... set online
+      // tester lancer mutation meme si socket.connected false
+      socket.on("connect", function () {
+        console.log("check 3", socket.connected);
+      });
+    });*/
+
     socket.on("ok", (data) => {
       dispatch(arrivalMessageAllGroupe(data));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [wsClient]);
 
   return (
     <div className="pt-20 flex flex-row h-full">
@@ -62,7 +78,7 @@ export default function Acceuil() {
         </div>
       </div>
       <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">
-        {selectedUser?.id ? <Chat /> : <Welcome />}
+        {idSelectedUser > -1 ? <Chat /> : <Welcome />}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const useChat = () => {
     (state) => state.groupe.idselectedGroupe
   );
   const me = useAppSelector((state) => state.user.me);
-  const selectedUser = useAppSelector((state) => state.user.selectedUser);
+  const idSelectedUser = useAppSelector((state) => state.user.idSelectedUser);
   const dispatch = useAppDispatch();
 
   const [sendMessageMutation] = useMutation(SEND_MESSAGE);
@@ -29,7 +29,7 @@ export const useChat = () => {
   };
 
   const createChat = () => {
-    createGroupe({ variables: { data: { users: [me.id, selectedUser.id] } } })
+    createGroupe({ variables: { data: { users: [me.id, idSelectedUser] } } })
       .then((result) => {
         dispatch(setExist(true));
         dispatch(selectGroupe(result.data.createGroupe.id));
@@ -58,5 +58,13 @@ export const useChat = () => {
       });
   };
 
-  return { sendMessage, iDselectedGroupe, handleChange, form, me, createChat };
+  return {
+    sendMessage,
+    iDselectedGroupe,
+    handleChange,
+    form,
+    me,
+    createChat,
+    idSelectedUser,
+  };
 };
