@@ -1,48 +1,20 @@
+import { GROUPE_FIELDS, USER_FIELDS } from "./fragement";
 import { gql } from "@apollo/client";
 
 export const GET_All_GROUPE_BY_USER = gql`
+  ${GROUPE_FIELDS}
   query GetGroupeByMultipleUsers($data: ArgsGetGroupePerUser!) {
     getGroupeByMultipleUsers(data: $data) {
-      id
-      name
-      messages {
-        id
-        content
-        date
-        author {
-          id
-          name
-          email
-          imageUrl
-          isOnline
-          connectedAt
-        }
-      }
-      users {
-        userId
-        groupeId
-        user {
-          id
-          name
-          email
-          imageUrl
-          isOnline
-          connectedAt
-        }
-      }
+      ...GroupeFields
     }
   }
 `;
 
 export const ALL_USERS = gql`
+  ${USER_FIELDS}
   query AllUsers {
     allUsers {
-      id
-      email
-      name
-      imageUrl
-      isOnline
-      connectedAt
+      ...UserFields
     }
   }
 `;

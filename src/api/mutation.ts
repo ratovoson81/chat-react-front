@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { GROUPE_FIELDS, MESSAGE_FIELDS, USER_FIELDS } from "./fragement";
 
 export const REGISTER = gql`
   mutation SignupUser($data: UserCreateInput!) {
@@ -10,82 +11,40 @@ export const REGISTER = gql`
 `;
 
 export const LOGIN = gql`
+  ${USER_FIELDS}
   mutation LoginUser($data: UserLoginInput!) {
     loginUser(data: $data) {
       token
       theUser {
-        email
-        name
-        id
-        imageUrl
-        isOnline
-        connectedAt
+        ...UserFields
       }
     }
   }
 `;
 
 export const ISLOGGED = gql`
+  ${USER_FIELDS}
   mutation IsLogged {
     isLogged {
-      id
-      email
-      name
-      imageUrl
-      isOnline
-      connectedAt
+      ...UserFields
     }
   }
 `;
 
 export const SEND_MESSAGE = gql`
+  ${MESSAGE_FIELDS}
   mutation SendMessage($data: MessageInput!) {
     sendMessage(data: $data) {
-      id
-      content
-      author {
-        id
-        email
-        name
-        imageUrl
-        isOnline
-        connectedAt
-      }
-      date
+      ...MessageFields
     }
   }
 `;
 
 export const CREATE_GROUPE = gql`
+  ${GROUPE_FIELDS}
   mutation CreateGroupe($data: ArgsGroupe!) {
     createGroupe(data: $data) {
-      id
-      name
-      messages {
-        id
-        content
-        date
-        author {
-          id
-          name
-          email
-          imageUrl
-          isOnline
-          connectedAt
-        }
-      }
-      users {
-        userId
-        groupeId
-        user {
-          id
-          name
-          email
-          imageUrl
-          isOnline
-          connectedAt
-        }
-      }
+      ...GroupeFields
     }
   }
 `;
