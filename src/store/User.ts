@@ -26,10 +26,17 @@ export const userSlice = createSlice({
     setSelectedUser: (state, action: PayloadAction<any>) => {
       state.idSelectedUser = action.payload;
     },
+    setIsOnline: (state, action: PayloadAction<any>) => {
+      const index = state.users.findIndex((u) => u.id === action.payload.id);
+      if (index !== -1) {
+        state.users[index] = action.payload;
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMe, setAllUsers, setSelectedUser } = userSlice.actions;
+export const { setMe, setAllUsers, setSelectedUser, setIsOnline } =
+  userSlice.actions;
 
 export default userSlice.reducer;

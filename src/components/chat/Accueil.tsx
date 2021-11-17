@@ -3,6 +3,7 @@ import { socket, wsClient } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import { arrivalMessageAllGroupe } from "../../store/Groupe";
+import { setIsOnline } from "../../store/User";
 import Chat from "./Chat";
 import ListConversation from "./ListConversation";
 import ListUser from "./ListUser";
@@ -14,17 +15,11 @@ export default function Acceuil() {
   const { form, handleChange } = useListUserAndGroupe();
 
   useEffect(() => {
-    socket.on("arrivalUser", (data) => {
-      console.log("arrivalUser", data);
+    socket.on("update-status-user", (data) => {
+      dispatch(setIsOnline(data));
     });
 
-    socket.on("someone disconnect", (data) => {
-      console.log("user offline", data);
-      console.log(localStorage.getItem("token"));
-      //reconnecter tous les users au cas ou une l'user connected avec deux session , pas nécessaire ou chercher meilleur méthode
-    });
-
-    socket.on("ok", (data) => {
+    socket.on("arrival-message", (data) => {
       dispatch(arrivalMessageAllGroupe(data));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,7 +27,7 @@ export default function Acceuil() {
 
   return (
     <div className="pt-20 flex flex-row h-full">
-      <div className="w-1/4">
+      <div className="w-96">
         <div className="flex relative m-2">
           <input
             className="border-2 border-primary bg-red transition h-10 px-5 pr-16 rounded-full focus:outline-none w-full text-black"

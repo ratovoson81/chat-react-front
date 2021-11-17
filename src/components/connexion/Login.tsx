@@ -33,7 +33,7 @@ export default function Login() {
         auth.signin(async () => {
           dispatch(setMe(result.data.loginUser.theUser));
           localStorage.setItem("token", result.data.loginUser.token);
-          socket.emit("conn", result.data.loginUser.token);
+          socket.emit("login", result.data.loginUser.token);
           history.replace(from);
         });
       })

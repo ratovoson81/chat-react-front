@@ -67,7 +67,7 @@ export default function Chat() {
         <div className="mb-auto">
           <img
             className="rounded-full m-auto "
-            width={55}
+            width={150}
             alt=""
             src={IMAGE_URL + selectedUser?.imageUrl}
           />

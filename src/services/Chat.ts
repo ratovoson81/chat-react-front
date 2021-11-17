@@ -48,7 +48,7 @@ export const useChat = () => {
     };
     sendMessageMutation({ variables: { data: data } })
       .then((result) => {
-        socket.emit("add", {
+        socket.emit("send-message", {
           message: result.data.sendMessage,
           idgroupe: iDselectedGroupe,
         });

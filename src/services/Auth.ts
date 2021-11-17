@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "../Hooks";
 import { setMe } from "../store/User";
+import { socket } from "../api";
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -62,6 +63,7 @@ export function useProvideAuth() {
   const signout = (cb: () => void) => {
     return fakeAuth.signout(() => {
       setUser(null);
+      socket.emit("logout", localStorage.getItem("token"));
       localStorage.removeItem("token");
       cb();
     });
