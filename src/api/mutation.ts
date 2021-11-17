@@ -18,7 +18,7 @@ export const LOGIN = gql`
         name
         id
         imageUrl
-        IsOnline
+        isOnline
         connectedAt
       }
     }
@@ -32,7 +32,7 @@ export const ISLOGGED = gql`
       email
       name
       imageUrl
-      IsOnline
+      isOnline
       connectedAt
     }
   }
@@ -48,7 +48,7 @@ export const SEND_MESSAGE = gql`
         email
         name
         imageUrl
-        IsOnline
+        isOnline
         connectedAt
       }
       date
@@ -70,7 +70,7 @@ export const CREATE_GROUPE = gql`
           name
           email
           imageUrl
-          IsOnline
+          isOnline
           connectedAt
         }
       }
@@ -82,7 +82,7 @@ export const CREATE_GROUPE = gql`
           name
           email
           imageUrl
-          IsOnline
+          isOnline
           connectedAt
         }
       }

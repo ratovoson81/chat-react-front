@@ -48,7 +48,7 @@ export default function ListConversation() {
                   alt=""
                   src={IMAGE_URL + user?.imageUrl}
                 />
-                {user?.IsOnline && (
+                {user?.isOnline && (
                   <span className="absolute bottom-0.5 right-3 text-xs h-3 w-3 leading-none ring-2 ring-gray-50 transform bg-green-400 rounded-full"></span>
                 )}
               </span>
@@ -89,7 +89,7 @@ export default function ListConversation() {
                   item.users.find((i) => i.user?.id !== me.id)?.user?.imageUrl
                 }
               />
-              {item.users.find((i) => i.user?.id !== me.id)?.user?.IsOnline && (
+              {item.users.find((i) => i.user?.id !== me.id)?.user?.isOnline && (
                 <span className="absolute bottom-0.5 right-0.5 text-xs h-3 w-3 leading-none ring-2 ring-gray-50 transform bg-green-400 rounded-full"></span>
               )}
             </div>

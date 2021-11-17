@@ -41,7 +41,7 @@ export default function Chat() {
             alt=""
             src={IMAGE_URL + selectedUser?.imageUrl}
           />
-          {selectedUser?.IsOnline && (
+          {selectedUser?.isOnline && (
             <span className="absolute bottom-0.5 right-0.5 text-xs h-3 w-3 leading-none ring-2 ring-gray-50  transform bg-green-400 rounded-full"></span>
           )}
         </span>
@@ -49,7 +49,7 @@ export default function Chat() {
           <div className="font-medium">{selectedUser?.name}</div>
           <div className="text-gray-500 text-xs">
             En ligne{" "}
-            {selectedUser?.IsOnline ? (
+            {selectedUser?.isOnline ? (
               ""
             ) : (
               <span>

@@ -248,7 +248,7 @@ export type User = {
   name: Scalars['String'];
   posts: Array<Post>;
   imageUrl?: Maybe<Scalars['String']>;
-  IsOnline?: Maybe<Scalars['Boolean']>;
+  isOnline?: Maybe<Scalars['Boolean']>;
   connectedAt?: Maybe<Scalars['DateTime']>;
 };
 

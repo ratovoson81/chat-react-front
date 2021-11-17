@@ -1807,7 +1807,7 @@
             "deprecationReason": null
           },
           {
-            "name": "IsOnline",
+            "name": "isOnline",
             "description": null,
             "args": [],
             "type": {
