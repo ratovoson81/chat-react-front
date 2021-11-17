@@ -53,8 +53,7 @@ export default function Chat() {
               ""
             ) : (
               <span>
-                il y a{" "}
-                <TimeAgo datetime={selectedUser?.connectedAt} locale="pt_BR" />
+                <TimeAgo datetime={selectedUser?.connectedAt} locale="f-on" />
               </span>
             )}
           </div>
