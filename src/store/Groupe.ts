@@ -42,15 +42,7 @@ export const groupeSlice = createSlice({
       if (index !== -1) {
         state.groupes[index].messages.unshift(action.payload.message);
       }
-      /*state.groupes.sort(
-        (a: any, b: any) =>
-          new Date(b.messages[0]?.date).getTime() -
-          new Date(a.messages[0]?.date).getTime()
-      );*/
     },
-    /*arrivalMessageSelectedGroupe: (state, action: PayloadAction<any>) => {
-      state.selectedGroupe.messages.unshift(action.payload);
-    },*/
   },
 });
 

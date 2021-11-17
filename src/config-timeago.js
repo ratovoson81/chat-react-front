@@ -27,7 +27,7 @@ let forOnline = function (number, index, totalSec) {
   // index: the index of array below;
   // totalSec: total seconds between date to be formatted and today's date;
   return [
-    ["À l'instant", "right now"],
+    ["à l'instant", "right now"],
     ["il y a %s sec", "in %s seconds"],
     ["il y a 1 min", "in 1 minute"],
     ["il y a %s min", "in %s minutes"],
