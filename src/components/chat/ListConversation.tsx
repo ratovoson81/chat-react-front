@@ -57,7 +57,7 @@ export default function ListConversation() {
           <SpinnerCircular size="40" color="black" />
         </div>
       )}
-      <FlipMove>
+      <FlipMove enterAnimation="fade">
         {groupes.map((item: Groupe, i: number) => {
           const id = item.users.find((i) => i.user?.id !== me.id)?.user?.id;
           const user = users.find((u) => id === u.id);
