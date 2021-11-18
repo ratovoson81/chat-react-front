@@ -60,9 +60,13 @@ export const useChat = () => {
   };
 
   const view = (idGroupe: number | undefined) => {
-    viewMessage({ variables: { data: { idGroupe: idGroupe } } })
+    viewMessage({
+      variables: { data: { idGroupe: idGroupe, idUser: idSelectedUser } },
+    })
       .then((result) => {
-        console.log(result.data.viewMessage);
+        socket.emit("view-message", {
+          groupe: result.data.viewMessage,
+        });
       })
       .catch((err) => {
         console.error(err);

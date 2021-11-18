@@ -20,6 +20,8 @@ export const GROUPE_FIELDS = gql`
       id
       content
       date
+      view
+      viewAt
       author {
         ...UserFields
       }
@@ -43,5 +45,7 @@ export const MESSAGE_FIELDS = gql`
       ...UserFields
     }
     date
+    view
+    viewAt
   }
 `;

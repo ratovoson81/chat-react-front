@@ -36,6 +36,15 @@ export const groupeSlice = createSlice({
         state.groupes[index].messages.unshift(action.payload.message);
       }
     },
+    viewMessage: (state, action: PayloadAction<any>) => {
+      console.log("hhhh", action.payload.groupe);
+      const index = state.groupes.findIndex(
+        (g) => g.id === action.payload.groupe.id
+      );
+      if (index !== -1) {
+        state.groupes[index] = action.payload.groupe;
+      }
+    },
     sortGroupeByDate: (state) => {
       state.groupes.sort(
         (a: any, b: any) =>
@@ -51,6 +60,7 @@ export const {
   setAllGroupe,
   selectGroupe,
   arrivalMessageAllGroupe,
+  viewMessage,
   sortGroupeByDate,
 } = groupeSlice.actions;
 
