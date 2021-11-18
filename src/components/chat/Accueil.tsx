@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket, wsClient } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
-import { arrivalMessageAllGroupe } from "../../store/Groupe";
+import { arrivalMessageAllGroupe, sortGroupeByDate } from "../../store/Groupe";
 import { setIsOnline } from "../../store/User";
 import Chat from "./Chat";
 import ListConversation from "./ListConversation";
@@ -21,6 +21,9 @@ export default function Acceuil() {
 
     socket.on("arrival-message", (data) => {
       dispatch(arrivalMessageAllGroupe(data));
+      setTimeout(function () {
+        dispatch(sortGroupeByDate());
+      }, 0);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wsClient]);

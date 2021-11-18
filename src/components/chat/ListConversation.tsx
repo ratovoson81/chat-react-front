@@ -58,18 +58,11 @@ export default function ListConversation() {
         </div>
       )}
       <FlipMove>
-        {groupes
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(b.messages[0]?.date).getTime() -
-              new Date(a.messages[0]?.date).getTime()
-          )
-          .map((item: Groupe, i: number) => {
-            const id = item.users.find((i) => i.user?.id !== me.id)?.user?.id;
-            const user = users.find((u) => id === u.id);
-            return <List key={item.id} item={item} user={user} />;
-          })}
+        {groupes.map((item: Groupe, i: number) => {
+          const id = item.users.find((i) => i.user?.id !== me.id)?.user?.id;
+          const user = users.find((u) => id === u.id);
+          return <List key={item.id} item={item} user={user} />;
+        })}
       </FlipMove>
     </>
   );

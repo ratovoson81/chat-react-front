@@ -20,12 +20,6 @@ export const groupeSlice = createSlice({
   reducers: {
     setAllGroupe: (state, action: PayloadAction<any>) => {
       state.groupes = action.payload;
-      /*.slice()
-        .sort(
-          (a: any, b: any) =>
-            new Date(b.messages[0]?.date).getTime() -
-            new Date(a.messages[0]?.date).getTime()
-        );*/
     },
     selectGroupe: (state, action: PayloadAction<any>) => {
       state.idselectedGroupe = action.payload;
@@ -43,10 +37,22 @@ export const groupeSlice = createSlice({
         state.groupes[index].messages.unshift(action.payload.message);
       }
     },
+    sortGroupeByDate: (state) => {
+      state.groupes.sort(
+        (a: any, b: any) =>
+          new Date(b.messages[0]?.date).getTime() -
+          new Date(a.messages[0]?.date).getTime()
+      );
+    },
   },
 });
 
-export const { setExist, setAllGroupe, selectGroupe, arrivalMessageAllGroupe } =
-  groupeSlice.actions;
+export const {
+  setExist,
+  setAllGroupe,
+  selectGroupe,
+  arrivalMessageAllGroupe,
+  sortGroupeByDate,
+} = groupeSlice.actions;
 
 export default groupeSlice.reducer;
