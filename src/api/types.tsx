@@ -30,6 +30,10 @@ export type ArgsMessageChat = {
   idTo: Scalars['Int'];
 };
 
+export type ArgsMessageView = {
+  idGroupe: Scalars['Int'];
+};
+
 export type AuthPayLoad = {
   __typename?: 'AuthPayLoad';
   token: Scalars['String'];
@@ -69,6 +73,8 @@ export type Message = {
   content: Scalars['String'];
   author: User;
   date: Scalars['DateTime'];
+  view: Scalars['Boolean'];
+  viewAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type MessageChat = {
@@ -101,6 +107,7 @@ export type Mutation = {
   sendMessage: Message;
   createGroupe: Groupe;
   setOnline: User;
+  viewMessage: Groupe;
 };
 
 
@@ -147,6 +154,11 @@ export type MutationCreateGroupeArgs = {
 
 export type MutationSetOnlineArgs = {
   idUser: Scalars['Int'];
+};
+
+
+export type MutationViewMessageArgs = {
+  data: ArgsMessageView;
 };
 
 export type Post = {

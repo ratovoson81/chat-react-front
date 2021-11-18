@@ -48,3 +48,12 @@ export const CREATE_GROUPE = gql`
     }
   }
 `;
+
+export const VIEW_MESSAGE = gql`
+  ${GROUPE_FIELDS}
+  mutation ViewMessage($data: ArgsMessageView!) {
+    viewMessage(data: $data) {
+      ...GroupeFields
+    }
+  }
+`;

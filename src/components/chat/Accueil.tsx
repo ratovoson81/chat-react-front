@@ -29,7 +29,7 @@ export default function Acceuil() {
   }, [wsClient]);
 
   return (
-    <div className="pt-20 flex flex-row h-full">
+    <div className="pt-16 flex flex-row h-full">
       <div className="w-96">
         <div className="flex relative m-2">
           <input

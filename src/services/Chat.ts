@@ -1,5 +1,5 @@
 import { MessageInput } from "./../api/types";
-import { CREATE_GROUPE, SEND_MESSAGE } from "./../api/mutation";
+import { CREATE_GROUPE, SEND_MESSAGE, VIEW_MESSAGE } from "./../api/mutation";
 import { useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
@@ -15,6 +15,7 @@ export const useChat = () => {
   const dispatch = useAppDispatch();
 
   const [sendMessageMutation] = useMutation(SEND_MESSAGE);
+  const [viewMessage] = useMutation(VIEW_MESSAGE);
   const [createGroupe] = useMutation(CREATE_GROUPE);
   const [form, setForm] = useState({
     message: "",
@@ -58,13 +59,22 @@ export const useChat = () => {
       });
   };
 
+  const view = (idGroupe: number | undefined) => {
+    viewMessage({ variables: { data: { idGroupe: idGroupe } } })
+      .then((result) => {
+        console.log(result.data.viewMessage);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return {
     sendMessage,
-    iDselectedGroupe,
     handleChange,
     form,
-    me,
     createChat,
+    view,
     idSelectedUser,
   };
 };

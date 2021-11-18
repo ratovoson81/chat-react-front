@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import React from "react";
 import { IMAGE_URL } from "../api";
 import { AuthButton } from "../components/AuthButton";
@@ -21,11 +20,7 @@ const PrivatePage: React.FC<props> = ({ children }) => {
           <p>Newest</p>
         </div>
         <div className="flex-1 flex items-center">
-          <div className="w-2/3 pl-16">
-            <Button type="primary" danger>
-              NEW MESSAGE
-            </Button>
-          </div>
+          <div className="w-2/3 pl-16"></div>
           <div className="flex items-center">
             <img
               className="rounded-full"

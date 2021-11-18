@@ -9,18 +9,15 @@ import { WechatOutlined } from "@ant-design/icons";
 import TimeAgo from "timeago-react";
 
 export default function Chat() {
-  const {
-    sendMessage,
-    iDselectedGroupe,
-    form,
-    handleChange,
-    me,
-    createChat,
-    idSelectedUser,
-  } = useChat();
+  const { sendMessage, form, handleChange, createChat, view, idSelectedUser } =
+    useChat();
+  const iDselectedGroupe = useAppSelector(
+    (state) => state.groupe.idselectedGroupe
+  );
   const selectedUser = useAppSelector((state) =>
     state.user.users.find((u) => u.id === idSelectedUser)
   );
+  const me = useAppSelector((state) => state.user.me);
   const exist = useAppSelector((state) => state.groupe.exist);
   const groupe = useAppSelector((state) =>
     state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
@@ -29,7 +26,9 @@ export default function Chat() {
   useEffect(() => {
     const div: any = document.getElementById("messages");
     div.scrollTop = div.scrollHeight - div.clientHeight;
-  });
+    view(iDselectedGroupe);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iDselectedGroupe]);
 
   return (
     <>
@@ -157,6 +156,7 @@ export default function Chat() {
               autoComplete="off"
               onChange={handleChange}
               value={form.message}
+              onFocus={() => view(groupe?.id)}
               required
               className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
             />

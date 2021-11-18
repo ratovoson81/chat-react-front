@@ -31,7 +31,6 @@ export const groupeSlice = createSlice({
       const index = state.groupes.findIndex(
         (g) => g.id === action.payload.idgroupe
       );
-      console.log(index);
 
       if (index !== -1) {
         state.groupes[index].messages.unshift(action.payload.message);
