@@ -37,7 +37,6 @@ export const groupeSlice = createSlice({
       }
     },
     viewMessage: (state, action: PayloadAction<any>) => {
-      console.log("hhhh", action.payload.groupe);
       const index = state.groupes.findIndex(
         (g) => g.id === action.payload.groupe.id
       );

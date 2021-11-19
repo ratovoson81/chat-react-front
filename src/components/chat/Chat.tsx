@@ -7,6 +7,7 @@ import { useAppSelector } from "../../Hooks";
 import { Button } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
 import TimeAgo from "timeago-react";
+import moment from "moment";
 
 export default function Chat() {
   const { sendMessage, form, handleChange, createChat, view, idSelectedUser } =
@@ -60,7 +61,7 @@ export default function Chat() {
       </div>
       <div
         id="messages"
-        className="h-full flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+        className="h-full flex flex-col p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
       >
         <div className="mb-auto">
           <img
@@ -92,40 +93,108 @@ export default function Chat() {
           groupe?.messages
             .slice(0)
             .reverse()
-            .map((message: Message, i: number) => (
-              <div key={i} className="chat-message mt-auto">
-                <div
-                  className={`flex items-end ${
-                    message.author.id === me.id && "justify-end"
-                  }`}
-                >
+            .map((message: Message, i: number, elem: any) => {
+              const nextElem = elem[i + 1];
+              const prevElem = elem[i - 1];
+
+              return (
+                <div key={i} className="chat-message mt-auto">
                   <div
-                    className={`flex flex-col space-y-2 text-xs max-w-xs mx-2 ${
-                      message.author.id === me.id
-                        ? "order-1 items-end"
-                        : "order-2 items-start"
+                    className={`flex items-end ${
+                      message.author.id === me.id && "justify-end"
                     }`}
                   >
-                    <div>
-                      <span
-                        className={`px-4 py-2 rounded-lg inline-block ${
-                          message.author.id === me.id
-                            ? "rounded-br-none bg-blue-600 text-white "
-                            : "rounded-bl-none bg-gray-300 text-gray-600"
-                        }`}
-                      >
-                        {message.content}
+                    <div
+                      className={`flex flex-col space-y-1 max-w-xs mx-2 ${
+                        message.author.id === me.id
+                          ? "order-1 items-end"
+                          : "order-2 items-start"
+                      }`}
+                    >
+                      {nextElem?.author.id === message.author.id &&
+                        prevElem?.author.id !== message.author.id && (
+                          <span className="text-xs">
+                            {`${moment(message.date).calendar(null, {
+                              sameElse: "Do MMM, H:mm",
+                            })}`}
+                          </span>
+                        )}
+                      {nextElem?.author.id !== message.author.id &&
+                        prevElem?.author.id !== message.author.id && (
+                          <span className="text-xs">
+                            {`${moment(message.date).calendar(null, {
+                              sameElse: "Do MMM, H:mm",
+                            })}`}
+                          </span>
+                        )}
+                      <div>
+                        <span
+                          className={`px-4 py-2 rounded-lg inline-block ${
+                            message.author.id === me.id
+                              ? "bg-blue-600 text-white "
+                              : "bg-gray-300 text-gray-600"
+                          }${
+                            message.author.id === me.id &&
+                            nextElem?.author.id !== message.author.id &&
+                            "rounded-tr-none"
+                          }
+                          ${
+                            message.author.id === me.id &&
+                            nextElem?.author.id === message.author.id &&
+                            prevElem?.author.id === message.author.id &&
+                            "rounded-r-none"
+                          }
+                          ${
+                            message.author.id === me.id &&
+                            prevElem?.author.id !== message.author.id &&
+                            nextElem?.author.id === message.author.id &&
+                            "rounded-br-none"
+                          }
+                          ${
+                            message.author.id !== me.id &&
+                            nextElem?.author.id !== message.author.id &&
+                            "rounded-tl-none"
+                          }
+                          ${
+                            message.author.id !== me.id &&
+                            nextElem?.author.id === message.author.id &&
+                            prevElem?.author.id === message.author.id &&
+                            "rounded-l-none"
+                          }
+                          ${
+                            message.author.id !== me.id &&
+                            prevElem?.author.id !== message.author.id &&
+                            nextElem?.author.id === message.author.id &&
+                            "rounded-l-none"
+                          }
+                          `}
+                        >
+                          {message.content + " " + i + " " + message.id}
+                        </span>
+                      </div>
+                      <span className="text-xs">
+                        {groupe.messages.length === i + 1 &&
+                          message.author.id === me.id &&
+                          message.view &&
+                          `Vu: ${moment(message.viewAt).calendar(null, {
+                            sameElse: "Do MMM, H:mm",
+                          })}`}
                       </span>
                     </div>
+                    {prevElem?.author.id !== message.author.id ? (
+                      <img
+                        src={IMAGE_URL + message.author.imageUrl}
+                        width={40}
+                        alt="My profile"
+                        className="rounded-full order-1 self-start"
+                      />
+                    ) : (
+                      <div className="mx-5 order-1"></div>
+                    )}
                   </div>
-                  <img
-                    src={IMAGE_URL + message.author.imageUrl}
-                    alt="My profile"
-                    className="w-6 h-6 rounded-full order-1"
-                  />
                 </div>
-              </div>
-            ))}
+              );
+            })}
       </div>
       {exist && (
         <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
