@@ -165,7 +165,7 @@ export default function Chat() {
                             message.author.id !== me.id &&
                             prevElem?.author.id !== message.author.id &&
                             nextElem?.author.id === message.author.id &&
-                            "rounded-l-none"
+                            "rounded-bl-none"
                           }
                           `}
                         >
