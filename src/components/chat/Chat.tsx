@@ -104,6 +104,15 @@ export default function Chat() {
               } else {
                 same = true;
               }
+              const diffMinutes = moment(message.date).diff(
+                moment(prevElem?.date),
+                "minute"
+              );
+              const diffNext = moment(nextElem?.date).diff(
+                moment(message.date),
+                "minute"
+              );
+              if (i === 72) console.log(diffNext);
               return (
                 <div key={i} className="chat-message mt-auto">
                   {same && (
@@ -129,62 +138,85 @@ export default function Chat() {
                       {nextElem?.author.id === message.author.id &&
                         prevElem?.author.id !== message.author.id && (
                           <span className="text-xs">
-                            {`${moment(message.date).calendar(null, {
-                              sameElse: "Do MMM, H:mm",
-                            })}`}
+                            {`${moment(message.date).format("LT")}`}
                           </span>
                         )}
                       {nextElem?.author.id !== message.author.id &&
                         prevElem?.author.id !== message.author.id && (
                           <span className="text-xs">
-                            {`${moment(message.date).calendar(null, {
-                              sameElse: "Do MMM, H:mm",
-                            })}`}
+                            {`${moment(message.date).format("LT")}`}
+                          </span>
+                        )}
+                      {prevElem?.author.id === message.author.id &&
+                        diffMinutes >= 3 && (
+                          <span className="text-xs">
+                            {`${moment(message.date).format("LT")}`}
                           </span>
                         )}
                       <div>
                         <span
-                          className={`px-4 py-2 rounded-lg inline-block ${
+                          className={`px-4 py-2  inline-block ${
                             message.author.id === me.id
-                              ? "bg-blue-600 text-white "
-                              : "bg-gray-300 text-gray-600"
-                          }${
-                            message.author.id === me.id &&
-                            nextElem?.author.id !== message.author.id &&
-                            "rounded-tr-none"
+                              ? "rounded-l-lg bg-blue-600 text-white "
+                              : "rounded-r-lg bg-gray-300 text-gray-600"
                           }
                           ${
                             message.author.id === me.id &&
+                            prevElem?.author.id !== message.author.id &&
+                            nextElem?.author.id !== message.author.id &&
+                            "rounded-br-lg"
+                          } 
+                          ${
+                            message.author.id === me.id &&
+                            prevElem?.author.id !== message.author.id &&
                             nextElem?.author.id === message.author.id &&
+                            diffNext >= 3 &&
+                            "rounded-br-lg"
+                          }
+                          ${
+                            message.author.id === me.id &&
                             prevElem?.author.id === message.author.id &&
-                            "rounded-r-none"
+                            nextElem?.author.id === message.author.id &&
+                            diffMinutes >= 3 &&
+                            diffNext <= 2 &&
+                            "rounded-tr-lg"
+                          }
+                          
+                          ${
+                            message.author.id === me.id &&
+                            prevElem?.author.id === message.author.id &&
+                            nextElem?.author.id === message.author.id &&
+                            diffMinutes <= 3 &&
+                            diffNext >= 3 &&
+                            "rounded-br-lg"
                           }
                           ${
                             message.author.id === me.id &&
                             prevElem?.author.id !== message.author.id &&
                             nextElem?.author.id === message.author.id &&
-                            "rounded-br-none"
+                            diffNext <= 3 &&
+                            "rounded-tr-lg"
                           }
                           ${
-                            message.author.id !== me.id &&
-                            nextElem?.author.id !== message.author.id &&
-                            "rounded-tl-none"
-                          }
-                          ${
-                            message.author.id !== me.id &&
-                            nextElem?.author.id === message.author.id &&
+                            message.author.id === me.id &&
                             prevElem?.author.id === message.author.id &&
-                            "rounded-l-none"
+                            nextElem?.author.id === message.author.id &&
+                            diffMinutes >= 3 &&
+                            diffNext >= 3 &&
+                            "rounded-br-lg"
                           }
                           ${
-                            message.author.id !== me.id &&
-                            prevElem?.author.id !== message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            "rounded-bl-none"
+                            message.author.id === me.id &&
+                            prevElem?.author.id === message.author.id &&
+                            nextElem?.author.id !== message.author.id &&
+                            "rounded-br-lg"
                           }
                           `}
                         >
-                          {message.content + " " + i + " " + message.id}
+                          {message.content + " " + i + " "}{" "}
+                          {`here ${moment(message.date).calendar(null, {
+                            sameElse: "Do MMM, H:mm",
+                          })}`}
                         </span>
                       </div>
                       <span className="text-xs">
@@ -197,6 +229,13 @@ export default function Chat() {
                       </span>
                     </div>
                     {prevElem?.author.id !== message.author.id ? (
+                      <img
+                        src={IMAGE_URL + message.author.imageUrl}
+                        width={40}
+                        alt="My profile"
+                        className="rounded-full order-1 self-start"
+                      />
+                    ) : diffMinutes >= 3 ? (
                       <img
                         src={IMAGE_URL + message.author.imageUrl}
                         width={40}
