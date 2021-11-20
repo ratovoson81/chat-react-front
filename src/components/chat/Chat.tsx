@@ -96,9 +96,24 @@ export default function Chat() {
             .map((message: Message, i: number, elem: any) => {
               const nextElem = elem[i + 1];
               const prevElem = elem[i - 1];
-
+              const now = moment(message.date).format("LL");
+              const prev = moment(prevElem?.date).format("LL");
+              let same = true;
+              if (now === prev) {
+                same = false;
+              } else {
+                same = true;
+              }
               return (
                 <div key={i} className="chat-message mt-auto">
+                  {same && (
+                    <div className="flex justify-center">{`${moment(
+                      message.date
+                    ).calendar(null, {
+                      sameWeek: "ddd",
+                      sameElse: "Do MMMM YYYY",
+                    })}`}</div>
+                  )}
                   <div
                     className={`flex items-end ${
                       message.author.id === me.id && "justify-end"
