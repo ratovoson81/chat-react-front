@@ -8,6 +8,7 @@ import { Button } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
 import TimeAgo from "timeago-react";
 import moment from "moment";
+import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 
 export default function Chat() {
   const { sendMessage, form, handleChange, createChat, view, idSelectedUser } =
@@ -112,7 +113,6 @@ export default function Chat() {
                 moment(message.date),
                 "minute"
               );
-              if (i === 72) console.log(diffNext);
               return (
                 <div key={i} className="chat-message mt-auto">
                   {same && (
@@ -160,63 +160,25 @@ export default function Chat() {
                               ? "rounded-l-lg bg-blue-600 text-white "
                               : "rounded-r-lg bg-gray-300 text-gray-600"
                           }
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id !== message.author.id &&
-                            nextElem?.author.id !== message.author.id &&
-                            "rounded-br-lg"
-                          } 
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id !== message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            diffNext >= 3 &&
-                            "rounded-br-lg"
-                          }
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id === message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            diffMinutes >= 3 &&
-                            diffNext <= 2 &&
-                            "rounded-tr-lg"
-                          }
-                          
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id === message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            diffMinutes <= 3 &&
-                            diffNext >= 3 &&
-                            "rounded-br-lg"
-                          }
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id !== message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            diffNext <= 3 &&
-                            "rounded-tr-lg"
-                          }
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id === message.author.id &&
-                            nextElem?.author.id === message.author.id &&
-                            diffMinutes >= 3 &&
-                            diffNext >= 3 &&
-                            "rounded-br-lg"
-                          }
-                          ${
-                            message.author.id === me.id &&
-                            prevElem?.author.id === message.author.id &&
-                            nextElem?.author.id !== message.author.id &&
-                            "rounded-br-lg"
-                          }
+                          ${BorderRoundedMe(
+                            me.id,
+                            message.author.id,
+                            prevElem?.author.id,
+                            nextElem?.author.id,
+                            diffMinutes,
+                            diffNext
+                          )}  
+                          ${BorderRoundedReceive(
+                            me.id,
+                            message.author.id,
+                            prevElem?.author.id,
+                            nextElem?.author.id,
+                            diffMinutes,
+                            diffNext
+                          )} 
                           `}
                         >
-                          {message.content + " " + i + " "}{" "}
-                          {`here ${moment(message.date).calendar(null, {
-                            sameElse: "Do MMM, H:mm",
-                          })}`}
+                          {message.content}
                         </span>
                       </div>
                       <span className="text-xs">
