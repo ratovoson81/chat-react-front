@@ -105,7 +105,7 @@ export default function Chat() {
               } else {
                 same = true;
               }
-              const diffMinutes = moment(message.date).diff(
+              const diffPrev = moment(message.date).diff(
                 moment(prevElem?.date),
                 "minute"
               );
@@ -114,7 +114,7 @@ export default function Chat() {
                 "minute"
               );
               return (
-                <div key={i} className="chat-message mt-auto">
+                <div key={i} className={`chat-message mt-auto `}>
                   {same && (
                     <div className="flex justify-center">{`${moment(
                       message.date
@@ -125,8 +125,10 @@ export default function Chat() {
                   )}
                   <div
                     className={`flex items-end ${
-                      message.author.id === me.id && "justify-end"
-                    }`}
+                      message.author.id === me.id && " justify-end"
+                    }
+                     ${diffPrev >= 3 && "mt-4 "}
+                    `}
                   >
                     <div
                       className={`flex flex-col space-y-1 max-w-xs mx-2 ${
@@ -148,7 +150,7 @@ export default function Chat() {
                           </span>
                         )}
                       {prevElem?.author.id === message.author.id &&
-                        diffMinutes >= 3 && (
+                        diffPrev >= 3 && (
                           <span className="text-xs">
                             {`${moment(message.date).format("LT")}`}
                           </span>
@@ -165,7 +167,7 @@ export default function Chat() {
                             message.author.id,
                             prevElem?.author.id,
                             nextElem?.author.id,
-                            diffMinutes,
+                            diffPrev,
                             diffNext
                           )}  
                           ${BorderRoundedReceive(
@@ -173,12 +175,15 @@ export default function Chat() {
                             message.author.id,
                             prevElem?.author.id,
                             nextElem?.author.id,
-                            diffMinutes,
+                            diffPrev,
                             diffNext
                           )} 
                           `}
                         >
-                          {message.content}
+                          {message.content + " " + i + " "}{" "}
+                          {`here ${moment(message.date).calendar(null, {
+                            sameElse: "Do MMM, H:mm",
+                          })}`}
                         </span>
                       </div>
                       <span className="text-xs">
@@ -197,7 +202,7 @@ export default function Chat() {
                         alt="My profile"
                         className="rounded-full order-1 self-start"
                       />
-                    ) : diffMinutes >= 3 ? (
+                    ) : diffPrev >= 3 ? (
                       <img
                         src={IMAGE_URL + message.author.imageUrl}
                         width={40}
