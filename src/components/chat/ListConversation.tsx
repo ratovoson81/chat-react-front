@@ -1,11 +1,16 @@
 import { SpinnerCircular } from "spinners-react";
 import { IMAGE_URL } from "../../api";
-import { Groupe } from "../../api/types";
+import { Groupe, Message, User } from "../../api/types";
 import { useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import TimeAgo from "timeago-react";
 import FlipMove from "react-flip-move";
 import { forwardRef } from "react";
+
+type TList = {
+  item: Groupe;
+  user?: User;
+};
 
 export default function ListConversation() {
   const groupes = useAppSelector((state) => state.groupe.groupes);
@@ -16,7 +21,7 @@ export default function ListConversation() {
   );
   const { selectConversation } = useListUserAndGroupe();
 
-  const List = forwardRef(({ item, user }: any, ref) => (
+  const List = forwardRef(({ item, user }: TList, ref) => (
     <div
       ref={ref as any}
       onClick={() => selectConversation(item)}
@@ -37,15 +42,32 @@ export default function ListConversation() {
       </span>
       <div className="flex flex-col col-span-3 pl-4 justify-center">
         <div className="font-medium">{user?.name}</div>
-        <div className="text-gray-500 text-xs">
+        <div
+          className={`"text-gray-500 text-xs ${
+            !item.messages[0]?.view &&
+            item.messages[0]?.author.id !== me.id &&
+            "font-bold"
+          }`}
+        >
           {item.messages[0]?.author.id === me.id && "Vous: "}
           {item.messages[0] ? item.messages[0]?.content : "vide"}
         </div>
       </div>
-      <div className="flex flex-col col-span-1 justify-center items-end pr-4">
-        <div className="text-xs">
+      <div className="flex flex-col col-span-1 justify-center items-end space-y-2">
+        <div className="text-xs pr-4">
           <TimeAgo datetime={item.messages[0]?.date} locale="pt_BR" />
         </div>
+        {!item.messages[0]?.view && item.messages[0].author.id !== me.id && (
+          <div className="text-xs h-4 w-4 leading-none ring-2 ring-red-400 text-center transform bg-red-400 rounded-full mr-3 text-white flex flex-col justify-center">
+            <span>
+              {
+                item?.messages?.filter(
+                  (m: Message) => m.view === false && m.author.id !== me.id
+                ).length
+              }
+            </span>
+          </div>
+        )}
       </div>
     </div>
   ));
