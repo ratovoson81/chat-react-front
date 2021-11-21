@@ -28,7 +28,7 @@ export default function Chat() {
   useEffect(() => {
     const div: any = document.getElementById("messages");
     div.scrollTop = div.scrollHeight - div.clientHeight;
-    view(iDselectedGroupe);
+    view();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iDselectedGroupe]);
 
@@ -246,7 +246,7 @@ export default function Chat() {
               autoComplete="off"
               onChange={handleChange}
               value={form.message}
-              onFocus={() => view(groupe?.id)}
+              onFocus={view}
               required
               className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
             />

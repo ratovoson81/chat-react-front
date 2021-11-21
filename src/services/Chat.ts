@@ -53,15 +53,18 @@ export const useChat = () => {
           message: result.data.sendMessage,
           idgroupe: iDselectedGroupe,
         });
+        view();
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  const view = (idGroupe: number | undefined) => {
+  const view = () => {
     viewMessage({
-      variables: { data: { idGroupe: idGroupe, idUser: idSelectedUser } },
+      variables: {
+        data: { idGroupe: iDselectedGroupe, idUser: idSelectedUser },
+      },
     })
       .then((result) => {
         socket.emit("view-message", {

@@ -6,6 +6,7 @@ import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import TimeAgo from "timeago-react";
 import FlipMove from "react-flip-move";
 import { forwardRef } from "react";
+import moment from "moment";
 
 type TList = {
   item: Groupe;
@@ -57,7 +58,7 @@ export default function ListConversation() {
         <div className="text-xs pr-4">
           <TimeAgo datetime={item.messages[0]?.date} locale="pt_BR" />
         </div>
-        {!item.messages[0]?.view && item.messages[0].author.id !== me.id && (
+        {!item.messages[0]?.view && item.messages[0].author.id !== me.id ? (
           <div className="text-xs h-4 w-4 leading-none ring-2 ring-red-400 text-center transform bg-red-400 rounded-full mr-3 text-white flex flex-col justify-center">
             <span>
               {
@@ -67,6 +68,12 @@ export default function ListConversation() {
               }
             </span>
           </div>
+        ) : (
+          <span className="text-xs pr-4">
+            {item.messages[0]?.view &&
+              item.messages[0].author.id === me.id &&
+              `Vu: ${moment(item.messages[0].viewAt).format("LT")}`}
+          </span>
         )}
       </div>
     </div>
