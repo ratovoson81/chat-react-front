@@ -16,8 +16,14 @@ export type Scalars = {
   Upload: any;
 };
 
+export type ArgsGetGroupeById = {
+  idGroupe: Scalars['Int'];
+  skip: Scalars['Int'];
+};
+
 export type ArgsGetGroupePerUser = {
   ids: Array<Scalars['Int']>;
+  skip: Scalars['Int'];
 };
 
 export type ArgsGroupe = {
@@ -33,6 +39,7 @@ export type ArgsMessageChat = {
 export type ArgsMessageView = {
   idGroupe: Scalars['Int'];
   idUser: Scalars['Int'];
+  skip: Scalars['Int'];
 };
 
 export type AuthPayLoad = {
@@ -238,7 +245,7 @@ export type QueryGetGroupeByMultipleUsersArgs = {
 
 
 export type QueryGetOneGroupeByIdArgs = {
-  data: Scalars['Int'];
+  data: ArgsGetGroupeById;
 };
 
 export type ReturnGroupe = {

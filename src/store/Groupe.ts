@@ -41,7 +41,22 @@ export const groupeSlice = createSlice({
         (g) => g.id === action.payload.groupe.id
       );
       if (index !== -1) {
-        state.groupes[index] = action.payload.groupe;
+        state.groupes[index].messages.forEach((m) => {
+          const { id, ...rest } = action.payload.groupe.messages.find(
+            (mp: any) => mp.id === m.id
+          );
+          Object.assign(
+            state.groupes[index].messages.find((mc) => mc.id === m.id),
+            rest
+          );
+        });
+      }
+    },
+    moreMessage: (state, action: PayloadAction<any>) => {
+      const index = state.groupes.findIndex((g) => g.id === action.payload.id);
+
+      if (index !== -1) {
+        state.groupes[index].messages.push(...action.payload.messages);
       }
     },
     sortGroupeByDate: (state) => {
@@ -61,6 +76,7 @@ export const {
   arrivalMessageAllGroupe,
   viewMessage,
   sortGroupeByDate,
+  moreMessage,
 } = groupeSlice.actions;
 
 export default groupeSlice.reducer;

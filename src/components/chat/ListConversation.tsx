@@ -6,7 +6,6 @@ import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import TimeAgo from "timeago-react";
 import FlipMove from "react-flip-move";
 import { forwardRef } from "react";
-import moment from "moment";
 
 type TList = {
   item: Groupe;
@@ -70,9 +69,17 @@ export default function ListConversation() {
           </div>
         ) : (
           <span className="text-xs pr-4">
-            {item.messages[0]?.view &&
+            {/*item.messages[0]?.view &&
               item.messages[0].author.id === me.id &&
-              `Vu: ${moment(item.messages[0].viewAt).format("LT")}`}
+            `Vu: ${moment(item.messages[0].viewAt).format("LT")}`*/}
+            {item.messages[0]?.view && item.messages[0].author.id === me.id && (
+              <img
+                src={IMAGE_URL + user?.imageUrl}
+                alt=""
+                width={18}
+                className="rounded-full"
+              />
+            )}
           </span>
         )}
       </div>

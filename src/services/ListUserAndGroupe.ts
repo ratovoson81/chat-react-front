@@ -1,4 +1,4 @@
-import { User } from "./../api/types";
+import { ArgsGetGroupePerUser, User } from "./../api/types";
 import { useLazyQuery } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ALL_USERS, GET_All_GROUPE_BY_USER } from "../api/query";
@@ -70,7 +70,13 @@ export const useListUserAndGroupe = () => {
   useEffect(() => {
     allUsers();
     if (me) {
-      getGroupeByMultipleUsers({ variables: { data: { ids: [me.id] } } });
+      const data: ArgsGetGroupePerUser = {
+        ids: [me.id],
+        skip: 0,
+      };
+      getGroupeByMultipleUsers({
+        variables: { data: data },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);

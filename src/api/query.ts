@@ -18,3 +18,12 @@ export const ALL_USERS = gql`
     }
   }
 `;
+
+export const GET_GROUPE_BY_ID = gql`
+  ${GROUPE_FIELDS}
+  query GetOneGroupeById($data: ArgsGetGroupeById!) {
+    getOneGroupeById(data: $data) {
+      ...GroupeFields
+    }
+  }
+`;

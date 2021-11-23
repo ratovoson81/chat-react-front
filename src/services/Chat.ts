@@ -1,10 +1,15 @@
-import { MessageInput } from "./../api/types";
+import {
+  ArgsGetGroupeById,
+  ArgsMessageView,
+  MessageInput,
+} from "./../api/types";
 import { CREATE_GROUPE, SEND_MESSAGE, VIEW_MESSAGE } from "./../api/mutation";
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
-import { selectGroupe, setExist } from "../store/Groupe";
+import { moreMessage, selectGroupe, setExist } from "../store/Groupe";
 import { socket } from "../api";
+import { GET_GROUPE_BY_ID } from "../api/query";
 
 export const useChat = () => {
   const iDselectedGroupe = useAppSelector(
@@ -20,6 +25,19 @@ export const useChat = () => {
   const [form, setForm] = useState({
     message: "",
   });
+
+  const groupe = useAppSelector((state) =>
+    state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
+  );
+
+  const [GetOneGroupeById /*, { called, loading, data }*/] = useLazyQuery(
+    GET_GROUPE_BY_ID,
+    {
+      onCompleted: ({ getOneGroupeById }) => {
+        dispatch(moreMessage(getOneGroupeById));
+      },
+    }
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -61,9 +79,14 @@ export const useChat = () => {
   };
 
   const view = () => {
+    const data: ArgsMessageView = {
+      idGroupe: iDselectedGroupe,
+      idUser: idSelectedUser,
+      skip: groupe?.messages.length as number,
+    };
     viewMessage({
       variables: {
-        data: { idGroupe: iDselectedGroupe, idUser: idSelectedUser },
+        data: data,
       },
     })
       .then((result) => {
@@ -76,6 +99,14 @@ export const useChat = () => {
       });
   };
 
+  const addMoreMessage = () => {
+    const data: ArgsGetGroupeById = {
+      idGroupe: iDselectedGroupe,
+      skip: groupe?.messages.length as number,
+    };
+    GetOneGroupeById({ variables: { data: data } });
+  };
+
   return {
     sendMessage,
     handleChange,
@@ -83,5 +114,6 @@ export const useChat = () => {
     createChat,
     view,
     idSelectedUser,
+    addMoreMessage,
   };
 };
