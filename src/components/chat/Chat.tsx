@@ -10,6 +10,7 @@ import TimeAgo from "timeago-react";
 import moment from "moment";
 import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { SpinnerDotted } from "spinners-react";
 
 export default function Chat() {
   const {
@@ -20,6 +21,7 @@ export default function Chat() {
     view,
     idSelectedUser,
     addMoreMessage,
+    loading,
   } = useChat();
   const iDselectedGroupe = useAppSelector(
     (state) => state.groupe.idselectedGroupe
@@ -154,7 +156,7 @@ export default function Chat() {
                           <span
                             className={`px-4 py-2  inline-block ${
                               message.author.id === me.id
-                                ? "rounded-l-lg bg-blue-600 text-white "
+                                ? "rounded-l-lg bg-purple-700 text-white "
                                 : "rounded-r-lg bg-gray-300 text-gray-600"
                             }
                           ${BorderRoundedMe(
@@ -328,20 +330,24 @@ export default function Chat() {
                   ></path>
                 </svg>
               </button>
-              <button
-                type="button"
-                onClick={sendMessage}
-                className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-6 w-6 transform rotate-90"
+              {!loading ? (
+                <button
+                  type="button"
+                  onClick={sendMessage}
+                  className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
                 >
-                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-6 w-6 transform rotate-90"
+                  >
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                  </svg>
+                </button>
+              ) : (
+                <SpinnerDotted size="25" color="purple" />
+              )}
             </div>
           </div>
         </div>

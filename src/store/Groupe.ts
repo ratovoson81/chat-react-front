@@ -42,13 +42,17 @@ export const groupeSlice = createSlice({
       );
       if (index !== -1) {
         state.groupes[index].messages.forEach((m) => {
-          const { id, ...rest } = action.payload.groupe.messages.find(
+          const data = action.payload.groupe.messages.find(
             (mp: any) => mp.id === m.id
           );
-          Object.assign(
-            state.groupes[index].messages.find((mc) => mc.id === m.id),
-            rest
-          );
+
+          if (data) {
+            const { id, ...rest } = data;
+            Object.assign(
+              state.groupes[index].messages.find((mc) => mc.id === m.id),
+              rest
+            );
+          }
         });
       }
     },

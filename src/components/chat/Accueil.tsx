@@ -31,7 +31,7 @@ export default function Acceuil() {
       dispatch(arrivalMessageAllGroupe(data));
       setTimeout(function () {
         dispatch(sortGroupeByDate());
-      }, 0);
+      }, 250);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wsClient]);

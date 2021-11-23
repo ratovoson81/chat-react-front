@@ -19,7 +19,7 @@ export const useChat = () => {
   const idSelectedUser = useAppSelector((state) => state.user.idSelectedUser);
   const dispatch = useAppDispatch();
 
-  const [sendMessageMutation] = useMutation(SEND_MESSAGE);
+  const [sendMessageMutation, { loading }] = useMutation(SEND_MESSAGE);
   const [viewMessage] = useMutation(VIEW_MESSAGE);
   const [createGroupe] = useMutation(CREATE_GROUPE);
   const [form, setForm] = useState({
@@ -65,13 +65,13 @@ export const useChat = () => {
       idGroupe: iDselectedGroupe,
       date: new Date(),
     };
+    view();
     sendMessageMutation({ variables: { data: data } })
       .then((result) => {
         socket.emit("send-message", {
           message: result.data.sendMessage,
           idgroupe: iDselectedGroupe,
         });
-        view();
       })
       .catch((err) => {
         console.error(err);
@@ -115,5 +115,6 @@ export const useChat = () => {
     view,
     idSelectedUser,
     addMoreMessage,
+    loading,
   };
 };
