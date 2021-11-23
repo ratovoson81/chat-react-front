@@ -10,7 +10,7 @@ import TimeAgo from "timeago-react";
 import moment from "moment";
 import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { SpinnerDotted } from "spinners-react";
+import { SpinnerCircular, SpinnerDotted } from "spinners-react";
 
 export default function Chat() {
   const {
@@ -80,7 +80,11 @@ export default function Chat() {
           style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
           inverse={true} //
           hasMore={true}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <span className="flex justify-center">
+              <SpinnerCircular size="40" color="purple" />
+            </span>
+          }
           scrollableTarget="messages"
           endMessage={
             <p style={{ textAlign: "center" }}>
