@@ -25,18 +25,17 @@ export const useChat = () => {
   const [form, setForm] = useState({
     message: "",
   });
-
+  const [hasMore, setHasMore] = useState(false);
   const groupe = useAppSelector((state) =>
     state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
   );
 
-  const [GetOneGroupeById, { data }] = useLazyQuery(GET_GROUPE_BY_ID, {
+  const [GetOneGroupeById] = useLazyQuery(GET_GROUPE_BY_ID, {
     onCompleted: ({ getOneGroupeById }) => {
       dispatch(moreMessage(getOneGroupeById));
+      setHasMore(getOneGroupeById.messages.length < 20 ? false : true);
     },
   });
-
-  const hasMore = data?.getOneGroupeById.messages.length < 20 ? false : true;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -99,6 +98,7 @@ export const useChat = () => {
   };
 
   function addMoreMessage() {
+    console.log("end of reach");
     const args: ArgsGetGroupeById = {
       idGroupe: iDselectedGroupe,
       skip: groupe?.messages.length as number,
@@ -116,5 +116,6 @@ export const useChat = () => {
     addMoreMessage,
     loading,
     hasMore,
+    setHasMore,
   };
 };

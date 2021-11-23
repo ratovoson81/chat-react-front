@@ -11,7 +11,7 @@ export interface MessageState {
 const initialState: MessageState = {
   groupes: [] as Groupe[],
   idselectedGroupe: -1,
-  exist: true,
+  exist: false,
 };
 
 export const groupeSlice = createSlice({

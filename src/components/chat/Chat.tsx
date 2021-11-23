@@ -23,6 +23,7 @@ export default function Chat() {
     addMoreMessage,
     loading,
     hasMore,
+    setHasMore,
   } = useChat();
 
   const iDselectedGroupe = useAppSelector(
@@ -39,8 +40,13 @@ export default function Chat() {
 
   useEffect(() => {
     const div: any = document.getElementById("messages");
-    div.scrollTop = div.scrollHeight - div.clientHeight;
-    view();
+    if (div) {
+      div.scrollTop = div.scrollHeight - div.clientHeight;
+    }
+    if (iDselectedGroupe !== -1 && exist) {
+      view();
+      setHasMore(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iDselectedGroupe]);
 
@@ -72,99 +78,110 @@ export default function Chat() {
           </div>
         </div>
       </div>
-      <div
-        id="messages"
-        className="h-full flex flex-col-reverse p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
-      >
-        <InfiniteScroll
-          dataLength={groupe?.messages.length as any}
-          next={addMoreMessage}
-          style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
-          inverse={true} //
-          hasMore={hasMore}
-          loader={
-            <span className="flex justify-center">
-              <SpinnerCircular size="40" color="purple" />
-            </span>
-          }
-          scrollableTarget="messages"
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
+      {exist ? (
+        <div
+          id="messages"
+          className="h-full flex flex-col-reverse p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
         >
-          {iDselectedGroupe > -1 &&
-            groupe?.messages
-              .slice(0)
-              .map((message: Message, i: number, elem: any) => {
-                const prevElem = elem[i - 1];
-                const nextElem = elem[i + 1];
-                const now = moment(message.date).format("LL");
-                const prev = moment(nextElem?.date).format("LL");
-                let same = true;
-                if (now === prev) {
-                  same = false;
-                } else {
-                  same = true;
-                }
-                const diffPrev = moment(message.date).diff(
-                  moment(nextElem?.date),
-                  "minute"
-                );
-                const diffNext = moment(prevElem?.date).diff(
-                  moment(message.date),
-                  "minute"
-                );
-                return (
-                  <div key={i} className={`chat-message mt-auto `}>
-                    {same && (
-                      <div className="flex justify-center">{`${moment(
-                        message.date
-                      ).calendar(null, {
-                        sameWeek: "ddd",
-                        sameElse: "Do MMMM YYYY",
-                      })}`}</div>
-                    )}
-                    <div
-                      className={`flex items-end ${
-                        message.author.id === me.id && " justify-end"
-                      }
+          <InfiniteScroll
+            dataLength={groupe?.messages.length as any}
+            next={addMoreMessage}
+            style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
+            inverse={true} //
+            hasMore={hasMore}
+            loader={
+              <span className="flex justify-center">
+                <SpinnerCircular size="40" color="purple" />
+              </span>
+            }
+            scrollableTarget="messages"
+            endMessage={
+              <div className="mb-auto">
+                <img
+                  className="rounded-full m-auto "
+                  width={150}
+                  alt=""
+                  src={IMAGE_URL + selectedUser?.imageUrl}
+                />
+                <div className="flex flex-col justify-center mt-4 text-xs">
+                  <div className="m-auto">{selectedUser?.email}</div>
+                  <div className="m-auto">{selectedUser?.name}</div>
+                  <div className="m-auto">Vous pouvez maintenant chater !</div>
+                </div>
+              </div>
+            }
+          >
+            {iDselectedGroupe > -1 &&
+              groupe?.messages
+                .slice(0)
+                .map((message: Message, i: number, elem: any) => {
+                  const prevElem = elem[i - 1];
+                  const nextElem = elem[i + 1];
+                  const now = moment(message.date).format("LL");
+                  const prev = moment(nextElem?.date).format("LL");
+                  let same = true;
+                  if (now === prev) {
+                    same = false;
+                  } else {
+                    same = true;
+                  }
+                  const diffPrev = moment(message.date).diff(
+                    moment(nextElem?.date),
+                    "minute"
+                  );
+                  const diffNext = moment(prevElem?.date).diff(
+                    moment(message.date),
+                    "minute"
+                  );
+                  return (
+                    <div key={i} className={`chat-message mt-auto `}>
+                      {same && (
+                        <div className="flex justify-center">{`${moment(
+                          message.date
+                        ).calendar(null, {
+                          sameWeek: "ddd",
+                          sameElse: "Do MMMM YYYY",
+                        })}`}</div>
+                      )}
+                      <div
+                        className={`flex items-end ${
+                          message.author.id === me.id && " justify-end"
+                        }
                      ${diffPrev >= 3 && "mt-4 "}
                     `}
-                    >
-                      <div
-                        className={`flex flex-col space-y-1 max-w-xs mx-2 ${
-                          message.author.id === me.id
-                            ? "order-1 items-end"
-                            : "order-2 items-start"
-                        }`}
                       >
-                        {prevElem?.author.id === message.author.id &&
-                          nextElem?.author.id !== message.author.id && (
-                            <span className="text-xs">
-                              {`${moment(message.date).format("LT")}`}
-                            </span>
-                          )}
-                        {prevElem?.author.id !== message.author.id &&
-                          nextElem?.author.id !== message.author.id && (
-                            <span className="text-xs">
-                              {`${moment(message.date).format("LT")}`}
-                            </span>
-                          )}
-                        {nextElem?.author.id === message.author.id &&
-                          diffPrev >= 3 && (
-                            <span className="text-xs">
-                              {`${moment(message.date).format("LT")}`}
-                            </span>
-                          )}
-                        <div>
-                          <span
-                            className={`px-4 py-2  inline-block ${
-                              message.author.id === me.id
-                                ? "rounded-l-lg bg-purple-700 text-white "
-                                : "rounded-r-lg bg-gray-300 text-gray-600"
-                            }
+                        <div
+                          className={`flex flex-col space-y-1 max-w-xs mx-2 ${
+                            message.author.id === me.id
+                              ? "order-1 items-end"
+                              : "order-2 items-start"
+                          }`}
+                        >
+                          {prevElem?.author.id === message.author.id &&
+                            nextElem?.author.id !== message.author.id && (
+                              <span className="text-xs">
+                                {`${moment(message.date).format("LT")}`}
+                              </span>
+                            )}
+                          {prevElem?.author.id !== message.author.id &&
+                            nextElem?.author.id !== message.author.id && (
+                              <span className="text-xs">
+                                {`${moment(message.date).format("LT")}`}
+                              </span>
+                            )}
+                          {nextElem?.author.id === message.author.id &&
+                            diffPrev >= 3 && (
+                              <span className="text-xs">
+                                {`${moment(message.date).format("LT")}`}
+                              </span>
+                            )}
+                          <div>
+                            <span
+                              className={`px-4 py-2  inline-block ${
+                                message.author.id === me.id
+                                  ? "rounded-l-lg bg-purple-700 text-white "
+                                  : "rounded-r-lg bg-gray-300 text-gray-600"
+                              }
                           ${BorderRoundedMe(
                             me.id,
                             message.author.id,
@@ -182,71 +199,69 @@ export default function Chat() {
                             diffNext
                           )} 
                           `}
-                          >
-                            {message.content + " " + i + " " + message.id}{" "}
-                            {`here ${moment(message.date).calendar(null, {
-                              sameElse: "Do MMM, H:mm",
-                            })}`}
+                            >
+                              {message.content + " " + i + " " + message.id}{" "}
+                              {`here ${moment(message.date).calendar(null, {
+                                sameElse: "Do MMM, H:mm",
+                              })}`}
+                            </span>
+                          </div>
+                          <span className="text-xs">
+                            {i === 0 &&
+                              message.author.id === me.id &&
+                              message.view &&
+                              `Vu: ${moment(message.viewAt).calendar(null, {
+                                sameElse: "Do MMM, H:mm",
+                              })}`}
                           </span>
                         </div>
-                        <span className="text-xs">
-                          {i === 0 &&
-                            message.author.id === me.id &&
-                            message.view &&
-                            `Vu: ${moment(message.viewAt).calendar(null, {
-                              sameElse: "Do MMM, H:mm",
-                            })}`}
-                        </span>
+                        {nextElem?.author.id !== message.author.id ? (
+                          <img
+                            src={IMAGE_URL + message.author.imageUrl}
+                            width={40}
+                            alt="My profile"
+                            className="rounded-full order-1 self-start"
+                          />
+                        ) : diffPrev >= 3 ? (
+                          <img
+                            src={IMAGE_URL + message.author.imageUrl}
+                            width={40}
+                            alt="My profile"
+                            className="rounded-full order-1 self-start"
+                          />
+                        ) : (
+                          <div className="mx-5 order-1"></div>
+                        )}
                       </div>
-                      {nextElem?.author.id !== message.author.id ? (
-                        <img
-                          src={IMAGE_URL + message.author.imageUrl}
-                          width={40}
-                          alt="My profile"
-                          className="rounded-full order-1 self-start"
-                        />
-                      ) : diffPrev >= 3 ? (
-                        <img
-                          src={IMAGE_URL + message.author.imageUrl}
-                          width={40}
-                          alt="My profile"
-                          className="rounded-full order-1 self-start"
-                        />
-                      ) : (
-                        <div className="mx-5 order-1"></div>
-                      )}
                     </div>
-                  </div>
-                );
-              })}
-          <div className="mb-auto">
-            <img
-              className="rounded-full m-auto "
-              width={150}
-              alt=""
-              src={IMAGE_URL + selectedUser?.imageUrl}
-            />
-            <div className="flex flex-col justify-center mt-4 text-xs">
-              <div className="m-auto">{selectedUser?.email}</div>
-              <div className="m-auto">{selectedUser?.name}</div>
-              {exist ? (
-                <div className="m-auto">Vous pouvez maintenant chater !</div>
-              ) : (
-                <Button
-                  className="mt-2 m-auto"
-                  type="primary"
-                  shape="round"
-                  icon={<WechatOutlined />}
-                  size="large"
-                  onClick={() => createChat()}
-                >
-                  Chater
-                </Button>
-              )}
-            </div>
+                  );
+                })}
+          </InfiniteScroll>
+        </div>
+      ) : (
+        <div className="mb-auto">
+          <img
+            className="rounded-full m-auto "
+            width={150}
+            alt=""
+            src={IMAGE_URL + selectedUser?.imageUrl}
+          />
+          <div className="flex flex-col justify-center mt-4 text-xs">
+            <div className="m-auto">{selectedUser?.email}</div>
+            <div className="m-auto">{selectedUser?.name}</div>
+            <Button
+              className="mt-2 m-auto"
+              type="primary"
+              shape="round"
+              icon={<WechatOutlined />}
+              size="large"
+              onClick={() => createChat()}
+            >
+              Chater
+            </Button>
           </div>
-        </InfiniteScroll>
-      </div>
+        </div>
+      )}
       {exist && (
         <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
           <div className="relative flex">

@@ -1,3 +1,4 @@
+import { useChat } from "./Chat";
 import { ArgsGetGroupePerUser, User } from "./../api/types";
 import { useLazyQuery } from "@apollo/client";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -13,6 +14,7 @@ type returnQuery = {
 
 export const useListUserAndGroupe = () => {
   const dispatch = useAppDispatch();
+  const { setHasMore } = useChat();
   const me = useAppSelector((state) => state.user.me);
   const [form, setForm] = useState({
     search: "",
@@ -27,15 +29,18 @@ export const useListUserAndGroupe = () => {
   };
 
   const selectConversation = (groupe: Groupe) => {
+    dispatch(setExist(true));
     dispatch(selectGroupe(groupe.id));
     dispatch(
       setSelectedUser(groupe.users.find((u) => u.userId !== me.id)?.user?.id)
     );
-    dispatch(setExist(true));
   };
 
   const selectUser = (user: User) => {
-    checkGroupeExist({ variables: { data: { ids: [me.id, user.id] } } });
+    const data: ArgsGetGroupePerUser = { ids: [me.id, user.id], skip: 0 };
+    checkGroupeExist({
+      variables: { data: data },
+    });
     dispatch(setSelectedUser(user.id));
   };
 
@@ -55,6 +60,7 @@ export const useListUserAndGroupe = () => {
           dispatch(setExist(true));
         } else {
           dispatch(setExist(false));
+          setHasMore(false);
           dispatch(selectGroupe(-1));
         }
       },
