@@ -30,14 +30,13 @@ export const useChat = () => {
     state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
   );
 
-  const [GetOneGroupeById /*, { called, loading, data }*/] = useLazyQuery(
-    GET_GROUPE_BY_ID,
-    {
-      onCompleted: ({ getOneGroupeById }) => {
-        dispatch(moreMessage(getOneGroupeById));
-      },
-    }
-  );
+  const [GetOneGroupeById, { data }] = useLazyQuery(GET_GROUPE_BY_ID, {
+    onCompleted: ({ getOneGroupeById }) => {
+      dispatch(moreMessage(getOneGroupeById));
+    },
+  });
+
+  const hasMore = data?.getOneGroupeById.messages.length < 20 ? false : true;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -99,13 +98,13 @@ export const useChat = () => {
       });
   };
 
-  const addMoreMessage = () => {
-    const data: ArgsGetGroupeById = {
+  function addMoreMessage() {
+    const args: ArgsGetGroupeById = {
       idGroupe: iDselectedGroupe,
       skip: groupe?.messages.length as number,
     };
-    GetOneGroupeById({ variables: { data: data } });
-  };
+    GetOneGroupeById({ variables: { data: args } });
+  }
 
   return {
     sendMessage,
@@ -116,5 +115,6 @@ export const useChat = () => {
     idSelectedUser,
     addMoreMessage,
     loading,
+    hasMore,
   };
 };

@@ -22,7 +22,9 @@ export default function Chat() {
     idSelectedUser,
     addMoreMessage,
     loading,
+    hasMore,
   } = useChat();
+
   const iDselectedGroupe = useAppSelector(
     (state) => state.groupe.idselectedGroupe
   );
@@ -79,7 +81,7 @@ export default function Chat() {
           next={addMoreMessage}
           style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
           inverse={true} //
-          hasMore={true}
+          hasMore={hasMore}
           loader={
             <span className="flex justify-center">
               <SpinnerCircular size="40" color="purple" />
