@@ -10,7 +10,7 @@ import TimeAgo from "timeago-react";
 import moment from "moment";
 import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { SpinnerCircular, SpinnerDotted } from "spinners-react";
+import { SpinnerDotted } from "spinners-react";
 
 export default function Chat() {
   const {
@@ -91,7 +91,7 @@ export default function Chat() {
             hasMore={hasMore}
             loader={
               <span className="flex justify-center">
-                <SpinnerCircular size="40" color="purple" />
+                <SpinnerDotted size="40" color="purple" />
               </span>
             }
             scrollableTarget="messages"
@@ -119,11 +119,11 @@ export default function Chat() {
                   const nextElem = elem[i + 1];
                   const now = moment(message.date).format("LL");
                   const prev = moment(nextElem?.date).format("LL");
-                  let same = true;
+                  let sameDay = true;
                   if (now === prev) {
-                    same = false;
+                    sameDay = false;
                   } else {
-                    same = true;
+                    sameDay = true;
                   }
                   const diffPrev = moment(message.date).diff(
                     moment(nextElem?.date),
@@ -135,8 +135,8 @@ export default function Chat() {
                   );
                   return (
                     <div key={i} className={`chat-message mt-auto `}>
-                      {same && (
-                        <div className="flex justify-center">{`${moment(
+                      {sameDay && (
+                        <div className="flex justify-center text-xs border border-transparent">{`${moment(
                           message.date
                         ).calendar(null, {
                           sameWeek: "ddd",
@@ -177,7 +177,7 @@ export default function Chat() {
                             )}
                           <div>
                             <span
-                              className={`px-4 py-2  inline-block ${
+                              className={`px-4 py-2 inline-block text-xs ${
                                 message.author.id === me.id
                                   ? "rounded-l-lg bg-purple-700 text-white "
                                   : "rounded-r-lg bg-gray-300 text-gray-600"

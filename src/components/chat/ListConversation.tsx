@@ -1,4 +1,4 @@
-import { SpinnerCircular } from "spinners-react";
+import { SpinnerDotted } from "spinners-react";
 import { IMAGE_URL } from "../../api";
 import { Groupe, Message, User } from "../../api/types";
 import { useAppSelector } from "../../Hooks";
@@ -90,7 +90,7 @@ export default function ListConversation() {
     <>
       {groupes.length === 0 && (
         <div className="flex justify-center items-center">
-          <SpinnerCircular size="40" color="black" />
+          <SpinnerDotted size="40" color="purple" />
         </div>
       )}
       <FlipMove enterAnimation="fade">
