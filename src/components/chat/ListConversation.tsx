@@ -6,6 +6,7 @@ import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import TimeAgo from "timeago-react";
 import FlipMove from "react-flip-move";
 import { forwardRef } from "react";
+import Name from "../public/Name";
 
 type TList = {
   item: Groupe;
@@ -41,7 +42,7 @@ export default function ListConversation() {
         )}
       </span>
       <div className="flex flex-col col-span-3 pl-4 justify-center">
-        <div className="font-medium">{user?.name}</div>
+        <Name name={user?.name} />
         <div
           className={`"text-gray-500 text-xs dark:text-white ${
             !item.messages[0]?.view &&

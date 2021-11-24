@@ -11,6 +11,7 @@ import moment from "moment";
 import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SpinnerDotted } from "spinners-react";
+import Name from "../public/Name";
 
 export default function Chat() {
   const {
@@ -65,7 +66,7 @@ export default function Chat() {
           )}
         </span>
         <div className="flex flex-col pl-4 justify-center">
-          <div className="font-medium">{selectedUser?.name}</div>
+          <Name name={selectedUser?.name} />
           <div className="text-gray-500 text-xs">
             En ligne{" "}
             {selectedUser?.isOnline ? (
@@ -151,7 +152,7 @@ export default function Chat() {
                     `}
                       >
                         <div
-                          className={`flex flex-col space-y-1 max-w-xs mx-2 ${
+                          className={`flex flex-col space-y-0.5 max-w-xs mx-2 ${
                             message.author.id === me.id
                               ? "order-1 items-end"
                               : "order-2 items-start"

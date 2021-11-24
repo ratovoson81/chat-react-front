@@ -1,7 +1,7 @@
 import { FireFilled, FireOutlined } from "@ant-design/icons";
 import React from "react";
-//import { FaSun, FaMoon} from "react-icons/fa";
 import { ThemeContext } from "./ThemeContext";
+//import { FaSun, FaMoon} from "react-icons/fa";
 
 const Toggle = () => {
   const { theme, setTheme }: any = React.useContext(ThemeContext);

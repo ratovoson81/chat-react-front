@@ -9,8 +9,8 @@ import PrivatePage from "../layout/PrivatePage";
 import Home from "../components/Home";
 import LoadingBar from "react-top-loading-bar";
 import { useState, useRef, useEffect } from "react";
-import { ThemeProvider } from "../components/connexion/ThemeContext";
-import Background from "../components/connexion/Background";
+import { ThemeProvider } from "../components/public/ThemeContext";
+import Background from "../components/public/Background";
 
 export default function App() {
   const [loading, setLoading] = useState<Boolean>(true);

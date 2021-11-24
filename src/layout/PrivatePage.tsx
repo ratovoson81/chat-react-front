@@ -1,7 +1,7 @@
 import React from "react";
 import { IMAGE_URL } from "../api";
 import { AuthButton } from "../components/AuthButton";
-import Toggle from "../components/connexion/ThemeToggle";
+import Toggle from "../components/public/ThemeToggle";
 import { useAppSelector } from "../Hooks";
 
 type props = {
