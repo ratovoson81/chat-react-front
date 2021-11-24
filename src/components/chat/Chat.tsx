@@ -6,14 +6,12 @@ import { IMAGE_URL } from "../../api";
 import { useAppSelector } from "../../Hooks";
 import { Button } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
-import TimeAgo from "timeago-react";
 import moment from "moment";
 import { BorderRoundedMe, BorderRoundedReceive } from "../../BorderChat";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SpinnerDotted } from "spinners-react";
-import Name from "../public/Name";
 import InputMessage from "../public/InputMessage";
-import Avatar from "../public/Avatar";
+import InfoSelectedUser from "../public/InfoSelectedUser";
 
 export default function Chat() {
   const {
@@ -51,29 +49,11 @@ export default function Chat() {
 
   return (
     <>
-      <div className="flex h-16">
-        <Avatar
-          imageUrl={selectedUser?.imageUrl}
-          isOnline={selectedUser?.isOnline}
-        />
-        <div className="flex flex-col pl-4 justify-center">
-          <Name name={selectedUser?.name} />
-          <div className="text-gray-500 text-xs">
-            En ligne{" "}
-            {selectedUser?.isOnline ? (
-              ""
-            ) : (
-              <span>
-                <TimeAgo datetime={selectedUser?.connectedAt} locale="f-on" />
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
+      <InfoSelectedUser />
       {exist ? (
         <div
           id="messages"
-          className="h-full flex flex-col-reverse p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+          className="border-t mt-2 h-full flex flex-col-reverse p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
         >
           <InfiniteScroll
             dataLength={groupe?.messages.length as any}

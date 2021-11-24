@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { socket, wsClient } from "../../api";
 import { useAppDispatch, useAppSelector } from "../../Hooks";
+import "../../css/chat.css";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import {
   arrivalMessageAllGroupe,
@@ -37,8 +38,8 @@ export default function Acceuil() {
   }, [wsClient]);
 
   return (
-    <div className="pt-16 flex flex-row h-full">
-      <div className="w-96">
+    <div className="pt-14 flex flex-row h-full">
+      <div className="w-96 border-r overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         <div className="flex relative m-2">
           <input
             className="border-2 border-primary bg-red transition h-10 px-5 pr-16 rounded-full focus:outline-none w-full text-black"
@@ -77,7 +78,7 @@ export default function Acceuil() {
           )}
         </div>
       </div>
-      <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col">
+      <div className="flex-1 m:2 sm:m-2 justify-between flex flex-col">
         {idSelectedUser > -1 ? <Chat /> : <Welcome />}
       </div>
     </div>

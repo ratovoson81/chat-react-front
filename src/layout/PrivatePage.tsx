@@ -15,10 +15,10 @@ const PrivatePage: React.FC<props> = ({ children }) => {
     <div className="h-screen">
       {/*<NavBar />
       <br />*/}
-      <div className="fixed flex pt-4 w-full">
+      <div className="fixed flex h-14 w-full border-b">
         <div className="flex-1 flex items-center">
-          <h1 className="ml-8 text-3xl w-1/3 ">Chat</h1>
-          <p>Newest</p>
+          <h1 className="ml-8 text-3xl w-1/3 my-auto">Chat</h1>
+          <p className="my-auto">Newest</p>
         </div>
         <div className="flex-1 flex items-center">
           <div className="w-2/3 pl-16"></div>

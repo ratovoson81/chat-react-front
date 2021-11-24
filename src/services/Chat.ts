@@ -37,7 +37,7 @@ export const useChat = () => {
     },
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setForm({
       ...form,

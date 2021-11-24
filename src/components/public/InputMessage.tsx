@@ -10,9 +10,9 @@ const InputMessage = () => {
   const { sendMessage, form, handleChange, loading, view } = useChat();
 
   return (
-    <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-      <div className="relative flex">
-        <span className="absolute inset-y-0 flex items-center">
+    <div className="border-t-2 border-gray-200 px-4 pt-2 mb-2 sm:mb-1">
+      <div className="flex">
+        <span className=" inset-y-0 flex items-center">
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -20,8 +20,7 @@ const InputMessage = () => {
             <img src={micro} width="25" alt="" />
           </button>
         </span>
-        <input
-          type="text"
+        <textarea
           placeholder="Taper votre message"
           name="message"
           autoComplete="off"
@@ -29,9 +28,9 @@ const InputMessage = () => {
           value={form.message}
           onFocus={view}
           required
-          className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-full py-3"
+          className="w-full h-12 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-6 bg-gray-200 rounded-full py-3"
         />
-        <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+        <div className=" right-0 items-center inset-y-0 hidden sm:flex">
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
