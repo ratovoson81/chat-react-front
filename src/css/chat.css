@@ -19,3 +19,13 @@
 .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
   border-radius: 0.25rem;
 }
+
+.emoji-picker {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+}
+
+.emoji-picker-react {
+  box-shadow: none !important;
+}

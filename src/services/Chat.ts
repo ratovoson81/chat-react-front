@@ -45,6 +45,12 @@ export const useChat = () => {
     });
   };
 
+  const onEmojiClick = (event: any, emojiObject: any) => {
+    setForm({
+      message: form.message.concat(emojiObject.emoji),
+    });
+  };
+
   const createChat = () => {
     createGroupe({ variables: { data: { users: [me.id, idSelectedUser] } } })
       .then((result) => {
@@ -118,5 +124,6 @@ export const useChat = () => {
     loading,
     hasMore,
     setHasMore,
+    onEmojiClick,
   };
 };

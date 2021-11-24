@@ -5,13 +5,18 @@ import trambon from "../../assets/trambon.svg";
 import filepicker from "../../assets/filepicker.svg";
 import emoji from "../../assets/emoji.svg";
 import { SendOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import "../../css/chat.css";
+import EmojiPicker from "./EmojiPicker";
 
 const InputMessage = () => {
-  const { sendMessage, form, handleChange, loading, view } = useChat();
+  const { sendMessage, form, handleChange, loading, view, onEmojiClick } =
+    useChat();
+  const [pickerOpen, togglePicker] = useState(false);
 
   return (
     <div className="border-t-2 border-gray-200 px-4 pt-2 mb-2 sm:mb-1">
-      <div className="flex">
+      <div className="flex space-x-1">
         <span className=" inset-y-0 flex items-center">
           <button
             type="button"
@@ -30,7 +35,7 @@ const InputMessage = () => {
           required
           className="w-full h-12 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-6 bg-gray-200 rounded-full py-3"
         />
-        <div className=" right-0 items-center inset-y-0 hidden sm:flex">
+        <div className=" right-0 items-center inset-y-0 hidden sm:flex space-x-0.5">
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -45,10 +50,19 @@ const InputMessage = () => {
           </button>
           <button
             type="button"
+            onClick={() => {
+              togglePicker(!pickerOpen);
+            }}
             className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
           >
             <img src={emoji} width="25" alt="" />
           </button>
+          {pickerOpen && (
+            <EmojiPicker
+              onEmojiClick={onEmojiClick}
+              togglePicker={togglePicker}
+            />
+          )}
           {!loading ? (
             <button
               type="button"
