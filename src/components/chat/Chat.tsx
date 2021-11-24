@@ -177,7 +177,7 @@ export default function Chat() {
                             )}
                           <div>
                             <span
-                              className={`px-4 py-2 inline-block text-xs ${
+                              className={`px-4 py-2 inline-block ${
                                 message.author.id === me.id
                                   ? "rounded-l-lg bg-purple-700 text-white "
                                   : "rounded-r-lg bg-gray-300 text-gray-600"

@@ -1,6 +1,7 @@
 import React from "react";
 import { IMAGE_URL } from "../api";
 import { AuthButton } from "../components/AuthButton";
+import Toggle from "../components/connexion/ThemeToggle";
 import { useAppSelector } from "../Hooks";
 
 type props = {
@@ -32,6 +33,7 @@ const PrivatePage: React.FC<props> = ({ children }) => {
               {me.name && me.name?.charAt(0).toUpperCase() + me.name?.slice(1)}
             </div>
           </div>
+          <Toggle />
           <AuthButton />
         </div>
       </div>

@@ -43,7 +43,7 @@ export default function ListConversation() {
       <div className="flex flex-col col-span-3 pl-4 justify-center">
         <div className="font-medium">{user?.name}</div>
         <div
-          className={`"text-gray-500 text-xs ${
+          className={`"text-gray-500 text-xs dark:text-white ${
             !item.messages[0]?.view &&
             item.messages[0]?.author.id !== me.id &&
             "font-bold"
