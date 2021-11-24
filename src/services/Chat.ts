@@ -70,6 +70,7 @@ export const useChat = () => {
           message: result.data.sendMessage,
           idgroupe: iDselectedGroupe,
         });
+        setForm({ message: "" });
       })
       .catch((err) => {
         console.error(err);
