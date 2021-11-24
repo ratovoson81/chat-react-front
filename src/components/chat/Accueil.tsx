@@ -42,7 +42,7 @@ export default function Acceuil() {
       <div className="w-96 border-r overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         <div className="flex relative m-2">
           <input
-            className="border-2 border-primary bg-red transition h-10 px-5 pr-16 rounded-full focus:outline-none w-full text-black"
+            className="border-2 border-primary transition h-10 px-5 pr-16 rounded-full focus:outline-none w-full text-black bg-gray-200 text-gray-600 placeholder-gray-600"
             type="search"
             name="search"
             placeholder="Recherche"
