@@ -5,6 +5,8 @@ import "../../css/chat.css";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import {
   arrivalMessageAllGroupe,
+  onCreateGroupe,
+  setExist,
   sortGroupeByDate,
   viewMessage,
 } from "../../store/Groupe";
@@ -13,10 +15,12 @@ import Chat from "./Chat";
 import ListConversation from "./ListConversation";
 import ListUser from "./ListUser";
 import Welcome from "./Welcome";
+import { Groupe } from "../../api/types";
 
 export default function Acceuil() {
   const dispatch = useAppDispatch();
   const idSelectedUser = useAppSelector((state) => state.user.idSelectedUser);
+  const me = useAppSelector((state) => state.user.me);
   const { form, handleChange } = useListUserAndGroupe();
 
   useEffect(() => {
@@ -26,6 +30,15 @@ export default function Acceuil() {
 
     socket.on("arrival-view-message", (data) => {
       dispatch(viewMessage(data));
+    });
+
+    socket.on("arrival-create-chat", (data: Groupe) => {
+      if (data.users.some((u: any) => me.id === u.userId)) {
+        dispatch(onCreateGroupe(data));
+        if (data.messages[0].author.id === me.id) {
+          dispatch(setExist(true));
+        }
+      }
     });
 
     socket.on("arrival-message", (data) => {

@@ -7,7 +7,7 @@ import { CREATE_GROUPE, SEND_MESSAGE, VIEW_MESSAGE } from "./../api/mutation";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
-import { moreMessage, selectGroupe, setExist } from "../store/Groupe";
+import { moreMessage, selectGroupe } from "../store/Groupe";
 import { socket } from "../api";
 import { GET_GROUPE_BY_ID } from "../api/query";
 
@@ -54,8 +54,8 @@ export const useChat = () => {
   const createChat = () => {
     createGroupe({ variables: { data: { users: [me.id, idSelectedUser] } } })
       .then((result) => {
-        dispatch(setExist(true));
         dispatch(selectGroupe(result.data.createGroupe.id));
+        socket.emit("create-chat", { data: result.data.createGroupe });
       })
       .catch((err) => {
         console.error(err);

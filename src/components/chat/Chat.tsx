@@ -42,7 +42,13 @@ export default function Chat() {
     }
     if (iDselectedGroupe !== -1 && exist) {
       view();
-      setHasMore(true);
+      if (groupe) {
+        if (groupe?.messages?.length >= 20) {
+          setHasMore(true);
+        } else {
+          setHasMore(false);
+        }
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iDselectedGroupe]);
@@ -172,10 +178,7 @@ export default function Chat() {
                           )} 
                           `}
                             >
-                              {message.content + " " + i + " " + message.id}{" "}
-                              {`here ${moment(message.date).calendar(null, {
-                                sameElse: "Do MMM, H:mm",
-                              })}`}
+                              {message.content}
                             </span>
                           </div>
                           <span className="text-xs">

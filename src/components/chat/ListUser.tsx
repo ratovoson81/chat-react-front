@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { IMAGE_URL } from "../../api";
 import { useAppSelector } from "../../Hooks";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
+import Avatar from "../public/Avatar";
+import Name from "../public/Name";
 
 type TypeListUser = {
   search: String;
@@ -21,21 +22,13 @@ const ListUser: FC<TypeListUser> = ({ search }) => {
           <div
             key={i}
             onClick={() => selectUser(user)}
-            className="hover:bg-gray-100 grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer"
+            className="hover:bg-gray-100 grid grid-cols-5 grid-rows-1 h-16 rounded-xl cursor-pointer items-center max-w-full"
           >
-            <span className="relative inline-block">
-              <img
-                className="rounded-full col-span-1 m-auto"
-                width={55}
-                alt=""
-                src={IMAGE_URL + user.imageUrl}
-              />
-              {user?.isOnline && (
-                <span className="absolute bottom-2 right-3 text-xs h-3 w-3 leading-none ring-2 ring-gray-50  transform bg-green-400 rounded-full"></span>
-              )}
-            </span>
+            <div className="flex justify-center ">
+              <Avatar imageUrl={user?.imageUrl} isOnline={user?.isOnline} />
+            </div>
             <div className="flex flex-col col-span-4 pl-4 justify-center">
-              <div className="font-medium">{user.name}</div>
+              <Name name={user.name} />
             </div>
           </div>
         ))}

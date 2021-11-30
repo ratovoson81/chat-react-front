@@ -1,4 +1,4 @@
-import { Groupe } from "../api/types";
+import { Groupe } from "./../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -18,13 +18,13 @@ export const groupeSlice = createSlice({
   name: "groupe",
   initialState,
   reducers: {
-    setAllGroupe: (state, action: PayloadAction<any>) => {
+    setAllGroupe: (state, action: PayloadAction<Groupe[]>) => {
       state.groupes = action.payload;
     },
-    selectGroupe: (state, action: PayloadAction<any>) => {
+    selectGroupe: (state, action: PayloadAction<number>) => {
       state.idselectedGroupe = action.payload;
     },
-    setExist: (state, action: PayloadAction<any>) => {
+    setExist: (state, action: PayloadAction<boolean>) => {
       state.exist = action.payload;
     },
     arrivalMessageAllGroupe: (state, action: PayloadAction<any>) => {
@@ -32,9 +32,16 @@ export const groupeSlice = createSlice({
         (g) => g.id === action.payload.idgroupe
       );
 
-      if (index !== -1) {
+      if (
+        index !== -1 &&
+        state.groupes[index].messages[0].id !== action.payload.message.id
+      ) {
         state.groupes[index].messages.unshift(action.payload.message);
       }
+    },
+    onCreateGroupe: (state, action: PayloadAction<Groupe>) => {
+      if (!state.groupes.find((g) => g.id === action.payload.id))
+        state.groupes.unshift(action.payload);
     },
     viewMessage: (state, action: PayloadAction<any>) => {
       const index = state.groupes.findIndex(
@@ -81,6 +88,7 @@ export const {
   viewMessage,
   sortGroupeByDate,
   moreMessage,
+  onCreateGroupe,
 } = groupeSlice.actions;
 
 export default groupeSlice.reducer;

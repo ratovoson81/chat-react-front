@@ -17,16 +17,16 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setMe: (state, action: PayloadAction<any>) => {
+    setMe: (state, action: PayloadAction<User>) => {
       state.me = action.payload;
     },
-    setAllUsers: (state, action: PayloadAction<any>) => {
+    setAllUsers: (state, action: PayloadAction<User[]>) => {
       state.users = action.payload;
     },
     setSelectedUser: (state, action: PayloadAction<any>) => {
       state.idSelectedUser = action.payload;
     },
-    setIsOnline: (state, action: PayloadAction<any>) => {
+    setIsOnline: (state, action: PayloadAction<User>) => {
       const index = state.users.findIndex((u) => u.id === action.payload.id);
       if (index !== -1) {
         state.users[index] = action.payload;
