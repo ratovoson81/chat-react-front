@@ -76,6 +76,13 @@ export const groupeSlice = createSlice({
         state.groupes[index].typing = action.payload.value;
       }
     },
+    destroyAllTyping: (state, action: PayloadAction<number>) => {
+      state.groupes.forEach((g) => {
+        if (g.users.find((u) => u.userId === action.payload)) {
+          g.typing = false;
+        }
+      });
+    },
     changeMessage: (state, action: PayloadAction<any>) => {
       const index = state.groupes.findIndex(
         (g) => g.id === action.payload.idGroupe
@@ -112,6 +119,7 @@ export const {
   onCreateGroupe,
   onTyping,
   changeMessage,
+  destroyAllTyping,
 } = groupeSlice.actions;
 
 export default groupeSlice.reducer;

@@ -69,6 +69,12 @@ export const useChat = () => {
       idGroupe: iDselectedGroupe,
       date: new Date(),
     };
+    socket.emit("typing", {
+      sender: me.id,
+      receive: idSelectedUser,
+      text: "",
+      idGroupe: iDselectedGroupe,
+    });
     view();
     sendMessageMutation({ variables: { data: data } })
       .then((result) => {
@@ -77,12 +83,6 @@ export const useChat = () => {
           idgroupe: iDselectedGroupe,
         });
         dispatch(changeMessage({ idGroupe: iDselectedGroupe, value: "" }));
-        socket.emit("typing", {
-          sender: me.id,
-          receive: idSelectedUser,
-          text: "",
-          idGroupe: iDselectedGroupe,
-        });
       })
       .catch((err) => {
         console.error(err);

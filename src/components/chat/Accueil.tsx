@@ -5,6 +5,7 @@ import "../../css/chat.css";
 import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import {
   arrivalMessageAllGroupe,
+  destroyAllTyping,
   onCreateGroupe,
   onTyping,
   setExist,
@@ -56,6 +57,12 @@ export default function Acceuil() {
         } else {
           dispatch(onTyping({ idGroupe: data.idGroupe, value: false }));
         }
+      }
+    });
+
+    socket.on("arrival-typing-disconnect", (data) => {
+      if (me.id !== data.id) {
+        dispatch(destroyAllTyping(data.id));
       }
     });
 
