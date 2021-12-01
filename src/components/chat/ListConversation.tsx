@@ -8,9 +8,11 @@ import FlipMove from "react-flip-move";
 import { forwardRef } from "react";
 import Name from "../public/Name";
 import Avatar from "../public/Avatar";
+import { TGroupe } from "../../store/Groupe";
+import { ThreeDotConv } from "../public/ThreeDot";
 
 type TList = {
-  item: Groupe;
+  item: TGroupe;
   user?: User;
 };
 
@@ -43,8 +45,8 @@ export default function ListConversation() {
             "font-bold"
           }`}
         >
-          {item.messages[0]?.author.id === me.id && "Vous: "}
-          {item.messages[0] ? item.messages[0]?.content : "vide"}
+          {item.messages[0]?.author.id === me.id && !item.typing && "Vous: "}
+          {item.typing ? <ThreeDotConv /> : item.messages[0]?.content}
         </div>
       </div>
       <div className="flex flex-col col-span-1 justify-center items-end space-y-2">

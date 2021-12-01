@@ -8,11 +8,17 @@ import { SendOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import "../../css/chat.css";
 import EmojiPicker from "./EmojiPicker";
+import { useAppSelector } from "../../Hooks";
 
 const InputMessage = () => {
-  const { sendMessage, form, handleChange, loading, view, onEmojiClick } =
-    useChat();
+  const { sendMessage, handleChange, loading, view, onEmojiClick } = useChat();
   const [pickerOpen, togglePicker] = useState(false);
+  const iDselectedGroupe = useAppSelector(
+    (state) => state.groupe.idselectedGroupe
+  );
+  const groupe = useAppSelector((state) =>
+    state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
+  );
 
   return (
     <div className="border-t-2 border-gray-200 px-4 pt-2 mb-2 sm:mb-1">
@@ -30,7 +36,7 @@ const InputMessage = () => {
           name="message"
           autoComplete="off"
           onChange={handleChange}
-          value={form.message}
+          value={groupe?.text || ""}
           onFocus={view}
           required
           className="w-full h-12 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-6 bg-gray-200 rounded-full py-3"
@@ -67,9 +73,11 @@ const InputMessage = () => {
             <button
               type="button"
               onClick={sendMessage}
-              disabled={form.message === "" ? true : false}
+              disabled={
+                groupe?.text === "" || groupe?.text === undefined ? true : false
+              }
               className={`inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white focus:outline-none ${
-                form.message === ""
+                groupe?.text === "" || groupe?.text === undefined
                   ? "bg-gray-400"
                   : "bg-purple-700 hover:bg-purple-900"
               }`}

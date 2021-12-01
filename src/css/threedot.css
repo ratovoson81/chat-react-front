@@ -1,12 +1,21 @@
 .chat-bubble {
-  background-color: #ebdef0;
-  padding: 12px 28px;
+  padding: 11px 28px;
   -webkit-border-radius: 20px;
   -webkit-border-bottom-left-radius: 2px;
   -moz-border-radius: 20px;
   -moz-border-radius-bottomleft: 2px;
   border-radius: 20px;
-  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  display: inline-block;
+  @apply bg-gray-300;
+}
+.conv-bubble {
+  padding: 2px;
+  -webkit-border-radius: 20px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius: 20px;
+  -moz-border-radius-bottomleft: 2px;
+  border-radius: 20px;
   display: inline-block;
 }
 .typing {

@@ -7,7 +7,7 @@ import { CREATE_GROUPE, SEND_MESSAGE, VIEW_MESSAGE } from "./../api/mutation";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 import { ChangeEvent, useState } from "react";
-import { moreMessage, selectGroupe } from "../store/Groupe";
+import { changeMessage, moreMessage, selectGroupe } from "../store/Groupe";
 import { socket } from "../api";
 import { GET_GROUPE_BY_ID } from "../api/query";
 
@@ -22,9 +22,6 @@ export const useChat = () => {
   const [sendMessageMutation, { loading }] = useMutation(SEND_MESSAGE);
   const [viewMessage] = useMutation(VIEW_MESSAGE);
   const [createGroupe] = useMutation(CREATE_GROUPE);
-  const [form, setForm] = useState({
-    message: "",
-  });
   const [hasMore, setHasMore] = useState(false);
   const groupe = useAppSelector((state) =>
     state.groupe.groupes.find((g) => g.id === iDselectedGroupe)
@@ -38,11 +35,8 @@ export const useChat = () => {
   });
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    const { value } = event.target;
+    dispatch(changeMessage({ idGroupe: iDselectedGroupe, value: value }));
     socket.emit("typing", {
       sender: me.id,
       receive: idSelectedUser,
@@ -52,9 +46,9 @@ export const useChat = () => {
   };
 
   const onEmojiClick = (event: any, emojiObject: any) => {
-    setForm({
-      message: form.message.concat(emojiObject.emoji),
-    });
+    dispatch(
+      changeMessage({ idGroupe: iDselectedGroupe, value: emojiObject.emoji })
+    );
   };
 
   const createChat = () => {
@@ -70,7 +64,7 @@ export const useChat = () => {
 
   const sendMessage = () => {
     const data: MessageInput = {
-      content: form.message,
+      content: groupe?.text as string,
       idFrom: me.id,
       idGroupe: iDselectedGroupe,
       date: new Date(),
@@ -82,7 +76,13 @@ export const useChat = () => {
           message: result.data.sendMessage,
           idgroupe: iDselectedGroupe,
         });
-        setForm({ message: "" });
+        dispatch(changeMessage({ idGroupe: iDselectedGroupe, value: "" }));
+        socket.emit("typing", {
+          sender: me.id,
+          receive: idSelectedUser,
+          text: "",
+          idGroupe: iDselectedGroupe,
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -122,7 +122,6 @@ export const useChat = () => {
   return {
     sendMessage,
     handleChange,
-    form,
     createChat,
     view,
     idSelectedUser,

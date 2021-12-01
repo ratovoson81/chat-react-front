@@ -2,7 +2,7 @@ import { Groupe } from "./../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
-type TGroupe = {
+export type TGroupe = {
   typing?: boolean;
   text?: string;
 } & Groupe;
@@ -76,6 +76,14 @@ export const groupeSlice = createSlice({
         state.groupes[index].typing = action.payload.value;
       }
     },
+    changeMessage: (state, action: PayloadAction<any>) => {
+      const index = state.groupes.findIndex(
+        (g) => g.id === action.payload.idGroupe
+      );
+      if (index !== -1) {
+        state.groupes[index].text = action.payload.value;
+      }
+    },
     moreMessage: (state, action: PayloadAction<any>) => {
       const index = state.groupes.findIndex((g) => g.id === action.payload.id);
 
@@ -103,6 +111,7 @@ export const {
   moreMessage,
   onCreateGroupe,
   onTyping,
+  changeMessage,
 } = groupeSlice.actions;
 
 export default groupeSlice.reducer;

@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { SpinnerDotted } from "spinners-react";
 import InputMessage from "../public/InputMessage";
 import InfoSelectedUser from "../public/InfoSelectedUser";
-import ThreeDot from "../public/ThreeDot";
+import { ThreeDot } from "../public/ThreeDot";
 
 export default function Chat() {
   const {
@@ -210,7 +210,11 @@ export default function Chat() {
                           <div className="mx-5 order-1"></div>
                         )}
                       </div>
-                      {groupe.typing && i === 0 && <ThreeDot />}
+                      {groupe.typing && i === 0 && (
+                        <div className="ml-12">
+                          <ThreeDot />
+                        </div>
+                      )}
                     </div>
                   );
                 })}
