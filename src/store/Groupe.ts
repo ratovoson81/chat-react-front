@@ -2,14 +2,19 @@ import { Groupe } from "./../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
+type TGroupe = {
+  typing?: boolean;
+  text?: string;
+} & Groupe;
+
 export interface MessageState {
-  groupes: Groupe[];
+  groupes: TGroupe[];
   idselectedGroupe: number;
   exist: Boolean;
 }
 
 const initialState: MessageState = {
-  groupes: [] as Groupe[],
+  groupes: [] as TGroupe[],
   idselectedGroupe: -1,
   exist: false,
 };
@@ -18,7 +23,7 @@ export const groupeSlice = createSlice({
   name: "groupe",
   initialState,
   reducers: {
-    setAllGroupe: (state, action: PayloadAction<Groupe[]>) => {
+    setAllGroupe: (state, action: PayloadAction<TGroupe[]>) => {
       state.groupes = action.payload;
     },
     selectGroupe: (state, action: PayloadAction<number>) => {
@@ -39,7 +44,7 @@ export const groupeSlice = createSlice({
         state.groupes[index].messages.unshift(action.payload.message);
       }
     },
-    onCreateGroupe: (state, action: PayloadAction<Groupe>) => {
+    onCreateGroupe: (state, action: PayloadAction<TGroupe>) => {
       if (!state.groupes.find((g) => g.id === action.payload.id))
         state.groupes.unshift(action.payload);
     },
@@ -61,6 +66,14 @@ export const groupeSlice = createSlice({
             );
           }
         });
+      }
+    },
+    onTyping: (state, action: PayloadAction<any>) => {
+      const index = state.groupes.findIndex(
+        (g) => g.id === action.payload.idGroupe
+      );
+      if (index !== -1) {
+        state.groupes[index].typing = action.payload.value;
       }
     },
     moreMessage: (state, action: PayloadAction<any>) => {
@@ -89,6 +102,7 @@ export const {
   sortGroupeByDate,
   moreMessage,
   onCreateGroupe,
+  onTyping,
 } = groupeSlice.actions;
 
 export default groupeSlice.reducer;

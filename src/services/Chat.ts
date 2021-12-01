@@ -43,6 +43,12 @@ export const useChat = () => {
       ...form,
       [name]: value,
     });
+    socket.emit("typing", {
+      sender: me.id,
+      receive: idSelectedUser,
+      text: value,
+      idGroupe: iDselectedGroupe,
+    });
   };
 
   const onEmojiClick = (event: any, emojiObject: any) => {

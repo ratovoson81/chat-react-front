@@ -87,7 +87,7 @@ export default function ListConversation() {
           <SpinnerDotted size="40" color="purple" />
         </div>
       )}
-      <FlipMove enterAnimation="fade">
+      <FlipMove enterAnimation="fade" className="m-1">
         {groupes.map((item: Groupe, i: number) => {
           const id = item.users.find((i) => i.user?.id !== me.id)?.user?.id;
           const user = users.find((u) => id === u.id);

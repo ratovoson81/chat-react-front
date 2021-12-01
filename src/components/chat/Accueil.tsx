@@ -6,6 +6,7 @@ import { useListUserAndGroupe } from "../../services/ListUserAndGroupe";
 import {
   arrivalMessageAllGroupe,
   onCreateGroupe,
+  onTyping,
   setExist,
   sortGroupeByDate,
   viewMessage,
@@ -47,12 +48,23 @@ export default function Acceuil() {
         dispatch(sortGroupeByDate());
       }, 250);
     });
+
+    socket.on("arrival-typing", (data) => {
+      if (me.id !== data.sender) {
+        if (data.text.length > 0) {
+          dispatch(onTyping({ idGroupe: data.idGroupe, value: true }));
+        } else {
+          dispatch(onTyping({ idGroupe: data.idGroupe, value: false }));
+        }
+      }
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wsClient]);
 
   return (
     <div className="pt-14 flex flex-row h-full">
-      <div className="w-96 border-r overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div className="w-96 border-r justify-between flex flex-col">
         <div className="flex relative m-2">
           <input
             className="border-2 border-primary transition h-10 px-5 pr-16 rounded-full focus:outline-none w-full text-black bg-gray-200 text-gray-600 placeholder-gray-600"
@@ -83,7 +95,7 @@ export default function Acceuil() {
         <div className="text-gray-400 flex justify-center">
           {form.search ? "Résultat de " + form.search : ""}
         </div>
-        <div className="m-2">
+        <div className="h-full overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
           {form.search ? (
             <ListUser search={form.search} />
           ) : (
