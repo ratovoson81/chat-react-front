@@ -12,7 +12,7 @@ const PrivatePage: React.FC<props> = ({ children }) => {
   const me = useAppSelector((state) => state.user.me);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-gray-50 dark:bg-black transition-all">
       {/*<NavBar />
       <br />*/}
       <div className="fixed flex h-14 w-full border-b">

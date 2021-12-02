@@ -51,16 +51,14 @@ export default function Login() {
   return (
     <form
       onSubmit={submit}
-      className="max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl"
+      className="max-w-md m-auto p-10 bg-white rounded shadow-xl space-y-8"
     >
-      <p className="text-white font-medium text-center text-lg font-bold">
-        LOGIN
-      </p>
-      <div className="">
-        <label className="block text-sm text-white">E-mail</label>
+      <p className="text-lg text-center">Login to your account</p>
+      <div>
+        <label className="block">E-mail</label>
         <input
-          className="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white"
-          placeholder="email"
+          className="w-full px-5 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:bg-white"
+          placeholder="Email"
           type="text"
           name="email"
           onChange={handleChange}
@@ -68,11 +66,11 @@ export default function Login() {
           required
         />
       </div>
-      <div className="mt-2">
-        <label className="block  text-sm text-white">Password</label>
+      <div>
+        <label className="block">Password</label>
         <input
-          className="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white"
-          placeholder="password"
+          className="w-full px-5 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:bg-white"
+          placeholder="Password"
           type="text"
           name="password"
           onChange={handleChange}
@@ -83,26 +81,28 @@ export default function Login() {
 
       <div className="mt-4 items-center flex justify-between">
         <button
-          className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded"
+          className="px-8 py-2 text-white tracking-wider bg-gradient-to-br from-pink-500 to-purple-800 transition duration-500 ease-in-out rounded-md"
           type="submit"
         >
           Se connecter
         </button>
         <a
-          className="inline-block right-0 align-baseline font-bold text-sm text-500 text-white hover:text-red-400"
+          className="inline-block right-0 align-baseline text-sm text-500 hover:text-red-400 text-purple-600"
           href="#exemple.com"
         >
           mot de passe oublié ?
         </a>
       </div>
-      <div className="text-center">
+      <div className="text-right">
         {/*<a
           className="inline-block right-0 align-baseline font-light text-sm text-500 hover:text-red-400"
           href="#exemple.com"
         >
           Créer un compte
         </a>*/}
-        <Link to="/register">{"Créer un compte"}</Link>
+        <Link to="/register" className="text-purple-600">
+          {"Créer un compte"}
+        </Link>
       </div>
     </form>
   );
