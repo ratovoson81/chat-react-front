@@ -9,7 +9,7 @@ export const useRegister = () => {
     email: "",
     name: "",
     password: "",
-    image: null,
+    image: null as any,
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

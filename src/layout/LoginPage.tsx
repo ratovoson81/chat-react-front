@@ -1,7 +1,10 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import "../css/loginPage.css";
 import { gradient } from "../css/gradient";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { settings, Slides } from "./SlideLogin";
 
 type props = {
   children: React.ReactNode;
@@ -11,8 +14,14 @@ const LoginPage: React.FC<props> = ({ children }) => {
   const location = useLocation();
 
   return (
-    <div className="h-screen flex">
-      <div className="flex-1 login"></div>
+    <div className="h-screen flex overflow-hidden ">
+      <div className="w-1/2 login">
+        <Slider {...settings}>
+          {Slides.map((slide) => (
+            <img src={slide.url} alt="" />
+          ))}
+        </Slider>
+      </div>
       <div className="flex-1 self-center">
         <div className="font-sans">
           <div className="relative min-h-screen flex flex-col sm:justify-center items-center">

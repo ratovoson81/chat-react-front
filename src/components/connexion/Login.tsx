@@ -71,14 +71,21 @@ export default function Login() {
         <input
           className="w-full px-5 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:bg-white"
           placeholder="Password"
-          type="text"
+          type="password"
           name="password"
           onChange={handleChange}
           value={form.password}
           required
         />
       </div>
-
+      {/*<div className="text-center">
+        <a
+          className="inline-block right-0 align-baseline text-sm text-500 hover:text-red-400 text-gray-400"
+          href="#exemple.com"
+        >
+          mot de passe oublié ?
+        </a>
+      </div>*/}
       <div className="mt-4 items-center flex justify-between">
         <button
           className="px-8 py-2 text-white tracking-wider bg-gradient-to-br from-pink-500 to-purple-800 transition duration-500 ease-in-out rounded-md"
@@ -86,21 +93,7 @@ export default function Login() {
         >
           Se connecter
         </button>
-        <a
-          className="inline-block right-0 align-baseline text-sm text-500 hover:text-red-400 text-purple-600"
-          href="#exemple.com"
-        >
-          mot de passe oublié ?
-        </a>
-      </div>
-      <div className="text-right">
-        {/*<a
-          className="inline-block right-0 align-baseline font-light text-sm text-500 hover:text-red-400"
-          href="#exemple.com"
-        >
-          Créer un compte
-        </a>*/}
-        <Link to="/register" className="text-purple-600">
+        <Link to="/register" className="text-purple-700 hover:text-purple-800">
           {"Créer un compte"}
         </Link>
       </div>
