@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useRegister } from "../../services/Register";
-import Imagepicker from "../../assets/imagepicker.svg";
+import CropImage from "../public/CropImage";
 
 export default function Register() {
   const { form, handleChange, submit, handleChangeFile } = useRegister();
@@ -16,7 +16,7 @@ export default function Register() {
         <input
           className="w-full px-5 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:bg-white"
           placeholder="Email"
-          type="text"
+          type="email"
           name="email"
           onChange={handleChange}
           value={form.email}
@@ -52,33 +52,7 @@ export default function Register() {
 
       <div>
         <label className="block ">Photo</label>
-        <div className="max-w-2xl">
-          <div className="m-4">
-            <div className="flex flex-col items-center justify-center w-full">
-              <label className="flex flex-col w-full h-28 border-4 border-gray-300 border-dashed hover:bg-gray-100 hover:border-gray-300">
-                <div className="flex flex-col items-center justify-center pt-7">
-                  <img
-                    src={Imagepicker}
-                    width="25"
-                    alt=""
-                    className="text-gray-400 group-hover:text-gray-600"
-                  />
-
-                  <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                    Attach a file
-                  </p>
-                </div>
-                <input
-                  className="opacity-0"
-                  type="file"
-                  onChange={handleChangeFile}
-                  required
-                />
-              </label>
-              <span>{form?.image && form.image.name}</span>
-            </div>
-          </div>
-        </div>
+        <CropImage handleChangeFile={handleChangeFile} />
       </div>
       <div className="mt-4 items-center flex justify-between">
         <button

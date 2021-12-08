@@ -9,7 +9,7 @@ export const useRegister = () => {
     email: "",
     name: "",
     password: "",
-    image: null as any,
+    image: "",
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,15 +20,16 @@ export const useRegister = () => {
     });
   };
 
-  const handleChangeFile = (event: any) => {
+  const handleChangeFile = (file: string) => {
     setForm({
       ...form,
-      image: event.target.files[0],
+      image: file,
     });
   };
 
   const submit = async (event: SyntheticEvent) => {
     event.preventDefault();
+    console.log(form);
     await register({ variables: { data: form } })
       .then((result) => {
         const placement = "bottomRight";

@@ -2,7 +2,6 @@ import { createUploadLink } from "apollo-upload-client";
 import {
   ApolloClient,
   DefaultOptions,
-  gql,
   InMemoryCache,
   split,
 } from "@apollo/client";
@@ -64,27 +63,6 @@ export const client = new ApolloClient({
   }),
   defaultOptions,
 });
-
-client
-  .query({
-    query: gql`
-      query {
-        feed {
-          id
-          title
-          content
-          published
-          author {
-            id
-            name
-            email
-          }
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
 
 export const IMAGE_URL = "http://localhost:4000/images/";
 export const socket = socketClient("http://localhost:4000", {

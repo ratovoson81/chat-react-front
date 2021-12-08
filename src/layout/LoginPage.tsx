@@ -17,8 +17,8 @@ const LoginPage: React.FC<props> = ({ children }) => {
     <div className="h-screen flex overflow-hidden ">
       <div className="w-1/2 login">
         <Slider {...settings}>
-          {Slides.map((slide) => (
-            <img src={slide.url} alt="" />
+          {Slides.map((slide, i) => (
+            <img key={i} src={slide.url} alt="" />
           ))}
         </Slider>
       </div>
