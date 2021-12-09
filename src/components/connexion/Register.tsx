@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegister } from "../../services/Register";
 import CropImage from "../public/CropImage";
 
 export default function Register() {
   const { form, handleChange, submit, handleChangeFile } = useRegister();
+  const [croppedImage, setCroppedImage] = useState<any>(null);
 
   return (
     <form
@@ -52,7 +54,14 @@ export default function Register() {
 
       <div>
         <label className="block ">Photo</label>
-        <CropImage handleChangeFile={handleChangeFile} />
+        {form.image.length > 0 && <img src={form.image} alt="" />}
+        <div className="py-1 mt-2">
+          <CropImage
+            handleChangeFile={handleChangeFile}
+            croppedImage={croppedImage}
+            setCroppedImage={setCroppedImage}
+          />
+        </div>
       </div>
       <div className="mt-4 items-center flex justify-between">
         <button

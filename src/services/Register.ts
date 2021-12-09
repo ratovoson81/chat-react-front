@@ -29,27 +29,35 @@ export const useRegister = () => {
 
   const submit = async (event: SyntheticEvent) => {
     event.preventDefault();
-    console.log(form);
-    await register({ variables: { data: form } })
-      .then((result) => {
-        const placement = "bottomRight";
-        notification.success({
-          message: `Notification`,
-          description:
-            "Nouvel utilisateur " +
-            result.data.signupUser.name +
-            " crée avec succès",
-          placement,
+    const placement = "bottomRight";
+
+    if (form.image.length > 0) {
+      await register({ variables: { data: form } })
+        .then((result) => {
+          const placement = "bottomRight";
+          notification.success({
+            message: `Notification`,
+            description:
+              "Nouvel utilisateur " +
+              result.data.signupUser.name +
+              " crée avec succès",
+            placement,
+          });
+        })
+        .catch((err) => {
+          notification.error({
+            message: `Notification`,
+            description: err.graphQLErrors[0].message,
+            placement,
+          });
         });
-      })
-      .catch((err) => {
-        const placement = "bottomRight";
-        notification.error({
-          message: `Notification`,
-          description: err.graphQLErrors[0].message,
-          placement,
-        });
+    } else {
+      notification.warning({
+        message: `Notification`,
+        description: "Please select and confirm crop image",
+        placement,
       });
+    }
   };
 
   return {
