@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 
 import ImgDialog from "./ImgDialog";
@@ -10,8 +10,10 @@ const CropImage = ({
   handleChangeFile,
   croppedImage,
   setCroppedImage,
+  imageSelected,
 }: any) => {
-  const [imageSrc, setImageSrc] = React.useState<any>(null);
+  const [imageSrc, setImageSrc] = useState<any>(null);
+  const [name, setName] = useState("");
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<any>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -42,9 +44,12 @@ const CropImage = ({
       let imageDataUrl = await readFile(file);
       setModalVisibleCrop(true);
       setImageSrc(imageDataUrl);
+      setName(file.name);
     } else {
       setImageSrc(null);
       setModalVisibleCrop(false);
+      setName("");
+      handleChangeFile("");
     }
   };
 
@@ -110,7 +115,25 @@ const CropImage = ({
         </div>
       </Modal>
       <ImgDialog img={croppedImage} onClose={onClose} />
-      <input type="file" onChange={onFileChange} accept="image/*" />
+      <div className="flex">
+        <label
+          className="px-5 py-1.5 text-gray-500 border-2 hover:text-gray-600 rounded-md focus:outline-none focus:bg-white cursor-pointer hover:bg-gray-300 border-gray-300 transition duration-500 ease-in-out"
+          htmlFor={"upload-button"}
+        >
+          <div className="">Choisir un fichier</div>
+        </label>
+        <input
+          type="file"
+          id="upload-button"
+          className="hidden"
+          onChange={onFileChange}
+          accept="image/*"
+        />
+        {name.length > 0 && <span className="ml-3 self-center">{name}</span>}
+      </div>
+      {imageSelected.length > 0 && (
+        <img className="my-4" src={imageSelected} alt="" />
+      )}
       {imageSrc && (
         <div
           className="ml-2 my-2 text-gray-600 hover:text-yellow-600 cursor-pointer"

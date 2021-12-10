@@ -18,10 +18,14 @@ import ListConversation from "./ListConversation";
 import ListUser from "./ListUser";
 import Welcome from "./Welcome";
 import { Groupe } from "../../api/types";
+import { notification } from "antd";
+import Avatar from "../public/Avatar";
+import Name from "../public/Name";
 
 export default function Acceuil() {
   const dispatch = useAppDispatch();
   const idSelectedUser = useAppSelector((state) => state.user.idSelectedUser);
+  const groupe = useAppSelector((state) => state.groupe.groupes);
   const me = useAppSelector((state) => state.user.me);
   const { form, handleChange } = useListUserAndGroupe();
 
@@ -45,6 +49,28 @@ export default function Acceuil() {
 
     socket.on("arrival-message", (data) => {
       dispatch(arrivalMessageAllGroupe(data));
+      const index = groupe.findIndex((g) => g.id === data.idgroupe);
+      if (index !== -1 && me.id !== data.message.author.id) {
+        notification.open({
+          message: "Vous avez un nouveau message !",
+          description: (
+            <div className="flex">
+              <div className="flex justify-center">
+                <Avatar
+                  imageUrl={data.message.author?.imageUrl}
+                  isOnline={data.message.author?.isOnline}
+                />
+              </div>
+              <div className="flex flex-col col-span-3 pl-4 justify-center">
+                <Name name={data.message.author?.name} />
+                <div className={`"text-gray-500 text-xs dark:text-white `}>
+                  {data.message.content}
+                </div>
+              </div>
+            </div>
+          ),
+        });
+      }
       setTimeout(function () {
         dispatch(sortGroupeByDate());
       }, 250);

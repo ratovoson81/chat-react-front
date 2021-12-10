@@ -54,12 +54,12 @@ export default function Register() {
 
       <div>
         <label className="block ">Photo</label>
-        {form.image.length > 0 && <img src={form.image} alt="" />}
         <div className="py-1 mt-2">
           <CropImage
             handleChangeFile={handleChangeFile}
             croppedImage={croppedImage}
             setCroppedImage={setCroppedImage}
+            imageSelected={form.image}
           />
         </div>
       </div>

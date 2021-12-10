@@ -1,11 +1,11 @@
 import { useChat } from "./Chat";
 import { ArgsGetGroupePerUser, User } from "./../api/types";
 import { useLazyQuery } from "@apollo/client";
-import { ChangeEvent, useEffect, useState } from "react";
-import { ALL_USERS, GET_All_GROUPE_BY_USER } from "../api/query";
+import { ChangeEvent, useState } from "react";
+import { GET_All_GROUPE_BY_USER } from "../api/query";
 import { Groupe } from "../api/types";
-import { selectGroupe, setAllGroupe, setExist } from "../store/Groupe";
-import { setAllUsers, setSelectedUser } from "../store/User";
+import { selectGroupe, setExist } from "../store/Groupe";
+import { setSelectedUser } from "../store/User";
 import { useAppDispatch, useAppSelector } from "../Hooks";
 
 type returnQuery = {
@@ -44,13 +44,6 @@ export const useListUserAndGroupe = () => {
     dispatch(setSelectedUser(user.id));
   };
 
-  const [getGroupeByMultipleUsers /*, { called, loading, data }*/] =
-    useLazyQuery(GET_All_GROUPE_BY_USER, {
-      onCompleted: ({ getGroupeByMultipleUsers }) => {
-        dispatch(setAllGroupe(getGroupeByMultipleUsers));
-      },
-    });
-
   const [checkGroupeExist /*, { called, loading, data }*/] = useLazyQuery(
     GET_All_GROUPE_BY_USER,
     {
@@ -66,26 +59,6 @@ export const useListUserAndGroupe = () => {
       },
     }
   );
-
-  const [allUsers /*, { called, loading, data }*/] = useLazyQuery(ALL_USERS, {
-    onCompleted: ({ allUsers }) => {
-      dispatch(setAllUsers(allUsers));
-    },
-  });
-
-  useEffect(() => {
-    allUsers();
-    if (me) {
-      const data: ArgsGetGroupePerUser = {
-        ids: [me.id],
-        skip: 0,
-      };
-      getGroupeByMultipleUsers({
-        variables: { data: data },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [me]);
 
   return { form, handleChange, selectConversation, selectUser };
 };
